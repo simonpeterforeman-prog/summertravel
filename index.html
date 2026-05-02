@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High & Wide · California Road Trip · July 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FDF8F2;
+    --cream-dark: #F5EDE0;
+    --ink: #1A1512;
+    --ink-mid: #4A3F38;
+    --ink-light: #8C7B72;
+    --amber: #B45309;
+    --amber-light: #FEF3C7;
+    --green: #2D5A27;
+    --green-light: #DCFCE7;
+    --blue: #1E3A5F;
+    --blue-light: #DBEAFE;
+    --sand: #E8DDD0;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Outfit', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+    padding: 80px 40px 64px;
+    text-align: center;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 80%, #2D1F0A 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 20%, #0A1F2D 0%, transparent 60%),
+      linear-gradient(165deg, #1A1512 0%, #2D1F0A 40%, #0F1A0F 100%);
+    opacity: 0.95;
+  }
+
+  .hero-rule {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .hero-rule::before, .hero-rule::after {
+    content: '';
+    flex: 1;
+    max-width: 120px;
+    height: 0.5px;
+    background: rgba(255,255,255,0.25);
+  }
+
+  .hero-label {
+    position: relative;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .hero h1 {
+    position: relative;
+    font-family: var(--serif);
+    font-size: clamp(42px, 8vw, 80px);
+    font-weight: 300;
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: #E8C87A;
+  }
+
+  .hero-sub {
+    position: relative;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-top: 16px;
+    margin-bottom: 40px;
+  }
+
+  .hero-stats {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .hero-stat {
+    padding: 16px 28px;
+    border-left: 0.5px solid rgba(255,255,255,0.12);
+    text-align: center;
+  }
+
+  .hero-stat:first-child { border-left: none; }
+
+  .hero-stat-val {
+    display: block;
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    color: #E8C87A;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .hero-stat-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ─── ROUTE BAR ─── */
+  .route-bar {
+    background: var(--ink);
+    border-top: 0.5px solid rgba(255,255,255,0.08);
+    padding: 20px 40px;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .route-stops {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .route-stop {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .route-node {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 0.5px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.7);
+  }
+
+  .route-node.node-fly { background: rgba(30,58,95,0.6); border-color: rgba(147,197,253,0.3); color: #93C5FD; }
+  .route-node.node-la  { background: rgba(30,58,95,0.4); border-color: rgba(147,197,253,0.2); color: #BAD8FB; }
+  .route-node.node-395 { background: rgba(45,90,39,0.5); border-color: rgba(134,239,172,0.3); color: #86EFAC; }
+  .route-node.node-bay { background: rgba(101,79,50,0.4); border-color: rgba(232,200,122,0.3); color: #E8C87A; }
+
+  .route-arrow {
+    font-size: 10px;
+    color: rgba(255,255,255,0.2);
+    padding: 0 4px;
+  }
+
+  /* ─── LAYOUT ─── */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .section {
+    padding: 56px 0;
+    border-bottom: 0.5px solid var(--sand);
+  }
+
+  .section:last-child { border-bottom: none; }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+
+  /* ─── PHASE BLOCKS ─── */
+  .phase {
+    margin-bottom: 40px;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--sand);
+  }
+
+  .phase-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .phase-dates {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+  }
+
+  .phase-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .badge-la { background: var(--blue-light); color: var(--blue); }
+  .badge-395 { background: var(--green-light); color: var(--green); }
+  .badge-bay { background: var(--amber-light); color: var(--amber); }
+
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+  }
+
+  .day-card {
+    background: var(--cream-dark);
+    border-radius: 10px;
+    padding: 14px 16px;
+    border-left: 3px solid transparent;
+  }
+
+  .day-card.la { border-left-color: var(--blue); }
+  .day-card.s395 { border-left-color: var(--green); }
+  .day-card.bay { border-left-color: var(--amber); }
+
+  .day-date {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 4px;
+  }
+
+  .day-title {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+
+  .day-desc {
+    font-size: 12px;
+    color: var(--ink-mid);
+    line-height: 1.5;
+  }
+
+  .highlight-card {
+    background: var(--ink);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 16px;
+  }
+
+  .highlight-card h4 {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    color: #E8C87A;
+    margin-bottom: 8px;
+  }
+
+  .highlight-card p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+  }
+
+  /* ─── FLIGHTS & CAR ─── */
+  .logistics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .logistics-card {
+    background: var(--cream-dark);
+    border-radius: 12px;
+    padding: 20px;
+    border: 0.5px solid var(--sand);
+  }
+
+  .logistics-card.featured {
+    background: var(--ink);
+    border-color: transparent;
+  }
+
+  .logistics-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+
+  .logistics-card.featured .logistics-eyebrow {
+    color: rgba(255,255,255,0.4);
+  }
+
+  .logistics-route {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .logistics-card.featured .logistics-route {
+    color: #E8C87A;
+  }
+
+  .logistics-detail {
+    font-size: 12px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    margin-top: 8px;
+  }
+
+  .logistics-card.featured .logistics-detail {
+    color: rgba(255,255,255,0.55);
+  }
+
+  .logistics-price {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.06);
+    color: var(--ink);
+  }
+
+  .logistics-card.featured .logistics-price {
+    background: rgba(232,200,122,0.15);
+    color: #E8C87A;
+  }
+
+  /* ─── STOPS TABLE ─── */
+  .stops-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 0.5px solid var(--sand);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .stop-row {
+    display: grid;
+    grid-template-columns: 40px 1fr 120px 120px;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    border-bottom: 0.5px solid var(--sand);
+    background: var(--cream);
+    transition: background 0.15s;
+  }
+
+  .stop-row:last-child { border-bottom: none; }
+  .stop-row:hover { background: var(--cream-dark); }
+
+  .stop-row.header {
+    background: var(--ink);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    cursor: default;
+  }
+
+  .stop-row.header:hover { background: var(--ink); }
+
+  .stop-num {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--ink-light);
+    text-align: center;
+  }
+
+  .stop-name {
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 14px;
+  }
+
+  .stop-detail {
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-top: 2px;
+  }
+
+  .stop-type {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  .type-nature { background: var(--green-light); color: var(--green); }
+  .type-history { background: #FEF9C3; color: #854D0E; }
+  .type-food { background: #FCE7F3; color: #831843; }
+  .type-geo { background: #F0FDF4; color: #166534; }
+  .type-ghost { background: #F3F4F6; color: #374151; }
+  .type-camp { background: var(--amber-light); color: var(--amber); }
+
+  .stop-must {
+    font-size: 11px;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+
+  /* ─── BUDGET ─── */
+  .budget-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 500px) {
+    .budget-grid { grid-template-columns: 1fr; }
+    .stop-row { grid-template-columns: 30px 1fr 80px; }
+    .stop-row > :last-child { display: none; }
+  }
+
+  .budget-card {
+    background: var(--cream-dark);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+
+  .budget-cat {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+
+  .budget-range {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .budget-note {
+    font-size: 11px;
+    color: var(--ink-light);
+    line-height: 1.4;
+  }
+
+  .budget-total {
+    background: var(--ink);
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .budget-total-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 4px;
+  }
+
+  .budget-total-amount {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 300;
+    color: #E8C87A;
+    line-height: 1;
+  }
+
+  .budget-total-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 4px;
+  }
+
+  /* ─── CHECKLIST ─── */
+  .checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 0.5px solid var(--sand);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    border-bottom: 0.5px solid var(--sand);
+    background: var(--cream);
+  }
+
+  .check-item:last-child { border-bottom: none; }
+
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1.5px solid var(--sand);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+
+  .check-urgency {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .urg-now { background: #FEE2E2; color: #991B1B; }
+  .urg-soon { background: var(--amber-light); color: #92400E; }
+  .urg-june { background: var(--green-light); color: var(--green); }
+
+  .check-text {
+    flex: 1;
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  .check-detail {
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-top: 1px;
+  }
+
+  .check-est {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    white-space: nowrap;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--ink);
+    padding: 40px;
+    text-align: center;
+  }
+
+  .footer-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+  }
+
+  .footer-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+    line-height: 1.6;
+  }
+
+  .footer-updated {
+    margin-top: 16px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ─── DIVIDER ─── */
+  .ornament {
+    text-align: center;
+    color: var(--sand);
+    font-size: 20px;
+    margin: 8px 0 32px;
+    letter-spacing: 8px;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero > * { animation: fadeUp 0.6s ease both; }
+  .hero .hero-bg { animation: none; }
+  .hero .hero-rule { animation-delay: 0.1s; }
+  .hero h1 { animation-delay: 0.2s; }
+  .hero .hero-sub { animation-delay: 0.3s; }
+  .hero .hero-stats { animation-delay: 0.4s; }
+
+  /* ─── STOPS ACCORDION ─── */
+  .stops-accordion {
+    border: 0.5px solid var(--sand);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .sa-row {
+    border-bottom: 0.5px solid var(--sand);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .sa-row:last-child { border-bottom: none; }
+  .sa-row:hover .sa-top { background: var(--cream-dark); }
+  .sa-row.open .sa-top { background: var(--cream-dark); }
+
+  .sa-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    transition: background 0.15s;
+  }
+
+  .sa-num {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--ink-light);
+    min-width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sa-main { flex: 1; min-width: 0; }
+
+  .sa-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .sa-loc {
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-top: 1px;
+  }
+
+  .sa-chevron {
+    font-size: 14px;
+    color: var(--ink-light);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .sa-row.open .sa-chevron { transform: rotate(90deg); }
+
+  .sa-body {
+    display: none;
+    padding: 0 20px 20px 62px;
+    border-top: 0.5px solid var(--sand);
+    background: var(--cream);
+  }
+
+  .sa-row.open .sa-body { display: block; }
+
+  .sa-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    padding-top: 16px;
+  }
+
+  .sa-col {}
+
+  .sa-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+
+  .sa-col p {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.65;
+  }
+
+  .sa-col p strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  @media (max-width: 600px) {
+    .sa-top { padding: 12px 14px; gap: 10px; }
+    .sa-body { padding: 0 14px 16px 14px; }
+    .stop-type { display: none; }
+  }
+
+</style>
+  @media print {
+    .hero { background: #1A1512 !important; -webkit-print-color-adjust: exact; }
+    .route-bar { background: #1A1512 !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-rule">
+    <span class="hero-label">High &amp; Wide · Family Road Trip · 2026</span>
+  </div>
+  <h1>High<br><em>&amp; Wide</em></h1>
+  <p class="hero-sub">Los Angeles &nbsp;·&nbsp; Eastern Sierra &nbsp;·&nbsp; Marin County &nbsp;·&nbsp; July 2026</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-val">17</span>
+      <span class="hero-stat-label">Days</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-val">3</span>
+      <span class="hero-stat-label">Travelers</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-val">~900</span>
+      <span class="hero-stat-label">Miles driven</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-val">Jul 3–20</span>
+      <span class="hero-stat-label">2026</span>
+    </div>
+  </div>
+</header>
+
+<!-- ROUTE BAR -->
+<nav class="route-bar">
+  <div class="route-stops">
+    <div class="route-stop">
+      <span class="route-node node-fly">FLL</span>
+      <span class="route-arrow">✈</span>
+    </div>
+    <div class="route-stop">
+      <span class="route-node node-la">Los Angeles</span>
+      <span class="route-arrow">→</span>
+    </div>
+    <div class="route-stop">
+      <span class="route-node node-395">Hwy 14</span>
+      <span class="route-arrow">→</span>
+    </div>
+    <div class="route-stop">
+      <span class="route-node node-395">Lone Pine</span>
+      <span class="route-arrow">→</span>
+    </div>
+    <div class="route-stop">
+      <span class="route-node node-395">Bishop</span>
+      <span class="route-arrow">→</span>
+    </div>
+    <div class="route-stop">
+      <span class="route-node node-395">Mammoth</span>
+      <span class="route-arrow">→</span>
+    </div>
+    <div class="route-stop">
+      <span class="route-node node-395">Mono Lake</span>
+      <span class="route-arrow">→</span>
+    </div>
+    <div class="route-stop">
+      <span class="route-node node-395">Bodie</span>
+      <span class="route-arrow">→</span>
+    </div>
+    <div class="route-stop">
+      <span class="route-node node-395">Yosemite</span>
+      <span class="route-arrow">→</span>
+    </div>
+    <div class="route-stop">
+      <span class="route-node node-bay">San Mateo</span>
+      <span class="route-arrow">→</span>
+    </div>
+    <div class="route-stop">
+      <span class="route-node node-bay">Marin</span>
+      <span class="route-arrow">✈</span>
+    </div>
+    <div class="route-stop">
+      <span class="route-node node-fly">SFO</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ──────────────────────────────────────── -->
+<!-- ITINERARY -->
+<main>
+<div class="container">
+
+<section class="section">
+  <p class="section-eyebrow">The Plan</p>
+  <h2 class="section-title">Day by day</h2>
+
+  <!-- PHASE 1: LA -->
+  <div class="phase">
+    <div class="phase-header">
+      <span class="phase-title">Los Angeles</span>
+      <span class="phase-dates">Jul 3–8 &nbsp;·&nbsp; 6 nights</span>
+      <span class="phase-badge badge-la">Phase 1</span>
+    </div>
+    <div class="days-grid">
+      <div class="day-card la">
+        <div class="day-date">Thu Jul 3</div>
+        <div class="day-title">Arrive Los Angeles</div>
+        <div class="day-desc">FLL → LAX nonstop. Pick up Budget SUV. Venice Beach boardwalk, settle in.</div>
+      </div>
+      <div class="day-card la">
+        <div class="day-date">Fri Jul 4</div>
+        <div class="day-title">Independence Day</div>
+        <div class="day-desc">Malibu morning. July 4th fireworks at Santa Monica Pier or Dodger Stadium.</div>
+      </div>
+      <div class="day-card la">
+        <div class="day-date">Sat Jul 5</div>
+        <div class="day-title">Griffith + Getty</div>
+        <div class="day-desc">Hike up to Griffith Observatory. Getty Center (free entry). Mulholland Drive at sunset.</div>
+      </div>
+      <div class="day-card la">
+        <div class="day-date">Sun Jul 6</div>
+        <div class="day-title">Malibu + PCH</div>
+        <div class="day-desc">El Matador Beach. Pacific Coast Highway. Topanga Canyon hike & swimming hole.</div>
+      </div>
+      <div class="day-card la">
+        <div class="day-date">Mon Jul 7</div>
+        <div class="day-title">Grandpa arrives</div>
+        <div class="day-desc">Dad flies SFO→LAX. Bonus LA day — Angeles National Forest, LACMA, or beach.</div>
+      </div>
+      <div class="day-card la">
+        <div class="day-date">Tue Jul 8</div>
+        <div class="day-title">Last LA day</div>
+        <div class="day-desc">Grand Central Market, Mission District art, Hermosa Beach. Pack up, early start tomorrow.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 2: 395 -->
+  <div class="phase">
+    <div class="phase-header">
+      <span class="phase-title">Highway 395 — Eastern Sierra</span>
+      <span class="phase-dates">Jul 9–13 &nbsp;·&nbsp; 5 days</span>
+      <span class="phase-badge badge-395">Phase 2</span>
+    </div>
+    <div class="days-grid">
+      <div class="day-card s395">
+        <div class="day-date">Wed Jul 9</div>
+        <div class="day-title">Enter the Sierra</div>
+        <div class="day-desc">Drive via Hwy 14. Red Rock Canyon State Park stop. Arrive Lone Pine.</div>
+      </div>
+      <div class="day-card s395">
+        <div class="day-date">Thu Jul 10</div>
+        <div class="day-title">Alabama Hills</div>
+        <div class="day-desc">Sunrise at Möbius Arch, Movie Road, Mt. Whitney Portal drive. Manzanar NHS. Stargazing.</div>
+      </div>
+      <div class="day-card s395">
+        <div class="day-date">Fri Jul 11</div>
+        <div class="day-title">Bishop + Mammoth</div>
+        <div class="day-desc">Erick Schat's Bakery. Bristlecone Pine Forest detour (trees older than the pyramids). Mammoth.</div>
+      </div>
+      <div class="day-card s395">
+        <div class="day-date">Sat Jul 12</div>
+        <div class="day-title">Mammoth full day</div>
+        <div class="day-desc">June Lake Loop, Devils Postpile, Hot Creek geothermal site. Minaret Vista sunset + Milky Way.</div>
+      </div>
+      <div class="day-card s395">
+        <div class="day-date">Sun Jul 13</div>
+        <div class="day-title">Mono Lake + Bodie</div>
+        <div class="day-desc">Mono Lake tufa towers. Whoa Nellie Deli. Bodie ghost town. Travertine Hot Springs soak.</div>
+      </div>
+    </div>
+    <div class="highlight-card">
+      <h4>Why Highway 395?</h4>
+      <p>Recommended by Grandpa — a man who knows every bend of this road. The Eastern Sierra is one of America's great drives: desert floor at 3,700 ft in Lone Pine, sub-alpine lakes at 9,000 ft above Mammoth, ancient trees, a ghost town, an alien lake, and then Yosemite's back door. No interstate. No franchises. Just the Sierra Nevada on your left, the White Mountains on your right, and the road ahead.</p>
+    </div>
+  </div>
+
+  <!-- PHASE 3: BAY AREA -->
+  <div class="phase">
+    <div class="phase-header">
+      <span class="phase-title">Bay Area — San Mateo, Marin &amp; Friends</span>
+      <span class="phase-dates">Jul 14–19 &nbsp;·&nbsp; 5 nights</span>
+      <span class="phase-badge badge-bay">Phase 3</span>
+    </div>
+    <div class="days-grid">
+      <div class="day-card bay">
+        <div class="day-date">Mon Jul 14</div>
+        <div class="day-title">Tioga Pass → SF</div>
+        <div class="day-desc">Drive over Tioga Pass (9,945 ft) into Yosemite. Tuolumne Meadows. Arrive San Mateo with Grandpa.</div>
+      </div>
+      <div class="day-card bay">
+        <div class="day-date">Tue Jul 15</div>
+        <div class="day-title">Move to Marin</div>
+        <div class="day-desc">Settle in with friends. Marin Headlands, Golden Gate North Vista. Sausalito waterfront dinner.</div>
+      </div>
+      <div class="day-card bay">
+        <div class="day-date">Wed Jul 16</div>
+        <div class="day-title">Muir Woods + Tam</div>
+        <div class="day-desc">Cathedral redwood grove (1,000-yr-old trees). Hike Mount Tamalpais. Stinson Beach end of day.</div>
+      </div>
+      <div class="day-card bay">
+        <div class="day-date">Thu Jul 17</div>
+        <div class="day-title">Point Reyes</div>
+        <div class="day-desc">Wild coastal bluffs with friends. Lighthouse. Tule elk. Fresh oysters on Tomales Bay.</div>
+      </div>
+      <div class="day-card bay">
+        <div class="day-date">Fri Jul 18</div>
+        <div class="day-title">San Francisco day</div>
+        <div class="day-desc">Ferry Plaza farmers market (Saturday hours). Alcatraz tour. Lands End Trail. Ferry to Sausalito.</div>
+      </div>
+      <div class="day-card bay">
+        <div class="day-date">Sat Jul 19</div>
+        <div class="day-title">Redeye home</div>
+        <div class="day-desc">Final morning in Marin. Drop car at SFO. JetBlue/United redeye 11:59pm → FLL 7:50am Jul 20.</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ──────────────────────────────────────── -->
+<!-- 395 HIGHLIGHTS -->
+<section class="section">
+  <p class="section-eyebrow">Highway 395 Stops</p>
+  <h2 class="section-title">Every stop earns its place</h2>
+
+  <div class="stops-accordion">
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">1</div>
+        <div class="sa-main">
+          <div class="sa-name">Red Rock Canyon State Park</div>
+          <div class="sa-loc">Hwy 14, Mojave</div>
+        </div>
+        <span class="stop-type type-nature">Nature</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>Striking red and white cliffs rising from the Mojave Desert floor — a dramatic shift from the LA basin. The canyon walls glow orange in the afternoon light and the rock formations feel genuinely alien.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to do</div>
+            <p>Pull off Hwy 14 and walk among the formations — no hiking required. The visitor center has a short trail. This is a 20–30 minute stop, not a half-day. Just enough to stretch legs and feel the desert begin.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p>Free entry. Open 24 hrs. Gas up before entering the Mojave stretch — next reliable stop is Lone Pine. Cell service fades here.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">2</div>
+        <div class="sa-main">
+          <div class="sa-name">Alabama Hills</div>
+          <div class="sa-loc">Lone Pine · 2 nights base</div>
+        </div>
+        <span class="stop-type type-nature">Nature / Film</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>A labyrinth of rounded granite boulders and golden arches at the foot of Mt. Whitney — the tallest peak in the lower 48. The contrast is staggering: warm desert rock in the foreground, 14,505 ft of snow-capped Sierra behind. Over 400 films have been shot here, including Gladiator, Star Trek, Django, and countless westerns.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to do</div>
+            <p>Drive Movie Road through the boulders — paved, no 4WD needed. Walk to Möbius Arch (easy 1-mi round trip): it perfectly frames Whitney at sunrise. Drive up Whitney Portal Road for canyon views. Museum of Western Film History in town is worth 45 minutes. Stargazing here is extraordinary — zero light pollution.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p>Free BLM land — dispersed camping allowed. Ask Grandpa for his favorite spot. Alabama Hills Cafe & Bakery in town: legendary breakfast, massive portions, don't skip the cookies. Lone Pine is the last place for reasonable gas prices heading north — fill up here.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">3</div>
+        <div class="sa-main">
+          <div class="sa-name">Manzanar National Historic Site</div>
+          <div class="sa-loc">10 mi north of Lone Pine</div>
+        </div>
+        <span class="stop-type type-history">History</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>One of ten WWII incarceration camps where over 10,000 Japanese-American citizens were imprisoned by the U.S. government — most of them American citizens. Located in the open Owens Valley with the Sierra Nevada towering above, the setting makes the injustice feel even more stark and surreal.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to do</div>
+            <p>Walk the reconstructed barracks and mess hall. The interpretive museum is exceptional and deeply moving — voices of former prisoners tell their own stories. A 3.5-mile driving loop covers the grounds. Ranger-led programs on weekends. Allow 1–2 hours. Lorenzo and Gia at 17 and 15 are exactly the right age for this.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p>Free entry. Open Mon, Fri, Sat, Sun 9am–4:30pm. <strong>Closed Tuesday, Wednesday, Thursday</strong> — plan the visit for Thursday Jul 10 accordingly. America the Beautiful pass covers entry.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">4</div>
+        <div class="sa-main">
+          <div class="sa-name">Erick Schat's Bakkery</div>
+          <div class="sa-loc">763 N Main St, Bishop</div>
+        </div>
+        <span class="stop-type type-food">Food</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>The most famous bakery in California, period. A Dutch family institution since 1938 in the heart of Bishop. The line often wraps around the building, but it moves fast. Every serious 395 road tripper stops here — it's a rite of passage.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to order</div>
+            <p>Sheepherder's bread is the signature — a round, crusty sourdough loaf that's been the same recipe for 80+ years. Get the roast turkey sandwich on sheepherder's bread. Stock up on cookies and walnut-raisin baguettes for the road. The deli counter has great road food for the Mammoth stretch ahead.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p>Open Mon–Thu 6am–6pm, Fri 6am–7pm, Sat–Sun 6am–6pm. The line looks long but moves quickly. Budget 20–30 minutes. Bishop is also the last major grocery store before Mammoth — good time to stock up on snacks and camp food.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">5</div>
+        <div class="sa-main">
+          <div class="sa-name">Ancient Bristlecone Pine Forest</div>
+          <div class="sa-loc">25 mi east of Big Pine · 10,000 ft elevation</div>
+        </div>
+        <span class="stop-type type-nature">Nature</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>Home to the oldest living trees on Earth — Bristlecone Pines up to 5,000 years old. Methuselah, the oldest known living tree at ~4,855 years, is somewhere in this grove (its exact location is kept secret to protect it). These trees were old when the Egyptian pyramids were being built. Nothing puts human scale in perspective quite like standing next to them.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to do</div>
+            <p>Drive the scenic road up from Big Pine (paved, 45 min from 395). Start at the visitor center for a short film and context. The Discovery Trail is a 1-mile loop through the oldest trees — easy walking. The Methuselah Trail (4.5 miles, more strenuous at altitude) takes you through the most ancient grove. Allow 2.5–3 hours total including the drive.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p>Visitor center open 9am–5pm daily. Free entry. Road is paved but steep and winding — fine for the SUV. Bring layers: it's 20–30°F cooler than the valley floor. The altitude (10,000 ft) means even a short walk feels slightly harder — take it slow. Worth every minute.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">6</div>
+        <div class="sa-main">
+          <div class="sa-name">June Lake Loop</div>
+          <div class="sa-loc">12-mile side road off 395 · just north of Mammoth</div>
+        </div>
+        <span class="stop-type type-nature">Nature</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>A 12-mile loop through four stunningly blue alpine lakes — June, Gull, Silver, and Grant — with the volcanic Mono Craters rising behind them. In July, the water is crystal-clear and warm enough to swim. The small town of June Lake sits on the lakeshore with a sandy beach. One of the loveliest short detours on all of 395.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to do</div>
+            <p>Drive the loop and stop at June Lake beach for a swim — the sandy shoreline is one of the best in the Sierra. Rent a kayak or paddleboard from the June Lake Marina. The loop takes about 45 minutes to drive; allow 2 hours if you stop to swim. It connects back to 395 at both ends so no backtracking.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p>Free to drive and access beaches. Small town has a general store, a couple of restaurants, and gas (though pricey). Do this loop on the morning of the Mammoth day — water is glassy early and crowds build by noon in July.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">7</div>
+        <div class="sa-main">
+          <div class="sa-name">Devils Postpile National Monument</div>
+          <div class="sa-loc">Mammoth Lakes area</div>
+        </div>
+        <span class="stop-type type-geo">Geology</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>A wall of 60-foot hexagonal basalt columns, formed when a river of molten lava cooled and cracked into near-perfect geometric shapes. You don't have to go to Iceland to see this — it's right here, and the columns here are among the finest examples in the world. A short walk leads to Rainbow Falls, a 101-foot waterfall where sunlight creates rainbows in the spray.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to do</div>
+            <p>Take the mandatory shuttle from the Mammoth Mountain Adventure Center (required in summer — no private cars to the monument during peak hours). Walk to the Postpile (0.5 mi easy), then continue to Rainbow Falls (2 more miles). The top of the Postpile offers a view of the perfectly tiled column tops, like a cracked mosaic. Allow 3 hours total.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p>Shuttle runs 7am–7pm daily in summer, departs from Mammoth Mountain Adventure Center. ~$15/adult shuttle fee. Covered by America the Beautiful pass for entry. Open 9am–5pm. Bring water — the trail to Rainbow Falls gets warm.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">8</div>
+        <div class="sa-main">
+          <div class="sa-name">Hot Creek Geological Site</div>
+          <div class="sa-loc">Hot Creek Hatchery Rd, near Mammoth</div>
+        </div>
+        <span class="stop-type type-geo">Geology</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>A dramatic gorge where geothermal hot springs bubble up directly into the cold, fast-moving Hot Creek — creating turquoise, steaming pools that glow against the volcanic rock. The canyon walls are just 20 feet apart and the contrast between the boiling springs and the icy creek is visually stunning. Swimming is prohibited (water is scalding near the vents), but the views are extraordinary.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to do</div>
+            <p>Easy 0.5-mile walk down into the gorge. Go in late afternoon for golden-hour light on the steam — the colors are incredible. The gorge also has excellent trout fishing in the calmer stretches. Go right at sunset if scheduling allows: the light turns the steam columns amber and rose.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p>Free entry. Last mile of road is unpaved but fine for SUV. Open 8am–7pm. Takes 45 minutes to an hour. Combine with Minaret Vista on the same afternoon for the best end to a Mammoth day.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">9</div>
+        <div class="sa-main">
+          <div class="sa-name">Minaret Vista</div>
+          <div class="sa-loc">Lookout Point Rd, above Mammoth Mountain</div>
+        </div>
+        <span class="stop-type type-nature">Nature</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>A viewpoint above Mammoth Mountain looking directly at the Minarets — a row of dramatic, jagged volcanic spires rising from the Sierra crest. The panorama also takes in the Ritter Range, Banner Peak, and on clear days, a sweep of the entire Eastern Sierra. At 9,175 ft, the air is thin and the sky is a deeper blue than anything at sea level.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to do</div>
+            <p>Drive up (15 min from Mammoth village) and walk the short loop along the ridge. Go at sunset for the most dramatic light on the Minarets — they glow red and orange before the sky goes dark. Stay for stargazing: this is one of the best dark-sky spots in California, and the Milky Way is fully visible from the parking area. Bring warm layers — it gets cold fast after sunset at altitude.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p>Open 24 hours. Free. Pit toilets in the parking lot. The road is paved and the lot is large. Lorenzo and Gia will not forget the Milky Way from this spot.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">10</div>
+        <div class="sa-main">
+          <div class="sa-name">Mono Lake Tufa Reserve</div>
+          <div class="sa-loc">South Tufa area, Lee Vining</div>
+        </div>
+        <span class="stop-type type-geo">Geology</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>An ancient inland sea three times saltier than the ocean, ringed by ghost-white limestone towers called tufa — formed where underwater freshwater springs met the alkaline lake water over thousands of years. As the lake level dropped, the towers emerged. The landscape is genuinely unlike anything else in California. Eerie, serene, otherworldly.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to do</div>
+            <p>Walk the South Tufa Trail (easy 1-mile loop) among the towers right at the water's edge. Book the Mono Lake Committee canoe tour (Saturday mornings, summer only — monolaketours.org) to paddle over the forming tufas underwater. The committee's visitor center in Lee Vining is also worth 30 minutes for the lake's ecological history.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p>$3/person entry for South Tufa area. Canoe tour: ~$25/person, books ahead fast — reserve before the trip. Best light is early morning or sunset. The lake's high salinity means you float effortlessly in a canoe — strange and fun. Cell service is spotty in Lee Vining; download offline maps before arriving.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">11</div>
+        <div class="sa-main">
+          <div class="sa-name">Whoa Nellie Deli</div>
+          <div class="sa-loc">22 Vista Point Dr, Lee Vining (Tioga Gas Mart)</div>
+        </div>
+        <span class="stop-type type-food">Food</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>A gourmet deli operating inside a Mobil gas station on the edge of Lee Vining. This sounds like a joke. It is not. The Whoa Nellie has been called the best food between LA and San Francisco, and it's inside a gas station next to the windshield wiper fluid. This is exactly the kind of thing that makes 395 trips legendary.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to order</div>
+            <p>The fish tacos are the signature — enormous, fresh, with a mango salsa that people drive two hours specifically to eat. Breakfast burritos. The BBQ plates. Fresh-baked goods. Eat outside on the picnic benches with views straight down to Mono Lake — one of the better dining views in California.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p>Open 7am–8pm daily. Gets crowded at lunch — go early or after 2pm. Also sells camping supplies and souvenirs. Fuel prices here are high; fill up in Mammoth. Gas station is the last one before the long climb over Tioga Pass into Yosemite.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">12</div>
+        <div class="sa-main">
+          <div class="sa-name">Bodie State Historic Park</div>
+          <div class="sa-loc">13 mi east of 395 near Bridgeport</div>
+        </div>
+        <span class="stop-type type-ghost">Ghost Town</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>The largest unrestored ghost town in the American West. At its peak in 1879, Bodie had 10,000 residents, 65 saloons, and a murder rate that made it notorious even by Gold Rush standards. Today, 200+ buildings remain exactly as they were abandoned — furniture, calendars, medicine bottles, rusting cars left in place. The state maintains it in "arrested decay."</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to do</div>
+            <p>Wander the deserted streets freely — peer through windows at still-set tables, dusty beds, open books. Book the Standard Mill tour (the ore-processing facility), the only interior you can enter with a guide. Walk the cemetery on the hill above town. Allow at least 2.5 hours. Lorenzo and Gia will be genuinely riveted — it's viscerally eerie in the best way.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p><strong>Opens 9am, closes 4pm — plan accordingly.</strong> Leave Mono Lake by 11:30am at the latest to do both properly. Last 3 miles of road are unpaved but easily passable in the SUV. Entry: ~$8/adult. No food or fuel at Bodie — eat at Whoa Nellie Deli first. Mill tour tickets sell out — buy at the museum when you arrive.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">13</div>
+        <div class="sa-main">
+          <div class="sa-name">Travertine Hot Springs</div>
+          <div class="sa-loc">South of Bridgeport · free BLM land</div>
+        </div>
+        <span class="stop-type type-camp">Hot Springs</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>A series of natural hot spring pools on open BLM land just south of Bridgeport, with unobstructed views of the Eastern Sierra. No infrastructure, no fees, no reservations — just concrete pools filled by natural geothermal water at various temperatures, set against a mountain backdrop that looks like a painting.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to do</div>
+            <p>Soak after a long day hiking Bodie and the tufa towers. Multiple pools at different temperatures — find the one that's right. The upper pools tend to be hottest. Go at sunset or at night for the full effect: the Milky Way overhead, the Sierra silhouetted, and hot water on tired legs after five days on 395. Ask Grandpa which pool he recommends — he'll know.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p>Free. No reservation. Short walk from the dirt parking area. Bring towels and water shoes (rocky bottom in some pools). Can be busy on weekends — go in the evening for more solitude. Good free BLM campsites nearby if camping overnight before the Tioga Pass drive.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sa-row" onclick="toggleStop(this)">
+      <div class="sa-top">
+        <div class="sa-num">14</div>
+        <div class="sa-main">
+          <div class="sa-name">Tioga Pass · Tuolumne Meadows</div>
+          <div class="sa-loc">Yosemite · 9,945 ft — highest drivable pass in California</div>
+        </div>
+        <span class="stop-type type-nature">Nature</span>
+        <div class="sa-chevron">›</div>
+      </div>
+      <div class="sa-body">
+        <div class="sa-grid">
+          <div class="sa-col">
+            <div class="sa-label">What it is</div>
+            <p>The eastern entrance to Yosemite National Park via Tioga Road — one of the great mountain drives in North America. The road climbs from the desert floor at Lee Vining to nearly 10,000 ft through glacially sculpted granite domes, alpine meadows, and sapphire lakes. Tuolumne Meadows at the summit is a vast high-altitude grassland surrounded by peaks — serene, open, and nothing like Yosemite Valley below.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">What to do</div>
+            <p>Stop at Olmsted Point for the first view down into Yosemite Valley — Half Dome appears on the horizon. Walk the easy Soda Springs trail in Tuolumne Meadows (1 mi, flat) through the meadow to the natural carbonated springs. If time allows, continue down into Yosemite Valley for Half Dome views from the valley floor. Then drive west (Hwy 120) to the Bay Area — about 3.5 hours from the valley.</p>
+          </div>
+          <div class="sa-col">
+            <div class="sa-label">Practical</div>
+            <p><strong>Timed-entry reservation required</strong> for Yosemite in summer — reserve on recreation.gov on June 30 for July 14 entry. America the Beautiful pass covers the $35 vehicle fee. Tioga Pass is only open in summer (typically late May through November). Confirm road status at nps.gov/yose as July approaches. Gas up in Lee Vining — no fuel inside the park.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────── -->
+<!-- FLIGHTS + CAR -->
+<section class="section">
+  <p class="section-eyebrow">Getting There</p>
+  <h2 class="section-title">Flights &amp; rental car</h2>
+
+  <div class="logistics-grid">
+    <div class="logistics-card featured">
+      <div class="logistics-eyebrow">Outbound · Jul 3</div>
+      <div class="logistics-route">FLL → LAX</div>
+      <div class="logistics-detail">
+        JetBlue nonstop recommended · ~6 hrs<br>
+        Fort Lauderdale Terminal 3 → LAX Terminal 5<br>
+        Aim for morning departure (~8–9am) to maximize first day<br>
+        3 passengers
+      </div>
+      <span class="logistics-price">~$150–200 / person</span>
+    </div>
+    <div class="logistics-card featured">
+      <div class="logistics-eyebrow">Return redeye · Jul 19</div>
+      <div class="logistics-route">SFO → FLL</div>
+      <div class="logistics-detail">
+        JetBlue or United nonstop · ~5.5 hrs<br>
+        Departs SFO 11:59pm → arrives FLL 7:50am Jul 20<br>
+        Back online and home before noon<br>
+        3 passengers
+      </div>
+      <span class="logistics-price">~$185–250 / person</span>
+    </div>
+    <div class="logistics-card">
+      <div class="logistics-eyebrow">Grandpa · ~Jul 7</div>
+      <div class="logistics-route">SFO → LAX</div>
+      <div class="logistics-detail">
+        Southwest or Alaska Airlines<br>
+        1-hour flight · meets us in LA<br>
+        Rides with us the whole 395 route home to San Mateo
+      </div>
+      <span class="logistics-price">~$60–90 one-way</span>
+    </div>
+    <div class="logistics-card">
+      <div class="logistics-eyebrow">Car Rental · 16 Days</div>
+      <div class="logistics-route">LAX → SFO</div>
+      <div class="logistics-detail">
+        Budget Fastbreak — 7-passenger SUV (Ford Explorer or similar)<br>
+        Pickup LAX Jul 3 · Drop SFO Jul 19<br>
+        Intra-CA one-way · Fastbreak skip-the-line at both airports
+      </div>
+      <span class="logistics-price">~$1,440–2,080 total</span>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────── -->
+<!-- ACCOMMODATION -->
+<section class="section">
+  <p class="section-eyebrow">Where We're Staying</p>
+  <h2 class="section-title">15 paid nights &nbsp;·&nbsp; 2 free nights</h2>
+
+  <div class="stops-list" style="margin-bottom: 24px;">
+    <div class="stop-row header">
+      <div></div>
+      <div>Location</div>
+      <div>Nights</div>
+      <div>Est. cost</div>
+    </div>
+    <div class="stop-row">
+      <div class="stop-num">LA</div>
+      <div>
+        <div class="stop-name">West LA / Culver City — 2br Airbnb</div>
+        <div class="stop-detail">Jul 3–8 · Full kitchen, parking, sleeps 4</div>
+      </div>
+      <div style="font-size:13px; font-weight:500;">6 nights</div>
+      <div style="font-size:13px; font-weight:500;">$1,200–1,560</div>
+    </div>
+    <div class="stop-row">
+      <div class="stop-num">395</div>
+      <div>
+        <div class="stop-name">Lone Pine — Best Western Frontier + BLM camping</div>
+        <div class="stop-detail">Jul 9–10 · 1 hotel night + 1 free Alabama Hills campsite (ask Grandpa)</div>
+      </div>
+      <div style="font-size:13px; font-weight:500;">2 nights</div>
+      <div style="font-size:13px; font-weight:500;">$160–400</div>
+    </div>
+    <div class="stop-row">
+      <div class="stop-num">395</div>
+      <div>
+        <div class="stop-name">Mammoth Lakes — 2br condo or cabin</div>
+        <div class="stop-detail">Jul 11–12 · Airbnb or VRBO · Kitchen, pool/hot tub access</div>
+      </div>
+      <div style="font-size:13px; font-weight:500;">2 nights</div>
+      <div style="font-size:13px; font-weight:500;">$500–750</div>
+    </div>
+    <div class="stop-row">
+      <div class="stop-num">395</div>
+      <div>
+        <div class="stop-name">Lee Vining / Bridgeport — BLM camping</div>
+        <div class="stop-detail">Jul 13 · Travertine Hot Springs area (ask Grandpa for best spot)</div>
+      </div>
+      <div style="font-size:13px; font-weight:500;">1 night</div>
+      <div style="font-size:13px; font-weight:500; color: var(--green);">Free</div>
+    </div>
+    <div class="stop-row">
+      <div class="stop-num">BA</div>
+      <div>
+        <div class="stop-name">San Mateo — Grandpa's home</div>
+        <div class="stop-detail">Jul 14 · One night with dad before heading to Marin</div>
+      </div>
+      <div style="font-size:13px; font-weight:500;">1 night</div>
+      <div style="font-size:13px; font-weight:500; color: var(--green);">Free</div>
+    </div>
+    <div class="stop-row">
+      <div class="stop-num">BA</div>
+      <div>
+        <div class="stop-name">Marin County — Travelodge Mill Valley/Sausalito</div>
+        <div class="stop-detail">Jul 15–18 · 4 nights · 707 Redwood Hwy, off Hwy 101 · Free parking (SUV-friendly), restaurant on-site, 15 min to SF · Holiday Inn Express nearby ($185+) if upgrade desired · <em>* If staying with friends in Marin, this section is complimentary</em></div>
+      </div>
+      <div style="font-size:13px; font-weight:500;">4 nights</div>
+      <div style="font-size:13px; font-weight:500;">$520–720</div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────── -->
+<!-- BUDGET -->
+<section class="section">
+  <p class="section-eyebrow">The Numbers</p>
+  <h2 class="section-title">Full trip budget estimate</h2>
+
+  <div class="budget-grid">
+    <div class="budget-card">
+      <div class="budget-cat">Flights (3 pax)</div>
+      <div class="budget-range">$1,065–1,440</div>
+      <div class="budget-note">FLL→LAX outbound + SFO→FLL redeye. One-way each direction. Grandpa books his own.</div>
+    </div>
+    <div class="budget-card">
+      <div class="budget-cat">Car Rental + Gas</div>
+      <div class="budget-range">$1,690–2,460</div>
+      <div class="budget-note">Budget Fastbreak 7-pax SUV, 16 days LAX→SFO + ~$250–380 gas on 395.</div>
+    </div>
+    <div class="budget-card">
+      <div class="budget-cat">Accommodation</div>
+      <div class="budget-range">$2,380–3,430</div>
+      <div class="budget-note">2 free nights (San Mateo with Grandpa). Marin: 4 nights Travelodge Mill Valley ~$130–180/night. * Free if staying with friends.</div>
+    </div>
+    <div class="budget-card">
+      <div class="budget-cat">Food</div>
+      <div class="budget-range">$1,500–2,000</div>
+      <div class="budget-note">~$100/day for 3 people. Mix of groceries, 395 road food, and Sausalito dinners.</div>
+    </div>
+    <div class="budget-card">
+      <div class="budget-cat">Activities</div>
+      <div class="budget-range">~$559</div>
+      <div class="budget-note">Alcatraz ($135) · America the Beautiful pass ($80) · Bodie ($24) · Mono Lake canoe ($75) · Postpile shuttle ($45) · Misc ($200).</div>
+    </div>
+    <div class="budget-card" style="background: var(--amber-light);">
+      <div class="budget-cat" style="color: var(--amber);">Per person</div>
+      <div class="budget-range" style="color: var(--ink);">~$2,400–3,296</div>
+      <div class="budget-note">3 travelers sharing costs. Grandpa's food and activities add a 4th share on road days. * Marin hotel drops ~$520–720 if staying with friends.</div>
+    </div>
+  </div>
+
+  <div class="budget-total">
+    <div>
+      <div class="budget-total-label">Total estimate</div>
+      <div class="budget-total-amount">$7,194–9,889</div>
+      <div class="budget-total-sub">With camping mix (Alabama Hills + Travertine). Add ~$520–720 for Marin if not staying with friends. Hotels-only on 395 adds another ~$600–840.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────── -->
+<!-- BOOKING CHECKLIST -->
+<section class="section">
+  <p class="section-eyebrow">Action Items</p>
+  <h2 class="section-title">Booking checklist</h2>
+
+  <div class="checklist">
+    <div class="check-item">
+      <div class="check-box"></div>
+      <span class="check-urgency urg-now">Book today</span>
+      <div>
+        <div class="check-text">FLL → LAX, Jul 3 — JetBlue nonstop, 3 passengers</div>
+        <div class="check-detail">jetblue.com · Morning departure recommended · Blue fare (not Basic)</div>
+      </div>
+      <div class="check-est">~$450–600</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <span class="check-urgency urg-now">Book today</span>
+      <div>
+        <div class="check-text">SFO → FLL redeye, Jul 19 — JetBlue or United, 3 passengers</div>
+        <div class="check-detail">jetblue.com · 11:59pm departure · arrives FLL ~7:50am Jul 20</div>
+      </div>
+      <div class="check-est">~$555–750</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <span class="check-urgency urg-now">Book today</span>
+      <div>
+        <div class="check-text">Budget SUV rental — LAX pickup Jul 3, SFO drop Jul 19</div>
+        <div class="check-detail">budget.com with Fastbreak number · 7-passenger SUV · Call 800-218-7792 for one-way fee</div>
+      </div>
+      <div class="check-est">~$1,440–2,080</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <span class="check-urgency urg-now">Book this week</span>
+      <div>
+        <div class="check-text">Alcatraz Island — Saturday Jul 18 (day tour with audio guide)</div>
+        <div class="check-detail">alcatrazcruises.com · July weekends sell out weeks early · ~$45/adult</div>
+      </div>
+      <div class="check-est">~$135</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <span class="check-urgency urg-now">Book this week</span>
+      <div>
+        <div class="check-text">Mammoth Lakes — 2br condo/cabin, Jul 11–13</div>
+        <div class="check-detail">airbnb.com or vrbo.com · July books fast · Look near Village or Canyon Lodge area</div>
+      </div>
+      <div class="check-est">~$500–750</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <span class="check-urgency urg-soon">Book within 2 weeks</span>
+      <div>
+        <div class="check-text">Marin hotel — Travelodge Mill Valley/Sausalito, Jul 15–18 (4 nights)</div>
+        <div class="check-detail">707 Redwood Hwy, Mill Valley · wyndhamhotels.com or booking.com · Free parking, SUV-friendly · * Skip if confirmed with friends</div>
+      </div>
+      <div class="check-est">~$520–720</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <span class="check-urgency urg-soon">Book within 2 weeks</span>
+      <div>
+        <div class="check-text">LA Airbnb — 2br, Jul 3–9, sleeps 4</div>
+        <div class="check-detail">airbnb.com · Culver City or West LA · Free parking essential with SUV</div>
+      </div>
+      <div class="check-est">~$1,200–1,560</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <span class="check-urgency urg-soon">Book within 2 weeks</span>
+      <div>
+        <div class="check-text">Grandpa's flight — SFO → LAX ~Jul 7</div>
+        <div class="check-detail">southwest.com or alaskaair.com · He books separately · ~1 hr flight</div>
+      </div>
+      <div class="check-est">~$60–90</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <span class="check-urgency urg-june">Set alarm for Jun 30</span>
+      <div>
+        <div class="check-text">Yosemite timed-entry reservation — Jul 14</div>
+        <div class="check-detail">recreation.gov · Opens rolling 2 weeks prior · Be on site at 8am PT on Jun 30</div>
+      </div>
+      <div class="check-est">$35 vehicle</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <span class="check-urgency urg-june">Before June 30</span>
+      <div>
+        <div class="check-text">Muir Woods parking — ~Jul 16</div>
+        <div class="check-detail">gomuirwoods.com · Or take the Sausalito ferry shuttle (no parking needed)</div>
+      </div>
+      <div class="check-est">$9</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <span class="check-urgency urg-june">Before June 30</span>
+      <div>
+        <div class="check-text">Mono Lake canoe tour — Sun Jul 13 morning</div>
+        <div class="check-detail">monolaketours.org · Summer weekends only · ~$25/person · Fills up</div>
+      </div>
+      <div class="check-est">~$75</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <span class="check-urgency urg-june">Ask Grandpa</span>
+      <div>
+        <div class="check-text">Camping spots: Alabama Hills (Jul 10) + Travertine area (Jul 13)</div>
+        <div class="check-detail">Free BLM sites — no reservation · Grandpa knows the best spots · Bring sleeping bags + pads</div>
+      </div>
+      <div class="check-est">Free</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <span class="check-urgency urg-june">Before trip</span>
+      <div>
+        <div class="check-text">America the Beautiful Annual Pass</div>
+        <div class="check-detail">store.usgs.gov or any federal recreation site · Covers Yosemite, Manzanar, Devils Postpile, more</div>
+      </div>
+      <div class="check-est">$80</div>
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-title">High &amp; Wide &nbsp;·&nbsp; California · July 2026</div>
+  <div class="footer-note">
+    FLL → LAX &nbsp;·&nbsp; Los Angeles &nbsp;·&nbsp; Highway 395 &nbsp;·&nbsp; Eastern Sierra &nbsp;·&nbsp; Yosemite &nbsp;·&nbsp; San Mateo &nbsp;·&nbsp; Marin &nbsp;·&nbsp; SFO → FLL
+  </div>
+  <div class="footer-updated">Planning in progress · Updated May 2026</div>
+</footer>
+
+<script>
+  function toggleStop(row) {
+    var isOpen = row.classList.contains('open');
+    // Close all open rows
+    document.querySelectorAll('.sa-row.open').forEach(function(r) {
+      r.classList.remove('open');
+    });
+    // Open this one if it wasn't already open
+    if (!isOpen) {
+      row.classList.add('open');
+      // Smooth scroll so the expanded content is visible
+      setTimeout(function() {
+        var body = row.querySelector('.sa-body');
+        if (body) {
+          var rect = body.getBoundingClientRect();
+          if (rect.bottom > window.innerHeight) {
+            row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        }
+      }, 50);
+    }
+  }
+</script>
+</body>
+</html>
