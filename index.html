@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <style>
   :root {
     --cream: #FDF8F2;
@@ -1000,6 +1001,19 @@
 </section>
 
 <!-- ──────────────────────────────────────── -->
+<!-- MAP -->
+<section class="section">
+  <p class="section-eyebrow">The Route</p>
+  <h2 class="section-title">17 days · ~900 miles · FLL to SFO</h2>
+  <div id="trip-map" style="height: 520px; border-radius: 12px; overflow: hidden; border: 0.5px solid var(--sand);"></div>
+  <div style="display:flex; gap: 20px; margin-top: 14px; flex-wrap: wrap;">
+    <span style="font-size:12px; color: var(--ink-light); display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#1E3A5F;display:inline-block;"></span> Los Angeles</span>
+    <span style="font-size:12px; color: var(--ink-light); display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#2D5A27;display:inline-block;"></span> Highway 395 · Eastern Sierra</span>
+    <span style="font-size:12px; color: var(--ink-light); display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#B45309;display:inline-block;"></span> Bay Area · Marin</span>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────── -->
 <!-- 395 HIGHLIGHTS -->
 <section class="section">
   <p class="section-eyebrow">Highway 395 Stops</p>
@@ -1711,24 +1725,97 @@
   <div class="footer-updated">Planning in progress · Updated May 2026</div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+  // Map stops data
+  var stops = [
+    { lat: 34.013, lng: -118.495, name: "Los Angeles", desc: "Jul 3–8 · 6 nights · Base camp for the first phase", phase: "la" },
+    { lat: 35.384, lng: -117.962, name: "Red Rock Canyon State Park", desc: "Hwy 14 · Quick stop heading north · Wild red & white cliff formations", phase: "s395" },
+    { lat: 36.568, lng: -118.090, name: "Alabama Hills · Lone Pine", desc: "Jul 9–10 · 2 nights · Möbius Arch, Movie Road, Mt. Whitney backdrop", phase: "s395" },
+    { lat: 36.727, lng: -118.153, name: "Manzanar National Historic Site", desc: "10 mi north of Lone Pine · WWII Japanese-American internment camp · Closed Tue/Wed", phase: "s395" },
+    { lat: 37.385, lng: -118.183, name: "Ancient Bristlecone Pine Forest", desc: "Big Pine detour · 10,000 ft · Trees older than the pyramids", phase: "s395" },
+    { lat: 37.368, lng: -118.396, name: "Erick Schat's Bakkery · Bishop", desc: "Bishop · Sheepherder's bread · Most famous bakery in California", phase: "s395" },
+    { lat: 37.779, lng: -119.075, name: "June Lake Loop", desc: "12-mile alpine lake loop · Sandy beach · Swimming in July", phase: "s395" },
+    { lat: 37.648, lng: -118.972, name: "Mammoth Lakes", desc: "Jul 11–12 · 2 nights · Devils Postpile, Hot Creek, Minaret Vista, Milky Way", phase: "s395" },
+    { lat: 37.615, lng: -119.088, name: "Devils Postpile", desc: "60-ft hexagonal basalt columns · Rainbow Falls nearby · Shuttle required", phase: "s395" },
+    { lat: 37.657, lng: -119.061, name: "Minaret Vista", desc: "Best stargazing near Mammoth · Jagged volcanic peaks at sunset", phase: "s395" },
+    { lat: 37.660, lng: -118.828, name: "Hot Creek Geological Site", desc: "Steaming turquoise geothermal pools in a river gorge", phase: "s395" },
+    { lat: 37.979, lng: -119.132, name: "Mono Lake Tufa Reserve", desc: "Jul 13 · Ancient salt lake · Alien limestone towers · Canoe tour Sundays", phase: "s395" },
+    { lat: 37.947, lng: -119.114, name: "Whoa Nellie Deli · Lee Vining", desc: "Gourmet fish tacos inside a Mobil station · Views of Mono Lake · 7am–8pm", phase: "s395" },
+    { lat: 38.213, lng: -119.015, name: "Bodie State Historic Park", desc: "Largest unrestored ghost town in the West · 200+ buildings · Closes 4pm sharp", phase: "s395" },
+    { lat: 38.246, lng: -119.205, name: "Travertine Hot Springs", desc: "Free BLM hot springs · Sierra Nevada views · Ask Grandpa for best pool", phase: "s395" },
+    { lat: 37.910, lng: -119.257, name: "Tioga Pass", desc: "9,945 ft · Highest drivable pass in CA · Yosemite east entrance · Reserve Jun 30", phase: "s395" },
+    { lat: 37.873, lng: -119.359, name: "Tuolumne Meadows", desc: "High alpine meadows · Olmsted Point · Soda Springs trail · 8,600 ft", phase: "s395" },
+    { lat: 37.549, lng: -122.052, name: "San Mateo · Grandpa's", desc: "Jul 14 · One night with Grandpa after crossing Tioga Pass", phase: "bay" },
+    { lat: 37.943, lng: -122.535, name: "Marin County", desc: "Jul 15–19 · Travelodge Mill Valley · Muir Woods · Mt. Tam · Point Reyes · Sausalito", phase: "bay" },
+    { lat: 37.795, lng: -122.394, name: "San Francisco", desc: "Alcatraz Jul 18 · Ferry Plaza Farmers Market · Lands End Trail · Ferry to Sausalito", phase: "bay" },
+    { lat: 37.615, lng: -122.392, name: "SFO · Redeye home", desc: "Jul 19 · JetBlue/United nonstop · 11:59pm → FLL 7:50am Jul 20", phase: "bay" }
+  ];
+
+  var colors = { la: '#1E3A5F', s395: '#2D5A27', bay: '#B45309' };
+
+  function makeIcon(phase) {
+    var c = colors[phase];
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="28" viewBox="0 0 20 28">'
+      + '<path d="M10 0C4.477 0 0 4.477 0 10c0 7 10 18 10 18S20 17 20 10C20 4.477 15.523 0 10 0z" fill="' + c + '"/>'
+      + '<circle cx="10" cy="10" r="4" fill="rgba(255,255,255,0.85)"/>'
+      + '</svg>';
+    return L.divIcon({
+      html: svg,
+      iconSize: [20, 28],
+      iconAnchor: [10, 28],
+      popupAnchor: [0, -28],
+      className: ''
+    });
+  }
+
+  // Route line coordinates in order
+  var routeCoords = stops.map(function(s) { return [s.lat, s.lng]; });
+
+  window.addEventListener('load', function() {
+    var map = L.map('trip-map', {
+      center: [37.2, -119.2],
+      zoom: 6,
+      scrollWheelZoom: false
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 13
+    }).addTo(map);
+
+    // Draw route line
+    L.polyline(routeCoords, {
+      color: '#8C7B72',
+      weight: 2,
+      opacity: 0.5,
+      dashArray: '6 4'
+    }).addTo(map);
+
+    // Add markers
+    stops.forEach(function(s) {
+      var marker = L.marker([s.lat, s.lng], { icon: makeIcon(s.phase) }).addTo(map);
+      marker.bindPopup(
+        '<div style="font-family: Outfit, sans-serif; min-width: 180px;">'
+        + '<div style="font-weight: 600; font-size: 13px; margin-bottom: 4px; color: ' + colors[s.phase] + ';">' + s.name + '</div>'
+        + '<div style="font-size: 12px; color: #4A3F38; line-height: 1.5;">' + s.desc + '</div>'
+        + '</div>',
+        { maxWidth: 240 }
+      );
+    });
+  });
+</script>
 <script>
   function toggleStop(row) {
     var isOpen = row.classList.contains('open');
-    // Close all open rows
-    document.querySelectorAll('.sa-row.open').forEach(function(r) {
-      r.classList.remove('open');
-    });
-    // Open this one if it wasn't already open
+    document.querySelectorAll('.sa-row.open').forEach(function(r) { r.classList.remove('open'); });
     if (!isOpen) {
       row.classList.add('open');
-      // Smooth scroll so the expanded content is visible
       setTimeout(function() {
         var body = row.querySelector('.sa-body');
         if (body) {
           var rect = body.getBoundingClientRect();
-          if (rect.bottom > window.innerHeight) {
-            row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          }
+          if (rect.bottom > window.innerHeight) row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
       }, 50);
     }
