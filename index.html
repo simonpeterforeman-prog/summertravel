@@ -153,23 +153,69 @@
   .route-bar {
     background: var(--ink);
     border-top: 0.5px solid rgba(255,255,255,0.08);
-    padding: 20px 40px;
+    padding: 14px 40px 0;
     overflow-x: auto;
-    white-space: nowrap;
-    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.35);
   }
 
   .route-stops {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 0;
+    white-space: nowrap;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
   }
 
   .route-stop {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    flex-shrink: 0;
   }
+
+  .nav-clickable {
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .nav-clickable:hover { opacity: 0.7; transform: translateY(-1px); }
+  .nav-fly { cursor: pointer; }
+
+  .nav-phase-pills {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0 12px;
+    border-top: 0.5px solid rgba(255,255,255,0.08);
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  .nav-pill {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 0.5px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.4);
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-pill:hover { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.35); }
+  .nav-pill-la.active   { background: rgba(30,58,95,0.5);  border-color: rgba(147,197,253,0.5); color: #93C5FD; }
+  .nav-pill-395.active  { background: rgba(45,90,39,0.5);  border-color: rgba(134,239,172,0.5); color: #86EFAC; }
+  .nav-pill-bay.active  { background: rgba(180,83,9,0.35); border-color: rgba(232,200,122,0.5); color: #E8C87A; }
+  .nav-pill-info.active { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); }
+
+  .phase-section { scroll-margin-top: 110px; }
+  #logistics, #accommodation-section, #budget-section, #checklist-section { scroll-margin-top: 110px; }
 
   .route-node {
     font-size: 11px;
@@ -818,69 +864,73 @@
   </div>
 </header>
 
-<!-- ROUTE BAR -->
-<nav class="route-bar">
+<!-- STICKY NAV -->
+<nav class="route-bar" id="sticky-nav">
   <div class="route-stops">
     <div class="route-stop">
-      <span class="route-node node-fly">FLL</span>
+      <span class="route-node node-fly nav-fly" onclick="navTo('la')">FLL</span>
       <span class="route-arrow">✈</span>
     </div>
     <div class="route-stop">
-      <span class="route-node node-la">Los Angeles</span>
+      <span class="route-node node-la nav-clickable" onclick="navTo('la')">Los Angeles</span>
       <span class="route-arrow">→</span>
     </div>
     <div class="route-stop">
-      <span class="route-node node-395">Hwy 14</span>
+      <span class="route-node node-395 nav-clickable" onclick="navTo('s395')">Hwy 14</span>
       <span class="route-arrow">→</span>
     </div>
     <div class="route-stop">
-      <span class="route-node node-395">Lone Pine</span>
+      <span class="route-node node-395 nav-clickable" onclick="navTo('s395')">Lone Pine</span>
       <span class="route-arrow">→</span>
     </div>
     <div class="route-stop">
-      <span class="route-node node-395">Bishop</span>
+      <span class="route-node node-395 nav-clickable" onclick="navTo('s395')">Bishop</span>
       <span class="route-arrow">→</span>
     </div>
     <div class="route-stop">
-      <span class="route-node node-395">Mammoth</span>
+      <span class="route-node node-395 nav-clickable" onclick="navTo('s395')">Mammoth</span>
       <span class="route-arrow">→</span>
     </div>
     <div class="route-stop">
-      <span class="route-node node-395">Mono Lake</span>
+      <span class="route-node node-395 nav-clickable" onclick="navTo('s395')">Mono Lake</span>
       <span class="route-arrow">→</span>
     </div>
     <div class="route-stop">
-      <span class="route-node node-395">Bodie</span>
+      <span class="route-node node-395 nav-clickable" onclick="navTo('s395')">Bodie</span>
       <span class="route-arrow">→</span>
     </div>
     <div class="route-stop">
-      <span class="route-node node-395">Yosemite</span>
+      <span class="route-node node-395 nav-clickable" onclick="navTo('s395')">Yosemite</span>
       <span class="route-arrow">→</span>
     </div>
     <div class="route-stop">
-      <span class="route-node node-bay">San Mateo</span>
+      <span class="route-node node-bay nav-clickable" onclick="navTo('bay')">San Mateo</span>
       <span class="route-arrow">→</span>
     </div>
     <div class="route-stop">
-      <span class="route-node node-bay">Marin</span>
+      <span class="route-node node-bay nav-clickable" onclick="navTo('bay')">Marin</span>
       <span class="route-arrow">✈</span>
     </div>
     <div class="route-stop">
-      <span class="route-node node-fly">SFO</span>
+      <span class="route-node node-fly nav-fly" onclick="navTo('bay')">SFO</span>
     </div>
+  </div>
+  <div class="nav-phase-pills">
+    <span class="nav-pill nav-pill-la" onclick="navTo('la')">Phase 1 · LA</span>
+    <span class="nav-pill nav-pill-395" onclick="navTo('s395')">Phase 2 · 395</span>
+    <span class="nav-pill nav-pill-bay" onclick="navTo('bay')">Phase 3 · Bay Area</span>
+    <span class="nav-pill nav-pill-info" onclick="navTo('logistics')">Logistics</span>
   </div>
 </nav>
 
 <!-- ──────────────────────────────────────── -->
-<!-- ITINERARY -->
+<!-- PHASE 1: LA -->
 <main>
 <div class="container">
 
-<section class="section">
-  <p class="section-eyebrow">The Plan</p>
-  <h2 class="section-title">Day by day</h2>
-
-  <!-- PHASE 1: LA -->
+<section class="section phase-section" id="la">
+  <p class="section-eyebrow">Phase 1 · Jul 3–8</p>
+  <h2 class="section-title">Los Angeles</h2>
   <div class="phase">
     <div class="phase-header">
       <span class="phase-title">Los Angeles</span>
@@ -920,8 +970,13 @@
       </div>
     </div>
   </div>
+</section>
 
-  <!-- PHASE 2: 395 -->
+<!-- ──────────────────────────────────────── -->
+<!-- PHASE 2: 395 -->
+<section class="section phase-section" id="s395">
+  <p class="section-eyebrow">Phase 2 · Jul 9–13</p>
+  <h2 class="section-title">Highway 395 — Eastern Sierra</h2>
   <div class="phase">
     <div class="phase-header">
       <span class="phase-title">Highway 395 — Eastern Sierra</span>
@@ -961,67 +1016,22 @@
     </div>
   </div>
 
-  <!-- PHASE 3: BAY AREA -->
-  <div class="phase">
-    <div class="phase-header">
-      <span class="phase-title">Bay Area — San Mateo, Marin &amp; Friends</span>
-      <span class="phase-dates">Jul 14–19 &nbsp;·&nbsp; 5 nights</span>
-      <span class="phase-badge badge-bay">Phase 3</span>
-    </div>
-    <div class="days-grid">
-      <div class="day-card bay">
-        <div class="day-date">Tue Jul 14</div>
-        <div class="day-title">Tioga Pass → SF</div>
-        <div class="day-desc">Drive over Tioga Pass (9,945 ft) into Yosemite. Tuolumne Meadows. Arrive San Mateo with Grandpa.</div>
-      </div>
-      <div class="day-card bay">
-        <div class="day-date">Wed Jul 15</div>
-        <div class="day-title">Move to Marin</div>
-        <div class="day-desc">Settle in with friends. Marin Headlands, Golden Gate North Vista. Sausalito waterfront dinner.</div>
-      </div>
-      <div class="day-card bay">
-        <div class="day-date">Thu Jul 16</div>
-        <div class="day-title">Muir Woods + Tam</div>
-        <div class="day-desc">Cathedral redwood grove (1,000-yr-old trees). Hike Mount Tamalpais. Stinson Beach end of day.</div>
-      </div>
-      <div class="day-card bay">
-        <div class="day-date">Fri Jul 17</div>
-        <div class="day-title">Point Reyes</div>
-        <div class="day-desc">Wild coastal bluffs with friends. Lighthouse. Tule elk. Fresh oysters on Tomales Bay.</div>
-      </div>
-      <div class="day-card bay">
-        <div class="day-date">Sat Jul 18</div>
-        <div class="day-title">San Francisco day</div>
-        <div class="day-desc">Ferry Plaza farmers market (Saturday hours). Alcatraz tour. Lands End Trail. Ferry to Sausalito.</div>
-      </div>
-      <div class="day-card bay">
-        <div class="day-date">Sun Jul 19</div>
-        <div class="day-title">Fly home</div>
-        <div class="day-desc">Leave Marin by 9am. Drop car at SFO. JetBlue Flight 378 · SFO 10:57am → FLL 7:40pm. Home Sunday evening.</div>
-      </div>
+  <!-- MAP inside 395 section -->
+  <div style="margin-top: 48px;">
+    <p class="section-eyebrow">The Drive</p>
+    <h3 style="font-family: var(--serif); font-size: clamp(22px,3vw,32px); font-weight:400; margin-bottom: 24px; color: var(--ink);">Burbank to San Mateo · ~700 miles</h3>
+    <div id="trip-map" style="height: 520px; border-radius: 12px; overflow: hidden; border: 0.5px solid var(--sand);"></div>
+    <div style="display:flex; gap: 20px; margin-top: 14px; flex-wrap: wrap;">
+      <span style="font-size:12px; color: var(--ink-light); display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#1E3A5F;display:inline-block;"></span> Los Angeles</span>
+      <span style="font-size:12px; color: var(--ink-light); display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#2D5A27;display:inline-block;"></span> Highway 395 · Eastern Sierra</span>
+      <span style="font-size:12px; color: var(--ink-light); display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#B45309;display:inline-block;"></span> Bay Area · Marin</span>
     </div>
   </div>
 
-</section>
-
-<!-- ──────────────────────────────────────── -->
-<!-- MAP -->
-<section class="section">
-  <p class="section-eyebrow">The Route</p>
-  <h2 class="section-title">17 days · ~900 miles · FLL to SFO</h2>
-  <div id="trip-map" style="height: 520px; border-radius: 12px; overflow: hidden; border: 0.5px solid var(--sand);"></div>
-  <div style="display:flex; gap: 20px; margin-top: 14px; flex-wrap: wrap;">
-    <span style="font-size:12px; color: var(--ink-light); display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#1E3A5F;display:inline-block;"></span> Los Angeles</span>
-    <span style="font-size:12px; color: var(--ink-light); display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#2D5A27;display:inline-block;"></span> Highway 395 · Eastern Sierra</span>
-    <span style="font-size:12px; color: var(--ink-light); display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#B45309;display:inline-block;"></span> Bay Area · Marin</span>
-  </div>
-</section>
-
-<!-- ──────────────────────────────────────── -->
-<!-- 395 HIGHLIGHTS -->
-<section class="section">
-  <p class="section-eyebrow">Highway 395 Stops</p>
-  <h2 class="section-title">Every stop earns its place</h2>
+  <!-- 395 STOPS -->
+  <div style="margin-top: 48px;">
+    <p class="section-eyebrow">Every stop earns its place</p>
+    <h3 style="font-family: var(--serif); font-size: clamp(22px,3vw,32px); font-weight:400; margin-bottom: 24px; color: var(--ink);">Highway 395 stops</h3>
 
   <div class="stops-accordion">
 
@@ -1421,8 +1431,54 @@
 </section>
 
 <!-- ──────────────────────────────────────── -->
+<!-- PHASE 3: BAY AREA -->
+<section class="section phase-section" id="bay">
+  <p class="section-eyebrow">Phase 3 · Jul 14–19</p>
+  <h2 class="section-title">Bay Area — San Mateo, Marin &amp; Friends</h2>
+  <div class="phase">
+    <div class="phase-header">
+      <span class="phase-title">Bay Area — San Mateo, Marin &amp; Friends</span>
+      <span class="phase-dates">Jul 14–19 &nbsp;·&nbsp; 5 nights</span>
+      <span class="phase-badge badge-bay">Phase 3</span>
+    </div>
+    <div class="days-grid">
+      <div class="day-card bay">
+        <div class="day-date">Tue Jul 14</div>
+        <div class="day-title">Tioga Pass → SF</div>
+        <div class="day-desc">Drive over Tioga Pass (9,945 ft) into Yosemite. Tuolumne Meadows. Arrive San Mateo with Grandpa.</div>
+      </div>
+      <div class="day-card bay">
+        <div class="day-date">Wed Jul 15</div>
+        <div class="day-title">Move to Marin</div>
+        <div class="day-desc">Settle in with friends. Marin Headlands, Golden Gate North Vista. Sausalito waterfront dinner.</div>
+      </div>
+      <div class="day-card bay">
+        <div class="day-date">Thu Jul 16</div>
+        <div class="day-title">Muir Woods + Tam</div>
+        <div class="day-desc">Cathedral redwood grove (1,000-yr-old trees). Hike Mount Tamalpais. Stinson Beach end of day.</div>
+      </div>
+      <div class="day-card bay">
+        <div class="day-date">Fri Jul 17</div>
+        <div class="day-title">Point Reyes</div>
+        <div class="day-desc">Wild coastal bluffs with friends. Lighthouse. Tule elk. Fresh oysters on Tomales Bay.</div>
+      </div>
+      <div class="day-card bay">
+        <div class="day-date">Sat Jul 18</div>
+        <div class="day-title">San Francisco day</div>
+        <div class="day-desc">Ferry Plaza farmers market (Saturday hours). Alcatraz tour. Lands End Trail. Ferry to Sausalito.</div>
+      </div>
+      <div class="day-card bay">
+        <div class="day-date">Sun Jul 19</div>
+        <div class="day-title">Fly home</div>
+        <div class="day-desc">Leave Marin by 9am. Drop car at SFO. JetBlue Flight 378 · SFO 10:57am → FLL 7:40pm. Home Sunday evening.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────── -->
 <!-- FLIGHTS + CAR -->
-<section class="section">
+<section class="section" id="logistics">
   <p class="section-eyebrow">Getting There</p>
   <h2 class="section-title">Flights &amp; rental car</h2>
 
@@ -1815,7 +1871,39 @@
   });
 </script>
 <script>
-  function toggleStop(row) {
+  function navTo(id) {
+    var el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Intersection observer to highlight active phase pill
+  var pills = {
+    'la':       document.querySelector('.nav-pill-la'),
+    's395':     document.querySelector('.nav-pill-395'),
+    'bay':      document.querySelector('.nav-pill-bay'),
+    'logistics': document.querySelector('.nav-pill-info')
+  };
+
+  var sections = ['la', 's395', 'bay', 'logistics'];
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        sections.forEach(function(s) {
+          var p = pills[s];
+          if (p) p.classList.remove('active');
+        });
+        if (pills[id]) pills[id].classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+  sections.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+</script>
     var isOpen = row.classList.contains('open');
     document.querySelectorAll('.sa-row.open').forEach(function(r) { r.classList.remove('open'); });
     if (!isOpen) {
