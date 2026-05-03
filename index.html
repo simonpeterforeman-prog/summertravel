@@ -548,6 +548,29 @@ body {
 .accom-pill.booked { background: #EDFAF2; color: #1B6B3A; border: 1px solid #B8DECA; }
 .accom-pill.free   { background: #EDFAF2; color: #1B6B3A; border: 1px solid #B8DECA; }
 .accom-pill.na     { background: var(--bg); color: var(--ink-3); border: 1px solid var(--border); }
+.accom-todo {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--heading);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: #FFF0EE;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+  animation: pulse-todo 2s ease-in-out infinite;
+}
+@keyframes pulse-todo {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
 .accom-note {
   font-size: 11px;
   color: var(--ink-3);
