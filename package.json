@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "description": "High & Wide — California Road Trip July 2026",
   "scripts": {
-    "start": "npx serve . --listen 3000 --single"
+    "start": "node server.js"
   }
 }
