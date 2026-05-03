@@ -602,6 +602,11 @@
   .urg-now { background: #FEE2E2; color: #991B1B; }
   .urg-soon { background: var(--amber-light); color: #92400E; }
   .urg-june { background: var(--green-light); color: var(--green); }
+  .urg-booked { background: #DCFCE7; color: #166534; font-weight: 600; }
+
+  .check-item.is-booked { background: #F0FDF4; }
+  .check-item.is-booked .check-box { background: #166534; border-color: #166534; color: #fff; font-size: 11px; font-weight: 700; }
+  .check-item.is-booked .check-text { color: var(--ink-mid); text-decoration: none; }
 
   .check-text {
     flex: 1;
@@ -1544,15 +1549,20 @@
   <h2 class="section-title">Full trip budget estimate</h2>
 
   <div class="budget-grid">
-    <div class="budget-card">
-      <div class="budget-cat">Flights (3 pax)</div>
-      <div class="budget-range">$1,065–1,440</div>
-      <div class="budget-note">FLL→LAX + SFO→FLL booked on JetBlue. Blue Basic fare · $1,979.43 charged. Grandpa books his own BUR flight.</div>
+    <div class="budget-card" style="background: #F0FDF4;">
+      <div class="budget-cat" style="color:#166534;">✓ Flights (3 pax) — Booked</div>
+      <div class="budget-range">$1,979.43</div>
+      <div class="budget-note">JetBlue FLL→LAX (Jul 3) + SFO→FLL (Jul 19) · Blue Basic · Both legs included. Grandpa books his own BUR flight separately.</div>
+    </div>
+    <div class="budget-card" style="background: #F0FDF4;">
+      <div class="budget-cat" style="color:#166534;">✓ Car Rental — Booked</div>
+      <div class="budget-range">$1,583.92</div>
+      <div class="budget-note">Budget Ford Explorer · LAX→SFO · 16 days · Unlimited miles · Prepaid · Conf: 45313664US4</div>
     </div>
     <div class="budget-card">
-      <div class="budget-cat">Car Rental + Gas</div>
-      <div class="budget-range">$1,690–2,460</div>
-      <div class="budget-note">Ford Explorer · $1,583.92 booked + ~$250–380 gas on 395.</div>
+      <div class="budget-cat">Gas — 395 + Bay Area</div>
+      <div class="budget-range">$250–380</div>
+      <div class="budget-note">~900 miles driving. Fill up in Mammoth before heading north — Lee Vining gas is $5–6+/gal. Fill in Lone Pine too.</div>
     </div>
     <div class="budget-card">
       <div class="budget-cat">Accommodation</div>
@@ -1592,32 +1602,32 @@
   <h2 class="section-title">Booking checklist</h2>
 
   <div class="checklist">
-    <div class="check-item">
-      <div class="check-box"></div>
-      <span class="check-urgency urg-now">Book today</span>
+    <div class="check-item is-booked">
+      <div class="check-box">✓</div>
+      <span class="check-urgency urg-booked">Booked</span>
       <div>
-        <div class="check-text">✓ FLL → LAX, Jul 3 — JetBlue Flight 1401 · BOOKED</div>
-        <div class="check-detail">FLL 12:00pm → LAX 2:15pm · Seats 22A, 22B, 22C · Blue Basic fare · $1,979.43 total</div>
+        <div class="check-text">FLL → LAX · JetBlue Flight 1401 · Jul 3</div>
+        <div class="check-detail">FLL 12:00pm → LAX 2:15pm · Seats 22A, 22B, 22C · Blue Basic</div>
       </div>
-      <div class="check-est">~$450–600</div>
+      <div class="check-est">$1,979.43</div>
     </div>
-    <div class="check-item">
-      <div class="check-box"></div>
-      <span class="check-urgency urg-now">Book today</span>
+    <div class="check-item is-booked">
+      <div class="check-box">✓</div>
+      <span class="check-urgency urg-booked">Booked</span>
       <div>
-        <div class="check-text">✓ SFO → FLL, Jul 19 — JetBlue Flight 378 · BOOKED</div>
-        <div class="check-detail">SFO 10:57am → FLL 7:40pm · Seats 20F, 21F, 22F · Blue Basic fare</div>
+        <div class="check-text">SFO → FLL · JetBlue Flight 378 · Jul 19</div>
+        <div class="check-detail">SFO 10:57am → FLL 7:40pm · Seats 20F, 21F, 22F · Blue Basic · included in above total</div>
       </div>
-      <div class="check-est">~$555–750</div>
+      <div class="check-est">—</div>
     </div>
-    <div class="check-item">
-      <div class="check-box"></div>
-      <span class="check-urgency urg-now">Book today</span>
+    <div class="check-item is-booked">
+      <div class="check-box">✓</div>
+      <span class="check-urgency urg-booked">Booked</span>
       <div>
-        <div class="check-text">✓ Budget Ford Explorer — LAX pickup Jul 3 2:30pm · SFO drop Jul 19 9:00am · BOOKED</div>
-        <div class="check-detail">Confirmation: 45313664US4 · $1,583.92 prepaid · Unlimited miles</div>
+        <div class="check-text">Budget Ford Explorer · LAX→SFO · Jul 3–19</div>
+        <div class="check-detail">Conf: 45313664US4 · LAX pickup 2:30pm · SFO drop 9:00am · Unlimited miles · Prepaid</div>
       </div>
-      <div class="check-est">~$1,440–2,080</div>
+      <div class="check-est">$1,583.92</div>
     </div>
     <div class="check-item">
       <div class="check-box"></div>
