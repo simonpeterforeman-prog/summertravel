@@ -521,12 +521,38 @@ body {
 /* accom bar */
 .day-accom {
   display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 56px;
-  background: var(--bg);
+  align-items: stretch;
   border-top: 1px solid var(--border);
+  min-height: 52px;
+  overflow: hidden;
+}
+.accom-status-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 20px;
+  font-family: var(--heading);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 80px;
+}
+.accom-status-block.book   { background: #C0392B; }
+.accom-status-block.booked { background: #1A6B3A; }
+.accom-status-block.free   { background: #1A6B3A; }
+.accom-status-block.na     { background: #ccc; }
+.accom-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
   flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 24px;
+  background: var(--bg);
 }
 .accom-label {
   font-family: var(--heading);
@@ -543,28 +569,13 @@ body {
   font-weight: 500;
   color: var(--ink);
   flex: 1;
+  min-width: 160px;
 }
-.accom-pill {
-  font-family: var(--heading);
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 100px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.accom-pill.book   { background: #FFF0EE; color: var(--accent); border: 1px solid #FECAB8; }
-.accom-pill.booked { background: #EDFAF2; color: #1B6B3A; border: 1px solid #B8DECA; }
-.accom-pill.free   { background: #EDFAF2; color: #1B6B3A; border: 1px solid #B8DECA; }
-.accom-pill.na     { background: var(--bg); color: var(--ink-3); border: 1px solid var(--border); }
-
-
 .accom-note {
   font-size: 11px;
   color: var(--ink-3);
   width: 100%;
-  padding-left: 0;
-  margin-top: -6px;
+  margin-top: -4px;
 }
 
 /* ━━━━ GLOBAL SECTIONS ━━━━ */
@@ -774,7 +785,8 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
   .hero-stat-n { font-size: 15px; }
   .day-topbar, .day-headline, .day-content-col { padding-left: 20px; padding-right: 20px; }
   .accom-content { padding: 10px 16px; }
-  .accom-status-block { padding: 12px 14px; font-size: 8px; }
+  .accom-status-block { padding: 12px 14px; min-width: 64px; font-size: 8px; }
+  .accom-content { padding: 10px 16px; gap: 6px; }
   .day-map-col { padding: 16px 20px; }
   .section-hd { padding: 28px 20px 0; }
   .global-pad { padding: 0 20px 40px; }
