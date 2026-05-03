@@ -241,18 +241,22 @@ body {
 /* ━━━━ HERO ━━━━ */
 .hero {
   background: var(--sidebar-bg);
-  padding: 56px 56px 48px;
+  padding: 20px 48px;
   border-bottom: 1px solid #222;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
 .hero::after {
   content: 'HIGH & WIDE';
   position: absolute;
-  right: -20px;
-  bottom: -24px;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
   font-family: var(--heading);
-  font-size: 120px;
+  font-size: 96px;
   font-weight: 700;
   color: rgba(255,255,255,0.03);
   letter-spacing: -0.04em;
@@ -260,57 +264,50 @@ body {
   pointer-events: none;
   white-space: nowrap;
 }
-.hero-label {
-  font-family: var(--heading);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.hero-label::after { content: ''; flex: 0 0 40px; height: 1px; background: var(--accent); opacity: 0.5; }
+.hero-label { display: none; }
 .hero-h1 {
   font-family: var(--heading);
-  font-size: clamp(40px, 5.5vw, 72px);
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: -0.03em;
-  line-height: 0.95;
-  margin-bottom: 16px;
-}
-.hero-h1 em { color: var(--accent); font-style: normal; }
-.hero-sub {
-  font-family: var(--heading);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #555;
-  margin-bottom: 40px;
-}
-.hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
-.hero-stat { }
-.hero-stat-n {
-  font-family: var(--heading);
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   color: #fff;
   letter-spacing: -0.03em;
   line-height: 1;
-  margin-bottom: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.hero-h1 em { color: var(--accent); font-style: normal; }
+.hero-h1 br { display: none; }
+.hero-sub {
+  font-family: var(--heading);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #444;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+.hero-flex-gap { flex: 1; }
+.hero-stats { display: flex; gap: 28px; flex-wrap: nowrap; flex-shrink: 0; }
+.hero-stat-n {
+  font-family: var(--heading);
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 2px;
 }
 .hero-stat-l {
   font-family: var(--heading);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #555;
+  color: #444;
 }
+
 
 /* ━━━━ SECTION HEADERS ━━━━ */
 .section-wrap { }
@@ -683,8 +680,12 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
   .sidebar { display: none; }
   .mobile-nav { display: flex; flex-direction: column; }
   .main { margin-left: 0; }
-  .hero { padding: 28px 20px 24px; }
+  .hero { padding: 14px 20px; gap: 16px; flex-wrap: wrap; }
   .hero::after { display: none; }
+  .hero-h1 { font-size: 20px; }
+  .hero-sub { display: none; }
+  .hero-stats { gap: 16px; }
+  .hero-stat-n { font-size: 15px; }
   .day-topbar, .day-headline, .day-content-col, .day-accom { padding-left: 20px; padding-right: 20px; }
   .day-map-col { padding: 16px 20px; }
   .section-hd { padding: 28px 20px 0; }
@@ -729,13 +730,13 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
 <main class="main">
 
   <div class="hero">
-    <div class="hero-label">Family Road Trip &middot; 2026</div>
-    <h1 class="hero-h1">HIGH<br><em>&amp; WIDE</em></h1>
+    <h1 class="hero-h1">HIGH <em>&amp; WIDE</em></h1>
     <p class="hero-sub">Los Angeles &middot; Eastern Sierra &middot; Marin County</p>
+    <div class="hero-flex-gap"></div>
     <div class="hero-stats">
       <div class="hero-stat"><div class="hero-stat-n">17</div><div class="hero-stat-l">Days</div></div>
       <div class="hero-stat"><div class="hero-stat-n">3</div><div class="hero-stat-l">Travelers</div></div>
-      <div class="hero-stat"><div class="hero-stat-n">~900</div><div class="hero-stat-l">Miles driven</div></div>
+      <div class="hero-stat"><div class="hero-stat-n">~900</div><div class="hero-stat-l">Miles</div></div>
       <div class="hero-stat"><div class="hero-stat-n">Jul 3&ndash;19</div><div class="hero-stat-l">2026</div></div>
     </div>
   </div>
