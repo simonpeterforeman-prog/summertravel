@@ -785,10 +785,40 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
 @media (max-width: 480px) {
   .budget-cards { grid-template-columns: 1fr 1fr; }
 }
+
+.marquee-wrap {
+  background: var(--accent);
+  height: 30px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  white-space: nowrap;
+  animation: marquee-scroll 50s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-item {
+  font-family: var(--heading);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  color: rgba(255,255,255,0.92);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 </style>
 </head>
 <body>
 
+<div class="marquee-wrap"><div class="marquee-track"><span class="marquee-item">Summer 2026&nbsp;&nbsp;·&nbsp;&nbsp;High &amp; Wide&nbsp;&nbsp;·&nbsp;&nbsp;Simon, Lorenzo &amp; Gia&nbsp;&nbsp;·&nbsp;&nbsp;Los Angeles&nbsp;&nbsp;·&nbsp;&nbsp;Highway 395&nbsp;&nbsp;·&nbsp;&nbsp;Eastern Sierra&nbsp;&nbsp;·&nbsp;&nbsp;Marin County&nbsp;&nbsp;·&nbsp;&nbsp;July 3&ndash;19&nbsp;&nbsp;·&nbsp;&nbsp;The Foreman Family California Road Trip&nbsp;&nbsp;·&nbsp;&nbsp;Keep the kids off their phones for 17 days or die trying&nbsp;&nbsp;·&nbsp;&nbsp;</span><span class="marquee-item">Summer 2026&nbsp;&nbsp;·&nbsp;&nbsp;High &amp; Wide&nbsp;&nbsp;·&nbsp;&nbsp;Simon, Lorenzo &amp; Gia&nbsp;&nbsp;·&nbsp;&nbsp;Los Angeles&nbsp;&nbsp;·&nbsp;&nbsp;Highway 395&nbsp;&nbsp;·&nbsp;&nbsp;Eastern Sierra&nbsp;&nbsp;·&nbsp;&nbsp;Marin County&nbsp;&nbsp;·&nbsp;&nbsp;July 3&ndash;19&nbsp;&nbsp;·&nbsp;&nbsp;The Foreman Family California Road Trip&nbsp;&nbsp;·&nbsp;&nbsp;Keep the kids off their phones for 17 days or die trying&nbsp;&nbsp;·&nbsp;&nbsp;</span></div></div>
 <aside class="sidebar">
   <div class="sb-brand">
     <div class="sb-brand-name">High <span>&amp;</span> Wide</div>
