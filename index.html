@@ -289,6 +289,15 @@ body {
   margin-bottom: 0;
 }
 .hero-flex-gap { flex: 1; }
+.hero-date {
+  font-family: var(--heading);
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
 .hero-stats { display: flex; gap: 28px; flex-wrap: nowrap; flex-shrink: 0; }
 .hero-stat-n {
   font-family: var(--heading);
@@ -831,12 +840,7 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
     <h1 class="hero-h1">HIGH <em>&amp; WIDE</em></h1>
     <p class="hero-sub">Los Angeles &middot; Eastern Sierra &middot; Marin County</p>
     <div class="hero-flex-gap"></div>
-    <div class="hero-stats">
-      <div class="hero-stat"><div class="hero-stat-n">17</div><div class="hero-stat-l">Days</div></div>
-      <div class="hero-stat"><div class="hero-stat-n">3</div><div class="hero-stat-l">Travelers</div></div>
-      <div class="hero-stat"><div class="hero-stat-n">~900</div><div class="hero-stat-l">Miles</div></div>
-      <div class="hero-stat"><div class="hero-stat-n">Jul 3&ndash;19</div><div class="hero-stat-l">2026</div></div>
-    </div>
+    <div class="hero-date">Jul 3&ndash;19, 2026</div>
   </div>
 
   <div id="days" class="section-wrap">
@@ -896,10 +900,11 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
         <div class="check-row"><div class="check-box"></div><span class="check-badge badge-soon">Soon</span><div class="check-content"><div class="check-main">San Mateo hotel &mdash; night of Jul 18 (near Dad, Uber to SFO in AM)</div><div class="check-detail">Marriott Courtyard or Hyatt Place San Mateo &middot; Near Hwy 101 &middot; ~15 min Uber to SFO</div></div><div class="check-cost">~$160&ndash;200</div></div>
 
         <div class="check-section-title">Activities &amp; Reservations</div>
+        <div class="check-row"><div class="check-box"></div><span class="check-badge badge-now">This week</span><div class="check-content"><div class="check-main">Grandpa&rsquo;s flight &mdash; SFO &rarr; BUR, Wed Jul 8</div><div class="check-detail">southwest.com or alaskaair.com &middot; Coordinate morning arrival time &middot; ~1 hr flight &middot; He needs to book this</div></div><div class="check-cost">~$60&ndash;90</div></div>
 
         <div class="check-row"><div class="check-box"></div><span class="check-badge badge-now">This week</span><div class="check-content"><div class="check-main">Alcatraz Island &mdash; Fri Jul 17</div><div class="check-detail">alcatrazcruises.com &middot; July slots sell out weeks early &middot; ~$45/adult &middot; Ferry from Pier 33</div></div><div class="check-cost">~$135</div></div>
 
-        <div class="check-row"><div class="check-box"></div><span class="check-badge badge-soon">Soon</span><div class="check-content"><div class="check-main">Grandpa&rsquo;s flight &mdash; SFO &rarr; BUR, Wed Jul 8</div><div class="check-detail">southwest.com or alaskaair.com &middot; Coordinate morning arrival time &middot; ~1 hr flight</div></div><div class="check-cost">~$60&ndash;90</div></div>
+
 
         <div class="check-row"><div class="check-box"></div><span class="check-badge badge-june">Jun 30</span><div class="check-content"><div class="check-main">Yosemite timed-entry reservation &mdash; Mon Jul 13</div><div class="check-detail">recreation.gov &middot; Set alarm for 8am PT on Jun 30 &middot; Opens 2 weeks rolling</div></div><div class="check-cost">$35</div></div>
 
@@ -925,13 +930,13 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
         <div class="budget-card done"><div class="bcard-label green">&#10003; Flights &mdash; Booked</div><div class="bcard-amount">$1,979.43</div><div class="bcard-note">JetBlue FLL&rarr;LAX + SFO&rarr;FLL &middot; Blue Basic &middot; 3 pax both legs</div></div>
         <div class="budget-card done"><div class="bcard-label green">&#10003; Car Rental &mdash; Booked</div><div class="bcard-amount">$1,583.92</div><div class="bcard-note">Budget Ford Explorer &middot; LAX&rarr;SFO &middot; 16 days &middot; Conf: 45313664US4</div></div>
         <div class="budget-card"><div class="bcard-label">Gas &middot; 395 + Bay Area</div><div class="bcard-amount">$250&ndash;380</div><div class="bcard-note">~900 miles. Fill in Mammoth before heading north &mdash; Lee Vining is $5&ndash;6+/gal.</div></div>
-        <div class="budget-card"><div class="bcard-label">Accommodation (LA booked)</div><div class="bcard-amount">$2,800&ndash;3,900</div><div class="bcard-note">Marin: 5 nights Travelodge Mill Valley OR Dan&rsquo;s house &middot; San Mateo: 1 night hotel &middot; All nights paid.</div></div>
+        <div class="budget-card"><div class="bcard-label">Accommodation ($1,487 confirmed)</div><div class="bcard-amount">$3,117&ndash;4,017</div><div class="bcard-note">Marin: 5 nights Travelodge Mill Valley OR Dan&rsquo;s house &middot; San Mateo: 1 night hotel &middot; All nights paid.</div></div>
         <div class="budget-card"><div class="bcard-label">Food</div><div class="bcard-amount">$1,500&ndash;2,000</div><div class="bcard-note">~$100/day &middot; 3 people &middot; Groceries, 395 road food, Sausalito dinners.</div></div>
         <div class="budget-card"><div class="bcard-label">Activities</div><div class="bcard-amount">~$559</div><div class="bcard-note">Alcatraz ($135) &middot; ATB Pass ($80) &middot; Bodie ($24) &middot; Mono canoe ($75) &middot; Misc ($245)</div></div>
         <div class="budget-card" style="background:#FFFAEB;border-color:#FDE68A;"><div class="bcard-label" style="color:#92400E;">Per person (3 travelers)</div><div class="bcard-amount">~$2,400&ndash;3,296</div><div class="bcard-note">Grandpa adds a 4th share on road days.</div></div>
       </div>
       <div class="budget-total">
-        <div><div class="btotal-label">Total estimate</div><div class="btotal-amount">$7,600&ndash;10,300</div><div class="btotal-sub">Marin: Travelodge or Dan&rsquo;s house (5 nights) &middot; San Mateo hotel 1 night &middot; Camping on 395 saves ~$600.</div></div>
+        <div><div class="btotal-label">Total estimate</div><div class="btotal-amount">$8,453&ndash;10,919</div><div class="btotal-sub">Marin: Travelodge or Dan&rsquo;s house (5 nights) &middot; San Mateo hotel 1 night &middot; Camping on 395 saves ~$600.</div></div>
         <div style="text-align:right;"><div class="btotal-label">Booked &amp; prepaid</div><div class="btotal-booked">$3,563.35</div><div class="btotal-sub">Flights + Car</div></div>
       </div>
     </div>
