@@ -557,37 +557,7 @@ body {
 .accom-pill.booked { background: #EDFAF2; color: #1B6B3A; border: 1px solid #B8DECA; }
 .accom-pill.free   { background: #EDFAF2; color: #1B6B3A; border: 1px solid #B8DECA; }
 .accom-pill.na     { background: var(--bg); color: var(--ink-3); border: 1px solid var(--border); }
-.day-accom-alert {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 48px;
-  background: var(--accent);
-  border-top: none;
-}
-.daa-icon {
-  font-size: 16px;
-  flex-shrink: 0;
-}
-.daa-text {
-  font-family: var(--heading);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #fff;
-  flex-shrink: 0;
-}
-.daa-name {
-  font-family: var(--heading);
-  font-size: 11px;
-  font-weight: 400;
-  color: rgba(255,255,255,0.75);
-  flex: 1;
-}
-@media (max-width: 768px) {
-  .day-accom-alert { padding: 12px 20px; }
-}
+
 
 .accom-note {
   font-size: 11px;
@@ -802,7 +772,9 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
   .hero-sub { display: none; }
   .hero-stats { gap: 16px; }
   .hero-stat-n { font-size: 15px; }
-  .day-topbar, .day-headline, .day-content-col, .day-accom { padding-left: 20px; padding-right: 20px; }
+  .day-topbar, .day-headline, .day-content-col { padding-left: 20px; padding-right: 20px; }
+  .accom-content { padding: 10px 16px; }
+  .accom-status-block { padding: 12px 14px; font-size: 8px; }
   .day-map-col { padding: 16px 20px; }
   .section-hd { padding: 28px 20px 0; }
   .global-pad { padding: 0 20px 40px; }
@@ -980,7 +952,7 @@ var DAYS=[
 {id:"day-17",num:17,date:"Sun Jul 19",phase:"travel",title:"Fly Home",subtitle:"SFO 10:57am \u2192 FLL 7:40pm \u00b7 West Palm Beach",lat:37.621,lng:-122.379,zoom:9,markers:[{lat:37.6213,lng:-122.3790,label:"SFO \u2014 Depart 10:57am",c:"#8C7B72"},{lat:26.0726,lng:-80.1527,label:"FLL \u2014 Arrive 7:40pm",c:"#8C7B72"}],schedule:[{time:"Morning",desc:"Hotel shuttle or walk to SFO \u2014 aim for 9am arrival at terminal",note:"JetBlue Terminal \u00b7 Allow time for security on a Sunday"},{time:"10:57am",desc:"JetBlue Flight 378 departs SFO",note:"Seats 20F (Simon), 21F (Lorenzo), 22F (Gia) \u00b7 Blue Basic"},{time:"7:40pm",desc:"Arrive Fort Lauderdale FLL",note:"FLL Terminal 3 \u00b7 Drive home to West Palm Beach (~45 min)"},{time:"Evening",desc:"Home \u00b7 West Palm Beach \u00b7 Trip of a lifetime complete",note:"Back online Monday Jul 20"},{time:"🏃 Suggested Evening Run",desc:"Travel day \u00b7 Fly home",note:"Save the legs \u00b7 You\u2019ve run every day for 16 days \u00b7 The only workout today is hauling bags through the airport"}],accom:{icon:"\u2708\ufe0f",label:"Home",name:"West Palm Beach, Florida",status:"na",note:""}}
 ];
 var PM={"travel":{tag:"Travel Day",cls:"phase-travel",sc:"phase-travel",cc:"phase-travel"},"la":{tag:"Los Angeles",cls:"phase-la",sc:"phase-la",cc:"phase-la"},"395":{tag:"Hwy 395",cls:"phase-395",sc:"phase-395",cc:"phase-395"},"bay":{tag:"Bay Area",cls:"phase-bay",sc:"phase-bay",cc:"phase-bay"}};
-var SM={"book":{text:"To Book",c:"book"},"booked":{text:"&#10003; Booked",c:"booked"},"free":{text:"Free &#10003;",c:"free"},"na":{text:"&mdash;",c:"na"}};
+var SM={"book":{text:"To Book",c:"book"},"booked":{text:"Booked",c:"booked"},"free":{text:"Free",c:"free"},"na":{text:"",c:"na"}};
 
 function buildSidebar(){var c=document.getElementById("sb-days"),s=document.getElementById("mob-strip");DAYS.forEach(function(d){var p=PM[d.phase]||PM.travel;var n=document.createElement("div");n.className="sb-day "+p.sc;n.id="sbn-"+d.id;n.onclick=function(){goDay(d.id);};var pts=d.date.split(" ");n.innerHTML='<span class="sb-day-num">'+String(d.num).padStart(2,"0")+'</span><span class="sb-day-date">'+pts[1]+" "+pts[2]+'</span><span class="sb-day-title">'+d.title+'</span>';c.appendChild(n);var ch=document.createElement("div");ch.className="mob-chip "+p.cc;ch.id="mbc-"+d.id;ch.onclick=function(){goDay(d.id);};ch.innerHTML='<span class="mob-chip-num">'+String(d.num).padStart(2,"0")+'</span><span class="mob-chip-date">'+pts[1]+' '+pts[2]+'</span>';s.appendChild(ch);});}
 
