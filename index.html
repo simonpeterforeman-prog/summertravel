@@ -459,6 +459,40 @@ body {
   top: 20px;
   background: #f0eeea;
 }
+.day-map-wrap {
+  position: sticky;
+  top: 20px;
+}
+.day-map-wrap .day-map {
+  position: relative;
+  top: 0;
+}
+.map-open-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1000;
+  background: rgba(255,255,255,0.95);
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  padding: 5px 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--heading);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.map-open-btn:hover { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.map-open-btn svg { flex-shrink: 0; }
 
 /* schedule */
 .schedule { display: flex; flex-direction: column; }
@@ -1005,6 +1039,10 @@ function initMaps(){var obs=new IntersectionObserver(function(entries){entries.f
 
 function initSpy(){var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){var id=e.target.id;["sb-days","mob-strip"].forEach(function(cid){var p=document.getElementById(cid);if(!p)return;p.querySelectorAll('[id^="sbn-"],[id^="mbc-"]').forEach(function(el){el.classList.remove("active");});var match=document.getElementById(cid==="sb-days"?"sbn-"+id:"mbc-"+id);if(match){match.classList.add("active");match.scrollIntoView({block:"nearest",inline:"center"});}})}});},{rootMargin:"-12% 0px -68% 0px"});document.querySelectorAll(".day-section").forEach(function(el){obs.observe(el);});}
 
+function openGoogleMaps(lat, lng, title) {
+  var url = 'https://www.google.com/maps/search/?api=1&query=' + lat + ',' + lng;
+  window.open(url, '_blank');
+}
 function goDay(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
 function goTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
 
