@@ -557,27 +557,36 @@ body {
 .accom-pill.booked { background: #EDFAF2; color: #1B6B3A; border: 1px solid #B8DECA; }
 .accom-pill.free   { background: #EDFAF2; color: #1B6B3A; border: 1px solid #B8DECA; }
 .accom-pill.na     { background: var(--bg); color: var(--ink-3); border: 1px solid var(--border); }
-.accom-todo {
-  display: inline-flex;
+.day-accom-alert {
+  display: flex;
   align-items: center;
-  gap: 5px;
-  font-family: var(--heading);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 100px;
-  background: #FFF0EE;
-  color: var(--accent);
-  border: 1.5px solid var(--accent);
-  white-space: nowrap;
-  flex-shrink: 0;
-  animation: pulse-todo 2s ease-in-out infinite;
+  gap: 12px;
+  padding: 12px 48px;
+  background: var(--accent);
+  border-top: none;
 }
-@keyframes pulse-todo {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+.daa-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.daa-text {
+  font-family: var(--heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  flex-shrink: 0;
+}
+.daa-name {
+  font-family: var(--heading);
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.75);
+  flex: 1;
+}
+@media (max-width: 768px) {
+  .day-accom-alert { padding: 12px 20px; }
 }
 
 .accom-note {
