@@ -785,32 +785,32 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
 @media (max-width: 480px) {
   .budget-cards { grid-template-columns: 1fr 1fr; }
 }
+  100% { transform: translateX(-50%); }
+}
 
-.marquee-wrap {
-  background: var(--accent);
-  height: 30px;
+.hero-scroll-wrap {
+  flex: 1;
   overflow: hidden;
-  display: flex;
-  align-items: center;
+  min-width: 0;
+  mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent);
 }
-.marquee-track {
+.hero-scroll-track {
   display: flex;
-  flex-shrink: 0;
   white-space: nowrap;
-  animation: marquee-scroll 50s linear infinite;
-  will-change: transform;
+  animation: hero-scroll 35s linear infinite;
 }
-.marquee-track:hover { animation-play-state: paused; }
-.marquee-item {
+.hero-scroll-track:hover { animation-play-state: paused; }
+.hero-scroll-item {
   font-family: var(--heading);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.09em;
-  color: rgba(255,255,255,0.92);
+  color: #555;
   white-space: nowrap;
   flex-shrink: 0;
 }
-@keyframes marquee-scroll {
+@keyframes hero-scroll {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
@@ -818,7 +818,7 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
 </head>
 <body>
 
-<div class="marquee-wrap"><div class="marquee-track"><span class="marquee-item">Summer 2026&nbsp;&nbsp;·&nbsp;&nbsp;High &amp; Wide&nbsp;&nbsp;·&nbsp;&nbsp;Simon, Lorenzo &amp; Gia&nbsp;&nbsp;·&nbsp;&nbsp;Los Angeles&nbsp;&nbsp;·&nbsp;&nbsp;Highway 395&nbsp;&nbsp;·&nbsp;&nbsp;Eastern Sierra&nbsp;&nbsp;·&nbsp;&nbsp;Marin County&nbsp;&nbsp;·&nbsp;&nbsp;July 3&ndash;19&nbsp;&nbsp;·&nbsp;&nbsp;The Foreman Family California Road Trip&nbsp;&nbsp;·&nbsp;&nbsp;Keep the kids off their phones for 17 days or die trying&nbsp;&nbsp;·&nbsp;&nbsp;</span><span class="marquee-item">Summer 2026&nbsp;&nbsp;·&nbsp;&nbsp;High &amp; Wide&nbsp;&nbsp;·&nbsp;&nbsp;Simon, Lorenzo &amp; Gia&nbsp;&nbsp;·&nbsp;&nbsp;Los Angeles&nbsp;&nbsp;·&nbsp;&nbsp;Highway 395&nbsp;&nbsp;·&nbsp;&nbsp;Eastern Sierra&nbsp;&nbsp;·&nbsp;&nbsp;Marin County&nbsp;&nbsp;·&nbsp;&nbsp;July 3&ndash;19&nbsp;&nbsp;·&nbsp;&nbsp;The Foreman Family California Road Trip&nbsp;&nbsp;·&nbsp;&nbsp;Keep the kids off their phones for 17 days or die trying&nbsp;&nbsp;·&nbsp;&nbsp;</span></div></div>
+</div>
 <aside class="sidebar">
   <div class="sb-brand">
     <div class="sb-brand-name">High <span>&amp;</span> Wide</div>
@@ -850,8 +850,12 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
 
   <div class="hero">
     <h1 class="hero-h1">HIGH <em>&amp; WIDE</em></h1>
-    <p class="hero-sub">Los Angeles &middot; Eastern Sierra &middot; Marin County</p>
-    <div class="hero-flex-gap"></div>
+    <div class="hero-scroll-wrap">
+    <div class="hero-scroll-track">
+      <span class="hero-scroll-item">Keep the kids off their phones for 17 days or die trying&nbsp;&nbsp;&middot;&nbsp;&nbsp;The Foreman Family California Road Trip&nbsp;&nbsp;&middot;&nbsp;&nbsp;Simon, Lorenzo &amp; Gia&nbsp;&nbsp;&middot;&nbsp;&nbsp;July 3&ndash;19, 2026&nbsp;&nbsp;&middot;&nbsp;&nbsp;Los Angeles &rarr; Highway 395 &rarr; Eastern Sierra &rarr; Marin County&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>
+      <span class="hero-scroll-item">Keep the kids off their phones for 17 days or die trying&nbsp;&nbsp;&middot;&nbsp;&nbsp;The Foreman Family California Road Trip&nbsp;&nbsp;&middot;&nbsp;&nbsp;Simon, Lorenzo &amp; Gia&nbsp;&nbsp;&middot;&nbsp;&nbsp;July 3&ndash;19, 2026&nbsp;&nbsp;&middot;&nbsp;&nbsp;Los Angeles &rarr; Highway 395 &rarr; Eastern Sierra &rarr; Marin County&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>
+    </div>
+  </div>
     <div class="hero-date">Jul 3&ndash;19, 2026</div>
   </div>
 
