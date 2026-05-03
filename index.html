@@ -559,6 +559,45 @@ body {
 /* ━━━━ GLOBAL SECTIONS ━━━━ */
 .global-pad { padding: 0 56px 56px; }
 
+/* checklist summary */
+.checklist-summary {
+  display: flex;
+  gap: 0;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+.cs-item {
+  flex: 1;
+  padding: 12px 16px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cs-item:last-child { border-right: none; }
+.cs-item.cs-total { background: #F6FDF9; }
+.cs-label {
+  font-family: var(--heading);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.cs-item.cs-total .cs-label { color: #1B6B3A; }
+.cs-amount {
+  font-family: var(--heading);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.cs-item.cs-total .cs-amount { color: #1B6B3A; }
+.cs-tbd { color: var(--ink-3) !important; font-weight: 500 !important; font-size: 12px !important; }
+
 /* checklist */
 .checklist { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-top: 4px; }
 .check-row {
@@ -778,11 +817,29 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
       <h2 class="section-title">Booking Checklist</h2>
     </div>
     <div class="global-pad">
-      <div class="checklist">
+      <div class="checklist-summary">
+  <div class="cs-item">
+    <span class="cs-label">Flights</span>
+    <span class="cs-amount">$1,979.43</span>
+  </div>
+  <div class="cs-item">
+    <span class="cs-label">Car Rental</span>
+    <span class="cs-amount">$1,583.92</span>
+  </div>
+  <div class="cs-item">
+    <span class="cs-label">LA Airbnb</span>
+    <span class="cs-amount cs-tbd">see app</span>
+  </div>
+  <div class="cs-item cs-total">
+    <span class="cs-label">Booked &amp; paid</span>
+    <span class="cs-amount">$3,563.35 + Airbnb</span>
+  </div>
+</div>
+<div class="checklist">
         <div class="check-row done"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">FLL &rarr; LAX &middot; JetBlue Flight 1401 &middot; Jul 3</div><div class="check-detail">FLL 12:00pm &rarr; LAX 2:15pm &middot; Seats 22A, 22B, 22C &middot; Blue Basic</div></div><div class="check-cost">$1,979.43</div></div>
         <div class="check-row done"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">SFO &rarr; FLL &middot; JetBlue Flight 378 &middot; Jul 19</div><div class="check-detail">SFO 10:57am &rarr; FLL 7:40pm &middot; Seats 20F, 21F, 22F &middot; included in above</div></div><div class="check-cost">&mdash;</div></div>
         <div class="check-row done"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">Budget Ford Explorer &middot; LAX&rarr;SFO &middot; Jul 3&ndash;19</div><div class="check-detail">Conf: 45313664US4 &middot; LAX pickup 2:30pm &middot; SFO drop 9:00am &middot; Unlimited miles</div></div><div class="check-cost">$1,583.92</div></div>
-        <div class="check-row done"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">Airbnb &mdash; 4625 Admiralty Way, Marina del Rey</div><div class="check-detail">Conf: HMJFZCPP89 &middot; Check-in Jul 3 4pm &middot; Check-out Jul 8 11am &middot; Marina del Rey</div></div><div class="check-cost">~$1,200&ndash;1,560</div></div>
+        <div class="check-row done"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">Airbnb &mdash; 4625 Admiralty Way, Marina del Rey</div><div class="check-detail">Conf: HMJFZCPP89 &middot; Check-in Fri Jul 3 4pm &middot; Check-out Wed Jul 8 11am</div></div><div class="check-cost">see app</div></div>
         <div class="check-row"><div class="check-box"></div><span class="check-badge badge-now">This week</span><div class="check-content"><div class="check-main">Alcatraz Island &mdash; Sat Jul 18</div><div class="check-detail">alcatrazcruises.com &middot; July weekends sell out weeks early &middot; ~$45/adult</div></div><div class="check-cost">~$135</div></div>
         <div class="check-row"><div class="check-box"></div><span class="check-badge badge-now">This week</span><div class="check-content"><div class="check-main">Mammoth Lakes &mdash; 2br cabin, Jul 11&ndash;13</div><div class="check-detail">airbnb.com or vrbo.com &middot; July books fast &middot; Near Village or Canyon Lodge area</div></div><div class="check-cost">~$500&ndash;750</div></div>
         <div class="check-row"><div class="check-box"></div><span class="check-badge badge-soon">2 weeks</span><div class="check-content"><div class="check-main">Marin hotel &mdash; Travelodge Mill Valley, Jul 15&ndash;18</div><div class="check-detail">707 Redwood Hwy, Mill Valley &middot; wyndhamhotels.com &middot; * Skip if confirmed with friends</div></div><div class="check-cost">~$520&ndash;720</div></div>
