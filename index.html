@@ -169,7 +169,7 @@ body {
   display: none;
   position: sticky;
   top: 0;
-  z-index: 300;
+  z-index: 500;
   background: var(--sidebar-bg);
   flex-direction: column;
   box-shadow: 0 1px 0 #222;
@@ -179,7 +179,8 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 14px 18px;
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid #2a2a2a;
+  min-height: 52px;
 }
 .mob-brand {
   font-family: var(--heading);
@@ -189,28 +190,33 @@ body {
   letter-spacing: -0.02em;
 }
 .mob-brand span { color: var(--accent); }
-.mob-pills { display: flex; gap: 6px; }
+.mob-pills { display: flex; gap: 0; }
 .mob-pill {
   font-family: var(--heading);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 4px 11px;
-  border-radius: 100px;
-  border: 1px solid #333;
-  color: #666;
+  padding: 0 14px;
+  color: #555;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: color 0.15s;
+  border: none;
+  background: none;
+  border-right: 1px solid #2a2a2a;
+  line-height: 1;
 }
-.mob-pill.active, .mob-pill:hover { color: #fff; border-color: #666; background: #222; }
+.mob-pill:last-child { border-right: none; }
+.mob-pill.active { color: #fff; }
+.mob-pill:hover { color: #ccc; }
 
 .mob-strip {
   display: flex;
   overflow-x: auto;
-  padding: 10px 14px;
+  padding: 8px 14px;
   gap: 6px;
   scrollbar-width: none;
+  border-top: 1px solid #1a1a1a;
 }
 .mob-strip::-webkit-scrollbar { display: none; }
 .mob-chip {
@@ -794,7 +800,9 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
   .day-body { grid-template-columns: 1fr; }
   .day-content-col { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
   .day-map-col { padding: 16px 56px 20px; }
-  .day-map { position: relative; top: 0; height: 180px; }
+  .day-map { position: relative !important; top: 0 !important; height: 180px; z-index: 1 !important; }
+  .day-section { scroll-margin-top: 120px; }
+  .day-map-wrap { position: relative !important; z-index: 1 !important; }
 }
 @media (max-width: 768px) {
   .sidebar { display: none; }
