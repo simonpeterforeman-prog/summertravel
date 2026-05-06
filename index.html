@@ -14,7 +14,7 @@
     document.addEventListener('DOMContentLoaded', function(){
       var overlay=document.createElement('div');
       overlay.id='pw-gate';
-      overlay.style.cssText='position:fixed;inset:0;background:#F7F6F3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:99999;font-family:sans-serif;';
+      overlay.style.cssText='position:fixed;inset:0;background:#F7F6F3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:99999;font-family:sans-serif;visibility:visible;';
       overlay.innerHTML='<div style="font-size:22px;font-weight:600;color:#111;letter-spacing:-.01em;">High &amp; Wide &middot; July 2026</div><input id="pw-input" type="password" placeholder="Password" style="padding:10px 16px;border:1.5px solid #ccc;border-radius:8px;font-size:16px;width:220px;outline:none;" autofocus><div id="pw-err" style="color:#C0392B;font-size:13px;height:16px;"></div>';
       document.body.appendChild(overlay);
       var inp=document.getElementById('pw-input');
