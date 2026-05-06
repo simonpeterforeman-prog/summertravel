@@ -1,6 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+(function(){
+  var HASH = '86b3caa4e813c196cee0bf6271e793ca84ff3fc1c0f6d69a9a3aa4a522ab1010';
+  function hex(buf){return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');}
+  function check(pw){
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw)).then(function(buf){return hex(buf)===HASH;});
+  }
+  function gate(){
+    if(sessionStorage.getItem('auth')==='1') return;
+    document.documentElement.style.visibility='hidden';
+    document.addEventListener('DOMContentLoaded', function(){
+      var overlay=document.createElement('div');
+      overlay.id='pw-gate';
+      overlay.style.cssText='position:fixed;inset:0;background:#F7F6F3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:99999;font-family:sans-serif;';
+      overlay.innerHTML='<div style="font-size:22px;font-weight:600;color:#111;letter-spacing:-.01em;">High &amp; Wide &middot; July 2026</div><input id="pw-input" type="password" placeholder="Password" style="padding:10px 16px;border:1.5px solid #ccc;border-radius:8px;font-size:16px;width:220px;outline:none;" autofocus><div id="pw-err" style="color:#C0392B;font-size:13px;height:16px;"></div>';
+      document.body.appendChild(overlay);
+      var inp=document.getElementById('pw-input');
+      inp.addEventListener('keydown',function(e){if(e.key==='Enter')attempt();});
+      function attempt(){
+        check(inp.value).then(function(ok){
+          if(ok){sessionStorage.setItem('auth','1');overlay.remove();document.documentElement.style.visibility='';}
+          else{document.getElementById('pw-err').textContent='Incorrect password';inp.value='';inp.focus();}
+        });
+      }
+    });
+  }
+  gate();
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>High & Wide &middot; California Road Trip &middot; July 2026</title>
