@@ -1083,6 +1083,11 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+/* sierra route map */
+#sierra-map { height: 460px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+.route-legend { display: flex; gap: 20px; margin-top: 10px; font-size: 12px; color: var(--muted); flex-wrap: wrap; align-items: center; }
+.route-legend-dot { display: inline-block; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+@media (max-width: 768px) { #sierra-map { height: 320px; } }
 </style>
 </head>
 <body>
@@ -1125,6 +1130,21 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
     </div>
   </div>
     <div class="hero-date">Jul 3&ndash;19, 2026</div>
+  </div>
+
+  <div id="sierra-route" class="section-wrap">
+    <div class="section-hd">
+      <div class="section-label">Jul 8 &ndash; 14 &middot; BUR to Bay Area</div>
+      <h2 class="section-title">Sierra Route</h2>
+    </div>
+    <div class="global-pad">
+      <div id="sierra-map"></div>
+      <div class="route-legend">
+        <span><span class="route-legend-dot" style="width:14px;height:14px;background:#1B4D2C;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"></span>Night stop</span>
+        <span><span class="route-legend-dot" style="width:10px;height:10px;background:#E8431C;"></span>Day stop / attraction</span>
+        <span style="margin-left:4px;color:#999;">Tap any marker for details</span>
+      </div>
+    </div>
   </div>
 
   <div id="days" class="section-wrap">
@@ -1393,8 +1413,44 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
 function goDay(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
 function goTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
 
+function initSierraMap(){
+  if(!window.L)return;
+  var el=document.getElementById('sierra-map');
+  if(!el||el._smap)return;
+  var map=L.map('sierra-map',{scrollWheelZoom:false}).setView([37.2,-119.0],7);
+  el._smap=map;
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'&copy; OSM &copy; CARTO',subdomains:'abcd',maxZoom:19}).addTo(map);
+  var route=[[34.2007,-118.3585],[35.02,-118.15],[35.62,-117.72],[36.6071,-118.0626],[36.7277,-118.1552],[37.3635,-118.3957],[37.5907,-118.8616],[37.6485,-118.9721],[37.7826,-119.0730],[37.9583,-119.1186],[38.2566,-119.2322],[37.9583,-119.1186],[37.9107,-119.2553],[37.8736,-119.3607],[37.8407,-120.2309],[37.5630,-122.3255]];
+  L.polyline(route,{color:'#E8431C',weight:3,opacity:0.65,dashArray:'8,5'}).addTo(map);
+  var nights=[
+    {lat:34.2007,lng:-118.3585,lbl:'✈',title:'Burbank Airport (BUR)',note:'Pick up Grandpa · 11:51am · Jul 8'},
+    {lat:36.6071,lng:-118.0626,lbl:'1',title:'Lone Pine',note:'Night 1 · Jul 8 · Dow Villa Motel (recommended)'},
+    {lat:37.7826,lng:-119.0730,lbl:'2',title:'June Lake',note:'Night 2 · Jul 9 · June Lake Motel (recommended)'},
+    {lat:37.6485,lng:-118.9721,lbl:'3',title:'Mammoth Lakes',note:'Nights 3–5 · Jul 10–12 · Airbnb booked ✓'},
+    {lat:38.2566,lng:-119.2322,lbl:'4',title:'Bridgeport area',note:'Night 6 · Jul 12 · Lee Vining or Bridgeport TBD'},
+    {lat:37.8407,lng:-120.2309,lbl:'5',title:'Groveland',note:'Night 7 · Jul 13 · Yosemite Westgate Lodge (recommended)'},
+    {lat:37.5630,lng:-122.3255,lbl:'6',title:'San Mateo → Mill Valley',note:'Jul 14 · Dan\'s house Mill Valley Jul 15–17'}
+  ];
+  nights.forEach(function(n){
+    var ic=L.divIcon({className:'',html:'<div style="background:#1B4D2C;color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3);">'+n.lbl+'</div>',iconSize:[26,26],iconAnchor:[13,13]});
+    L.marker([n.lat,n.lng],{icon:ic}).addTo(map).bindPopup('<strong>'+n.title+'</strong><br><span style="font-size:12px;color:#555;">'+n.note+'</span>');
+  });
+  var stops=[
+    {lat:36.6081,lng:-118.1218,title:'Alabama Hills',note:'Movie Road · BLM land · free · sunrise or golden hour'},
+    {lat:36.7277,lng:-118.1552,title:'Manzanar NHS',note:'Japanese American internment site · free · very moving'},
+    {lat:37.3635,lng:-118.3957,title:'Bishop',note:'Lunch · Erick Schat\'s Bakkerij is legendary'},
+    {lat:37.5907,lng:-118.8616,title:'Convict Lake',note:'Stunning alpine lake · short loop walk · free'},
+    {lat:37.6577,lng:-118.8300,title:'Hot Creek',note:'Volcanic hot springs overlook · free · unique'},
+    {lat:38.3148,lng:-119.2176,title:'Travertine Hot Springs',note:'Free soak on BLM land · near Bridgeport'},
+    {lat:37.8736,lng:-119.3607,title:'Tuolumne Meadows',note:'Yosemite high country · timed entry permit needed'}
+  ];
+  stops.forEach(function(s){
+    L.circleMarker([s.lat,s.lng],{radius:7,fillColor:'#E8431C',color:'#fff',weight:2,fillOpacity:0.9}).addTo(map).bindPopup('<strong>'+s.title+'</strong><br><span style="font-size:12px;color:#555;">'+s.note+'</span>');
+  });
+}
+
 buildSidebar();buildDays();
-window.addEventListener("load",function(){initMaps();initSpy();});
+window.addEventListener("load",function(){initMaps();initSpy();initSierraMap();});
 </script>
 </body>
 </html>
