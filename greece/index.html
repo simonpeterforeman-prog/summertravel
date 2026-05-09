@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Girls Trip · May 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<style>
+:root {
+  --bg: #FFFFFF;
+  --surface: #FFFFFF;
+  --ink: #0a0a0a;
+  --ink-2: #3a3a3a;
+  --ink-3: #717171;
+  --ink-4: #c0c0c0;
+  --border: #EEEEEE;
+  --border-2: #D0D0D0;
+  --hero-bg: #111111;
+  --nav-h: 58px;
+  --athens-color: #8C7455;
+  --paros-color: #3B8FA3;
+  --travel-color: #9A9A9A;
+  --heading: "Cormorant Garamond", Georgia, serif;
+  --body: "Jost", Helvetica, Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+body {
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-3);
+  background: var(--bg);
+  margin: 0;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* ━━━━ HERO (black) ━━━━ */
+.hero {
+  background: var(--hero-bg);
+  padding: 52px 0 44px;
+}
+.hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 56px;
+  text-align: center;
+}
+.hero-rule { margin-left: auto; margin-right: auto; }
+.hero-pills { justify-content: center; }
+.hero-eyebrow {
+  font-family: var(--body); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: #555; margin-bottom: 14px;
+}
+.hero-title {
+  font-family: var(--heading); font-size: 42px; font-weight: 300;
+  font-style: italic; color: #fff; letter-spacing: -0.01em;
+  line-height: 1.0; margin-bottom: 4px; white-space: nowrap;
+}
+.hero-title span { font-weight: 400; }
+.hero-subtitle {
+  font-family: var(--heading); font-size: 18px; font-weight: 300;
+  font-style: italic; color: #666; letter-spacing: 0.02em; margin-bottom: 28px;
+}
+.hero-rule { width: 32px; height: 1px; background: #333; margin-bottom: 22px; }
+.hero-pills { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid #222; padding-top: 18px; }
+.hero-pill {
+  font-family: var(--body); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 0 20px 0 0; color: #555;
+}
+.hero-pill + .hero-pill { border-left: 1px solid #222; padding-left: 20px; }
+.hero-pill strong { color: #ccc; font-weight: 500; }
+
+/* ━━━━ TOP NAV ━━━━ */
+.top-nav {
+  position: sticky; position: -webkit-sticky; top: 0; z-index: 300;
+  background: #fff; border-bottom: 1px solid var(--border);
+  height: var(--nav-h);
+  width: 100%;
+  overflow: hidden;
+}
+.top-nav-inner {
+  display: flex; align-items: stretch;
+  overflow-x: scroll; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  width: calc(100% - 80px);
+  max-width: calc(900px - 80px);
+  padding: 0 0 0 20px;
+  height: 100%;
+}
+.top-nav-inner::-webkit-scrollbar { display: none; }
+.top-nav-day {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  padding: 0 14px; cursor: pointer; white-space: nowrap;
+  border-right: 1px solid var(--border);
+  transition: background 0.12s; flex-shrink: 0;
+  position: relative;
+}
+.top-nav-day:hover { background: #FAFAFA; }
+.top-nav-day.active { background: #FAFAFA; }
+.top-nav-day.active::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: var(--ink);
+}
+.top-nav-day.active.phase-athens::after { background: var(--athens-color); }
+.top-nav-day.active.phase-paros::after  { background: var(--paros-color); }
+.top-nav-num  { font-family: var(--body); font-size: 9px; font-weight: 600; letter-spacing: 0.1em; color: var(--ink-4); }
+.top-nav-date { font-family: var(--body); font-size: 10px; font-weight: 400; color: var(--ink-3); }
+.top-nav-day.active .top-nav-num,
+.top-nav-day.active .top-nav-date { color: var(--ink-2); }
+
+/* ━━━━ MAIN ━━━━ */
+.main-wrap { max-width: 900px; margin: 0 auto; width: 100%; }
+
+/* ━━━━ SECTION ━━━━ */
+.section-hd { padding: 40px 40px 0; }
+.section-rule { width: 32px; height: 1px; background: var(--border-2); margin-bottom: 12px; }
+.section-label {
+  font-family: var(--body); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 8px;
+}
+.section-title {
+  font-family: var(--heading); font-size: 30px; font-weight: 400;
+  color: var(--ink); letter-spacing: -0.01em;
+}
+
+/* ━━━━ DAY CARDS ━━━━ */
+#days-container { padding: 24px 40px 64px; display: flex; flex-direction: column; gap: 1px; }
+
+.day-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  isolation: isolate;
+  scroll-margin-top: calc(var(--nav-h) + 16px);
+}
+.day-section + .day-section { border-top: none; }
+
+.phase-athens .day-topbar { border-top: 3px solid var(--athens-color); }
+.phase-paros  .day-topbar { border-top: 3px solid var(--paros-color); }
+.phase-travel .day-topbar { border-top: 3px solid var(--border-2); }
+
+.day-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 24px; border-bottom: 1px solid var(--border); background: #FAFAFA;
+}
+.day-topbar-left { display: flex; align-items: center; gap: 12px; }
+.day-counter {
+  font-family: var(--body); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-4);
+}
+.day-counter-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--border-2); }
+.day-weekdate { font-family: var(--body); font-size: 10px; font-weight: 400; letter-spacing: 0.06em; color: var(--ink-3); }
+.day-phase-tag {
+  font-family: var(--body); font-size: 8px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 3px 8px; border: 1px solid var(--border); color: var(--ink-4);
+}
+.phase-athens .day-phase-tag { color: var(--athens-color); border-color: var(--athens-color); }
+.phase-paros  .day-phase-tag { color: var(--paros-color);  border-color: var(--paros-color); }
+
+.day-headline {
+  padding: 20px 24px 18px;
+  display: flex; align-items: flex-start; justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.day-title {
+  font-family: var(--heading); font-size: 24px; font-weight: 500;
+  font-style: normal; letter-spacing: -0.01em; color: var(--ink);
+  margin-bottom: 5px; line-height: 1.15;
+}
+.day-subtitle {
+  font-family: var(--body); font-size: 10px; font-weight: 400;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-4);
+}
+.day-num-bg {
+  font-family: var(--heading); font-size: 60px; font-weight: 300;
+  color: var(--border); letter-spacing: -0.04em; line-height: 1;
+  flex-shrink: 0; user-select: none;
+}
+
+.day-body { display: flex; }
+
+.day-content-col { flex: 1; min-width: 0; }
+.schedule { display: flex; flex-direction: column; }
+.schedule-row {
+  display: flex; gap: 16px; padding: 10px 24px;
+  border-bottom: 1px solid var(--border); align-items: flex-start;
+}
+.schedule-row:last-child { border-bottom: none; }
+.sched-time {
+  font-family: var(--body); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-4); min-width: 80px; flex-shrink: 0; padding-top: 2px;
+}
+.sched-main { flex: 1; min-width: 0; }
+.sched-main strong { font-weight: 400; font-size: 13px; color: var(--ink-2); display: block; }
+.sched-note { font-size: 11px; color: var(--ink-4); display: block; margin-top: 2px; font-weight: 300; }
+.flight-row { background: #FAFAFA; }
+.flight-row .sched-time { color: var(--ink-2); }
+.flight-row .sched-main strong { font-weight: 500; }
+
+.day-map-col {
+  width: 200px; flex-shrink: 0;
+  border-left: 1px solid var(--border); position: relative;
+}
+.day-map { width: 100%; height: 100%; min-height: 160px; }
+.map-open-btn {
+  position: absolute; bottom: 8px; right: 8px;
+  font-family: var(--body); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: rgba(255,255,255,.92); border: 1px solid var(--border);
+  padding: 3px 8px; cursor: pointer; color: var(--ink-3);
+}
+
+.day-accom {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  padding: 11px 24px; border-top: 1px solid var(--border);
+}
+.day-accom.has-modal { cursor: pointer; }
+.day-accom.has-modal:hover { background: #FAFAFA; }
+.accom-status-text {
+  font-family: var(--body); font-size: 8px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 2px 6px; border: 1px solid;
+}
+.booked .accom-status-text { color: #3a7a50; border-color: #b8ddc8; background: #f0faf4; }
+.book   .accom-status-text { color: #a04030; border-color: #e8c0ba; background: #fdf5f4; }
+.na     .accom-status-text { display: none; }
+.accom-sep   { color: var(--border-2); }
+.accom-label {
+  font-family: var(--body); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-4);
+}
+.accom-name  { font-family: var(--body); font-size: 13px; font-weight: 300; color: var(--ink-2); }
+.accom-note  { font-size: 11px; color: var(--ink-4); flex: 1 0 100%; margin-top: 2px; }
+.accom-detail-hint {
+  font-family: var(--body); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-4); margin-left: auto;
+}
+.accom-detail-hint:hover { color: var(--ink); }
+
+/* ━━━━ MODAL ━━━━ */
+.accom-modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.4); z-index: 1000;
+  align-items: center; justify-content: center; padding: 20px;
+}
+.accom-modal-overlay.open { display: flex; }
+.accom-modal {
+  background: var(--surface); width: 100%; max-width: 460px;
+  max-height: 80vh; overflow-y: auto;
+  box-shadow: 0 8px 40px rgba(0,0,0,.15); border: 1px solid var(--border);
+}
+.accom-modal-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 24px 16px; border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; background: var(--surface); z-index: 10;
+}
+.accom-modal-title {
+  font-family: var(--heading); font-size: 18px; font-weight: 500; color: var(--ink);
+}
+.accom-modal-close {
+  font-family: var(--body); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-4); cursor: pointer; border: none; background: none;
+}
+.accom-modal-body { padding: 8px 0 16px; }
+.accom-modal-row {
+  display: flex; gap: 14px; padding: 11px 24px;
+  border-bottom: 1px solid var(--border); align-items: flex-start;
+}
+.accom-modal-row:last-child { border-bottom: none; }
+.accom-modal-icon { font-size: 14px; flex-shrink: 0; width: 20px; text-align: center; padding-top: 1px; }
+.accom-modal-cell { flex: 1; }
+.accom-modal-lbl {
+  font-family: var(--body); font-size: 8px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 3px;
+}
+.accom-modal-val { font-size: 13px; color: var(--ink-2); font-weight: 300; line-height: 1.5; }
+.accom-modal-val a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ━━━━ RESPONSIVE ━━━━ */
+@media (max-width: 768px) {
+  .hero { padding: 36px 24px 32px; }
+  .hero-title { font-size: 32px; white-space: normal; }
+  .hero-subtitle { font-size: 15px; }
+  .hero-pills { display: none; }
+  .section-hd { padding: 28px 20px 0; }
+  #days-container { padding: 16px 20px 48px; }
+  .day-map-col { display: none; }
+  .day-headline { padding: 16px 20px 14px; }
+  .day-num-bg { font-size: 44px; }
+  .day-title { font-size: 20px; }
+  .schedule-row { padding: 9px 20px; }
+  .day-topbar { padding: 8px 20px; }
+  .day-accom { padding: 10px 20px; }
+  .top-nav-day { padding: 0 14px; }
+  .recs-label-full { display: none; }
+  .recs-label-short { display: inline !important; }
+  .recs-toggle { flex-direction: column; gap: 0; justify-content: center; padding: 0 12px; }
+  .recs-label-short { line-height: 1; margin-bottom: 2px; }
+}
+.recs-label-short { display: none; }
+
+/* ━━━━ PASSWORD GATE ━━━━ */
+#pw-gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #111111;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 20px;
+}
+#pw-gate-title {
+  font-family: var(--heading); font-size: 36px; font-weight: 300;
+  font-style: italic; color: #fff; letter-spacing: -0.01em;
+}
+#pw-gate-form { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+#pw-row { display: flex; align-items: stretch; gap: 12px; }
+#pw-input {
+  background: transparent; border: 1px solid #444;
+  color: #fff; font-family: var(--body); font-size: 13px; font-weight: 300;
+  letter-spacing: 0.12em; text-align: center; padding: 9px 20px;
+  width: 220px; outline: none;
+}
+#pw-input::placeholder { color: #555; letter-spacing: 0.18em; text-transform: uppercase; font-size: 10px; }
+#pw-error {
+  font-family: var(--body); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #c0392b; display: none;
+}
+#pw-submit {
+  background: transparent; border: 1px solid #444; color: #aaa;
+  font-family: var(--body); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 0 28px; cursor: pointer; align-self: stretch;
+  transition: border-color 0.15s, color 0.15s;
+}
+#pw-submit:hover { border-color: #aaa; color: #fff; }
+
+/* ━━━━ RECOMMENDATIONS ━━━━ */
+.day-recs { display: none; border-top: 1px solid var(--border); padding: 20px 24px 22px; }
+body.show-recs .day-recs { display: block; }
+.recs-hd { font-family: var(--body); font-size: 8px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 14px; }
+.recs-grid { display: flex; flex-direction: column; gap: 8px; }
+.rec-item { display: flex; gap: 12px; align-items: baseline; }
+.rec-cat { font-family: var(--body); font-size: 8px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-4); min-width: 36px; flex-shrink: 0; padding-top: 1px; }
+.rec-body { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 6px; }
+.rec-text { font-family: var(--body); font-size: 13px; font-weight: 400; color: var(--ink-2); }
+.rec-note { font-family: var(--body); font-size: 11px; font-weight: 300; color: var(--ink-3); }
+
+/* toggle pill — lives at right end of top nav */
+.recs-toggle {
+  position: absolute; top: 0; right: 0; height: 100%;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 20px; cursor: pointer;
+  border-left: 1px solid var(--border);
+  font-family: var(--body); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3);
+  white-space: nowrap; user-select: none;
+  background: #fff; color: var(--ink-4);
+}
+.recs-toggle:hover { background: #FAFAFA; }
+.recs-switch {
+  width: 26px; height: 14px; border-radius: 7px;
+  background: var(--border-2); position: relative;
+  transition: background 0.18s; flex-shrink: 0;
+}
+.recs-switch::after {
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #fff; transition: transform 0.18s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+}
+body.show-recs .recs-switch { background: var(--ink); }
+body.show-recs .recs-switch::after { transform: translateX(12px); }
+</style>
+<script>
+(function(){
+  var KEY = "gt_auth";
+  var HASH = "5a5c9cd4f5e8b2a3d7e6f1c0b9a8d2e4"; /* md5-ish placeholder replaced below */
+  function check(pw){ return pw.toLowerCase() === "greece"; }
+  function unlock(){ document.getElementById("pw-gate").style.display="none"; sessionStorage.setItem(KEY,"1"); }
+  window.addEventListener("DOMContentLoaded", function(){
+    if(sessionStorage.getItem(KEY)==="1"){ unlock(); return; }
+    document.getElementById("pw-form").addEventListener("submit", function(e){
+      e.preventDefault();
+      var v = document.getElementById("pw-input").value;
+      if(check(v)){ unlock(); }
+      else {
+        var err = document.getElementById("pw-error");
+        err.style.display="block";
+        document.getElementById("pw-input").value="";
+      }
+    });
+  });
+})();
+</script>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="pw-gate">
+  <div id="pw-gate-title">Girls Trip</div>
+  <form id="pw-form" id="pw-gate-form">
+    <div id="pw-row">
+      <input id="pw-input" type="password" placeholder="password" autocomplete="off" autofocus>
+      <button id="pw-submit" type="submit">Enter</button>
+    </div>
+    <div id="pw-error">Incorrect password</div>
+  </form>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">May 12 &ndash; 20 &middot; 2026 &middot; 9 Days</div>
+    <div class="hero-title">Girls Trip <span>to Greece</span></div>
+    <div class="hero-subtitle">Athens &middot; Paros &middot; Naousa</div>
+    <div class="hero-pills">
+      <span class="hero-pill"><strong>2</strong>&nbsp; SAS Flights</span>
+      <span class="hero-pill"><strong>2 Nights</strong>&nbsp; Athens</span>
+      <span class="hero-pill"><strong>4 Nights</strong>&nbsp; Paros</span>
+      <span class="hero-pill"><strong>1 Night</strong>&nbsp; Airport</span>
+    </div>
+  </div>
+</div>
+
+<!-- TOP NAV -->
+<nav class="top-nav" id="top-nav">
+  <div class="top-nav-inner" id="top-nav-inner"></div>
+  <div class="recs-toggle" id="recs-toggle" onclick="toggleRecs()">
+    <span class="recs-label-full">Recommendations</span>
+    <span class="recs-label-short">Recos</span>
+    <span class="recs-switch"></span>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+  <!-- DAYS -->
+  <div class="section-wrap" id="days">
+    <div id="days-container"></div>
+  </div>
+
+</div>
+
+<!-- HOTEL MODAL -->
+<div class="accom-modal-overlay" id="accom-modal-overlay" onclick="closeAccomModal(event)">
+  <div class="accom-modal">
+    <div class="accom-modal-hd">
+      <div class="accom-modal-title" id="accom-modal-title"></div>
+      <button class="accom-modal-close" onclick="closeAccomModal()">&#x2715;</button>
+    </div>
+    <div class="accom-modal-body" id="accom-modal-body"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+var DAYS = [
+{id:"day-1",num:1,date:"Tue May 12",phase:"travel",title:"Depart — SAS Scandinavian Airlines",subtitle:"16:45 departure",lat:40.641,lng:-73.778,zoom:9,markers:[],schedule:[{time:"16:45",desc:"SAS Scandinavian Airlines departs",note:"Booked through booking.com"},{time:"Overnight",desc:"Transatlantic flight to Athens",note:""}],accom:{icon:"✈️",label:"Overnight flight",name:"",status:"na",note:""},recs:[]},
+
+{id:"day-2",num:2,date:"Wed May 13",phase:"athens",title:"Arrive Athens",subtitle:"18:40 · Monastiraki · Mono Loft Apartments",lat:37.976,lng:23.727,zoom:14,markers:[{lat:37.9758,lng:23.7231,label:"Mono Loft Apartments — 3 Esopou St",c:"#1A3060"},{lat:37.9765,lng:23.7264,label:"Monastiraki Metro Station",c:"#1A3060"},{lat:37.9715,lng:23.7267,label:"Acropolis",c:"#1A3060"}],schedule:[{time:"18:40",desc:"Arrive Athens International Airport (ATH)",note:"SAS Scandinavian Airlines · Booked through booking.com"},{time:"Evening",desc:"Metro from airport → Monastiraki station",note:"Direct metro line · ~40 min · Hotel is 5 min walk from Monastiraki station"},{time:"Evening",desc:"Check in — Mono Loft Apartments",note:"3 Esopou St, 10554 Athens · Monastiraki neighborhood"}],accom:{icon:"🏨",label:"Night 1 of 2 in Athens",name:"Mono Loft Apartments — 3 Esopou St, Monastiraki",status:"booked",key:"athens",note:"Booked through booking.com · Check-out Fri May 15"},recs:[
+  {cat:"Eat",text:"Bairaktaris",note:"Monastiraki Sq · classic meze and lamb chops · open late · great first-night spot"},
+  {cat:"Drink",text:"Tailor Made",note:"Miaouli 2 · craft cocktails in Monastiraki · lively outdoor seating"},
+  {cat:"Do",text:"Night walk to Hadrian's Arch",note:"10 min walk · beautifully lit at night · free"},
+  {cat:"Tip",text:"Grab an Athens transit card at the airport",note:"Works on metro, bus, tram · €1.20/ride vs single tickets"}
+]},
+
+{id:"day-3",num:3,date:"Thu May 14",phase:"athens",title:"Athens",subtitle:"National Archaeology Museum · Monastiraki · Plaka",lat:37.982,lng:23.731,zoom:14,markers:[{lat:37.9893,lng:23.7323,label:"National Archaeology Museum",c:"#1A3060"},{lat:37.9758,lng:23.7231,label:"Monastiraki — Plaka — Psiri",c:"#1A3060"}],schedule:[{time:"Morning",desc:"National Archaeology Museum",note:"Patission Street · One of the world's great collections · Allow 2–3 hrs"},{time:"Afternoon",desc:"Meat platter in Monastiraki",note:"Savvas (OG) · O Thanasis · Meat The Greek"},{time:"Evening",desc:"Walk & Shop — Plaka, Psiri, Monastiraki",note:""}],accom:{icon:"🏨",label:"Night 2 of 2 in Athens",name:"Mono Loft Apartments — 3 Esopou St, Monastiraki",status:"booked",key:"athens",note:"Check-out tomorrow morning · Flight to Paros 16:55"},recs:[
+  {cat:"Do",text:"Acropolis",note:"Go at 8am when it opens · buy tickets online at odysseus.culture.gr · brutal queue otherwise"},
+  {cat:"Do",text:"Acropolis Museum",note:"If skipping the hill · world-class collection · air conditioned"},
+  {cat:"Eat",text:"Diporto Agoras",note:"Hidden basement taverna near Varvakeios market · cash only · fish soup + house wine · no menu"},
+  {cat:"Eat",text:"To Steki tou Ilia",note:"Thisseio · legendary lamb chops · go for lunch to avoid the queue"},
+  {cat:"Drink",text:"Couleur Locale",note:"Normanou 3 · rooftop bar with Acropolis views · best at golden hour"},
+  {cat:"Shop",text:"Forget Me Not",note:"Adrianou St, Monastiraki · beautiful Greek design objects and prints"}
+]},
+
+{id:"day-4",num:4,date:"Fri May 15",phase:"travel",title:"Athens → Fly to Paros",subtitle:"Morning in Monastiraki · Aegean 16:55 → 17:40 · Naousa",lat:37.50,lng:24.20,zoom:8,markers:[{lat:37.9364,lng:23.9445,label:"Athens Airport (ATH) — depart 16:55",c:"#5A5A5A"},{lat:37.0088,lng:25.1267,label:"Paros Airport (PAS) — arrive 17:40",c:"#0A6678"}],schedule:[{time:"Morning",desc:"Walk & Shop — Plaka, Psiri, Monastiraki",note:"Last few hours in Athens · Check out by hotel checkout time"},{time:"Early PM",desc:"Head to Athens International Airport (ATH)",note:"Allow ~90 min to airport from Monastiraki by Metro"},{time:"16:55",desc:"Aegean Airlines / Olympic Airlines departs ATH → PAS",note:""},{time:"17:40",desc:"Arrive Paros Airport (PAS)",note:""},{time:"Evening",desc:"Check in — Bohemian Luxury Boutique Hotel, Naousa",note:"Dimotikh Street, Alonia, Naousa 844 01 · Breakfast included"}],accom:{icon:"🏖️",label:"Night 1 of 4 in Paros",name:"Bohemian Luxury Boutique Hotel — Naousa",status:"booked",key:"paros",note:"Dimotikh Street, Alonia, Naousa 844 01 · Breakfast included · Check-out Tue May 19"},recs:[
+  {cat:"Eat",text:"Avocado Athens",note:"Nikis 30, Syntagma · healthy café · great pre-airport lunch"},
+  {cat:"Do",text:"Zappeion gardens",note:"5 min from Syntagma · peaceful morning walk before heading to airport"},
+  {cat:"Tip",text:"Metro to airport takes ~40 min from Monastiraki",note:"Line 3 direct · leave with 2+ hrs before departure"},
+  {cat:"Tip",text:"Paros airport is tiny",note:"No food past security · eat before you fly"}
+]},
+
+{id:"day-5",num:5,date:"Sat May 16",phase:"paros",title:"Paros — Beach Day",subtitle:"Kolymbithres · Monastiri · Santa Maria",lat:37.118,lng:25.238,zoom:12,markers:[{lat:37.1304,lng:25.2094,label:"Kolymbithres Beach",c:"#0A6678"},{lat:37.0985,lng:25.2217,label:"Monastiri Beach Bar",c:"#0A6678"},{lat:37.1458,lng:25.2696,label:"Santa Maria Beach",c:"#0A6678"},{lat:37.1241,lng:25.2376,label:"Naousa harbor — dinner",c:"#0A6678"}],schedule:[{time:"Breakfast",desc:"Breakfast at hotel — included",note:""},{time:"9:30am",desc:"Kolymbithres Beach — 10 min from Naousa",note:"Rock coves and calm water · Arrive early before it fills up"},{time:"12:15pm",desc:"Lunch — Monastiri Beach Bar Restaurant",note:"5 min drive · Grilled meats, seafood, salads · Right on the water"},{time:"2:30pm",desc:"Santa Maria Beach — 10 min drive",note:"More lively · Music, drinks, loungers for rent"},{time:"Evening",desc:"Sunset drinks + dinner by Naousa harbor",note:""}],accom:{icon:"🏖️",label:"Night 2 of 4 in Paros",name:"Bohemian Luxury Boutique Hotel — Naousa",status:"booked",key:"paros",note:"Breakfast included"},recs:[
+  {cat:"Beach",text:"Lageri Beach",note:"Remote and wild · 20 min from Naousa · no facilities · worth the hike"},
+  {cat:"Eat",text:"Soso",note:"Naousa · best restaurant on the island · book ahead · creative Greek cuisine"},
+  {cat:"Drink",text:"Barbarossa Wine Bar",note:"Right on Naousa harbor · local wine · excellent mezze · perfect at sunset"},
+  {cat:"Do",text:"Rent scooters or a buggy",note:"Best way to explore the island · €25–35/day · essential for beach hopping"},
+  {cat:"Tip",text:"Kolymbithres fills up fast",note:"Arrive before 10am for the best rock coves · no lounger rental, bring a mat"}
+]},
+
+{id:"day-6",num:6,date:"Sun May 17",phase:"paros",title:"Antiparos — Day Trip",subtitle:"Ferry from Paros · beaches · Antiparos town",lat:37.030,lng:25.080,zoom:12,markers:[{lat:37.0396,lng:25.0788,label:"Antiparos town + beaches",c:"#0A6678"},{lat:37.0741,lng:25.1476,label:"Pounda ferry port — depart from here",c:"#0A6678"}],schedule:[{time:"Breakfast",desc:"Breakfast at hotel — included",note:""},{time:"Morning",desc:"Drive to Pounda ferry port — ferry to Antiparos",note:"Pounda is ~25 min from Naousa · Short ferry crossing · Car ferry or passenger only"},{time:"Day",desc:"Antiparos — beaches and the main town",note:"Small, quieter island · Great for a full day of exploring"},{time:"Evening",desc:"Ferry back to Paros — return to Naousa",note:""}],accom:{icon:"🏖️",label:"Night 3 of 4 in Paros",name:"Bohemian Luxury Boutique Hotel — Naousa",status:"booked",key:"paros",note:"Breakfast included"},recs:[
+  {cat:"Do",text:"Cave of Antiparos",note:"Giant stalactite cave · open daily · one of the deepest caves in Greece · €4 entry"},
+  {cat:"Beach",text:"Sifneiko Beach",note:"10 min walk from Antiparos town · calm and quiet · good snorkeling"},
+  {cat:"Eat",text:"Tikoli",note:"Antiparos main street · excellent mezze and grilled fish · try the local octopus"},
+  {cat:"Tip",text:"Take the car ferry from Pounda",note:"€10 return per car · don't take the passenger ferry from Parikia — it's much further"}
+]},
+
+{id:"day-7",num:7,date:"Mon May 18",phase:"paros",title:"Paros — South Beaches",subtitle:"Golden Beach · Faragas · Kalogeros · last evening Naousa",lat:37.075,lng:25.290,zoom:12,markers:[{lat:37.0647,lng:25.3037,label:"Golden Beach",c:"#0A6678"},{lat:37.0476,lng:25.2701,label:"Faragas Beach",c:"#0A6678"},{lat:37.0290,lng:25.2190,label:"Kalogeros Beach — clay cliffs",c:"#0A6678"}],schedule:[{time:"Breakfast",desc:"Breakfast at hotel — included",note:""},{time:"10:00am",desc:"Golden Beach — 25 min drive from Naousa",note:"Long sandy beach · Paddleboarding available · Lunch at Blue Restaurant Bar on the sand"},{time:"2:30pm",desc:"Faragas Beach — 20 min drive",note:"Smaller, quieter, scenic · Good contrast to Golden Beach"},{time:"Late PM",desc:"Kalogeros Beach (optional) — 15 min detour",note:"Natural clay cliffs · Fun mud mask moment"},{time:"Evening",desc:"Last evening in Naousa — harbor dinner",note:"Check out tomorrow · Flight to Athens 16:55"}],accom:{icon:"🏖️",label:"Night 4 of 4 in Paros",name:"Bohemian Luxury Boutique Hotel — Naousa",status:"booked",key:"paros",note:"Check-out tomorrow Tue May 19 · Breakfast included"},recs:[
+  {cat:"Beach",text:"Tserdakia Beach",note:"Near Golden Beach · much less crowded · good for snorkeling"},
+  {cat:"Eat",text:"Pervolaria",note:"Naousa · garden courtyard · wine and cheese plates · perfect last-night dinner"},
+  {cat:"Tip",text:"Kalogeros clay is real",note:"Slather it on, let it dry in the sun, rinse in the sea · full spa treatment for free"},
+  {cat:"Do",text:"Naousa old town at night",note:"White cube streets lit by lanterns · best walk on your last evening"}
+]},
+
+{id:"day-8",num:8,date:"Tue May 19",phase:"travel",title:"Paros → Athens Airport Hotel",subtitle:"Aegean 16:55 → 17:40 · Holiday Inn Attica Ave",lat:37.95,lng:23.93,zoom:11,markers:[{lat:37.0088,lng:25.1267,label:"Paros Airport (PAS) — depart 16:55",c:"#5A5A5A"},{lat:37.9364,lng:23.9445,label:"Athens Airport (ATH) — arrive 17:40",c:"#5A5A5A"},{lat:37.9656,lng:23.9236,label:"Holiday Inn Attica Ave — airport hotel",c:"#5A5A5A"}],schedule:[{time:"Morning",desc:"Check out — Bohemian Luxury Boutique Hotel",note:"Last morning in Paros · Breakfast included"},{time:"Afternoon",desc:"Head to Paros Airport (PAS)",note:""},{time:"16:55",desc:"Aegean Airlines / Olympic Airlines departs PAS → ATH",note:""},{time:"17:40",desc:"Arrive Athens International Airport (ATH)",note:""},{time:"Evening",desc:"Check in — Holiday Inn Athens Attica Ave Airport West",note:"Attica Avenue 40.2 km, between exits 17 and 18, Paiania · Booked through Capital One · Early departure tomorrow 07:45"}],accom:{icon:"🏨",label:"Night before departure",name:"Holiday Inn Athens Attica Ave Airport West",status:"booked",key:"airport",note:"Paiania, Attiki · Booked through Capital One · 5 min to terminal"},recs:[
+  {cat:"Do",text:"Morning walk through Naousa",note:"The white cube streets are magical before the crowds · grab a last coffee at the harbor"},
+  {cat:"Eat",text:"Levantis",note:"If you have time in Parikia on the way to the airport · best lamb in Paros"},
+  {cat:"Tip",text:"Hotel is 5 min from ATH terminal",note:"Set an early alarm · SAS departs 07:45 · check in closes ~1 hr before"}
+]},
+
+{id:"day-9",num:9,date:"Wed May 20",phase:"travel",title:"Fly Home — SAS",subtitle:"07:45 departs ATH · arrives 14:40",lat:37.936,lng:23.944,zoom:11,markers:[{lat:37.9364,lng:23.9445,label:"Athens Airport (ATH) — depart 07:45",c:"#5A5A5A"}],schedule:[{time:"Early",desc:"Transfer to Athens Airport (ATH)",note:"Hotel is 5 min from terminal"},{time:"07:45",desc:"SAS Scandinavian Airlines departs ATH",note:"Booked through booking.com"},{time:"14:40",desc:"Arrive home",note:""}],accom:{icon:"✈️",label:"Home",name:"",status:"na",note:""},recs:[]}
+];
+
+var PM = {
+  "travel":{"tag":"Travel","cls":"phase-travel","sc":"phase-travel","cc":"phase-travel"},
+  "athens":{"tag":"Athens","cls":"phase-athens","sc":"phase-athens","cc":"phase-athens"},
+  "paros": {"tag":"Paros", "cls":"phase-paros", "sc":"phase-paros", "cc":"phase-paros"}
+};
+var SM = {
+  "booked":{"text":"Booked","c":"booked"},
+  "book":  {"text":"To Book","c":"book"},
+  "na":    {"text":"","c":"na"}
+};
+
+var _ACCOMDATA = {
+  athens: {
+    title: '🏨 Mono Loft Apartments — Athens',
+    rows: [
+      {icon:'📍', label:'Address',    val:'3 Esopou St, 10554 Athens (Monastiraki)', map:'37.9758,23.7231'},
+      {icon:'📅', label:'Check-in',   val:'Wed May 13'},
+      {icon:'👋', label:'Check-out',  val:'Fri May 15'},
+      {icon:'🌐', label:'Booking',    val:'booking.com'},
+      {icon:'🚇', label:'Getting there', val:'Metro to Monastiraki station · 5 min walk to hotel · Direct line from Athens Airport (~40 min)'}
+    ]
+  },
+  paros: {
+    title: '🏖️ Bohemian Luxury Boutique Hotel — Naousa',
+    rows: [
+      {icon:'📍', label:'Address',    val:'Dimotikh Street, Alonia, Naousa 844 01, Paros', map:'37.1241,25.2376'},
+      {icon:'📅', label:'Check-in',   val:'Fri May 15 (evening)'},
+      {icon:'👋', label:'Check-out',  val:'Tue May 19 (morning)'},
+      {icon:'🍳', label:'Breakfast',  val:'Included daily'},
+      {icon:'✈️', label:'Getting there', val:'Aegean / Olympic Airlines ATH → PAS · 16:55 dep · 17:40 arr'}
+    ]
+  },
+  airport: {
+    title: '🏨 Holiday Inn Athens Attica Ave Airport West',
+    rows: [
+      {icon:'📍', label:'Address',    val:'Attica Avenue 40.2 km, Between Exits 17–18, Paiania, Attiki', map:'37.9656,23.9236'},
+      {icon:'📅', label:'Check-in',   val:'Tue May 19 (evening)'},
+      {icon:'👋', label:'Check-out',  val:'Wed May 20 (early)'},
+      {icon:'💳', label:'Booking',    val:'Capital One'},
+      {icon:'✈️', label:'Note',       val:'5 min to Athens Airport terminal · SAS departs 07:45 — check out early'}
+    ]
+  }
+};
+
+function buildTopNav() {
+  var c = document.getElementById("top-nav-inner");
+  DAYS.forEach(function(d) {
+    var p = PM[d.phase] || PM.travel;
+    var el = document.createElement("div");
+    el.className = "top-nav-day " + p.sc;
+    el.id = "tnav-" + d.id;
+    el.onclick = function() { goDay(d.id); };
+    var pts = d.date.split(" ");
+    el.innerHTML = '<span class="top-nav-num">' + String(d.num).padStart(2,"0") + '</span>'
+      + '<span class="top-nav-date">' + pts[1] + ' ' + pts[2] + '</span>';
+    c.appendChild(el);
+  });
+}
+
+function buildDays() {
+  var MDATA = {};
+  var c = document.getElementById("days-container");
+  DAYS.forEach(function(d) {
+    var p = PM[d.phase] || PM.travel;
+    var st = SM[d.accom.status] || SM.na;
+    MDATA["map-" + d.id] = d.markers;
+    var rows = d.schedule.map(function(s) {
+      var isFlight = s.time.match(/^\d{2}:\d{2}$/) || s.desc.toLowerCase().indexOf('airline') > -1 || s.desc.toLowerCase().indexOf('depart') > -1 || s.desc.toLowerCase().indexOf('arrive') > -1;
+      return '<div class="schedule-row' + (isFlight ? ' flight-row' : '') + '">'
+        + '<div class="sched-time">' + s.time + '</div>'
+        + '<div class="sched-main"><strong>' + s.desc + '</strong>'
+        + (s.note ? '<span class="sched-note">' + s.note + '</span>' : '')
+        + '</div></div>';
+    }).join("");
+    c.innerHTML += '<section class="day-section ' + p.cls + '" id="' + d.id + '">'
+      + '<div class="day-topbar">'
+        + '<div class="day-topbar-left">'
+          + '<span class="day-counter">Day ' + String(d.num).padStart(2,"0") + ' / 9</span>'
+          + '<span class="day-counter-sep"></span>'
+          + '<span class="day-weekdate">' + d.date + '</span>'
+        + '</div>'
+        + '<span class="day-phase-tag">' + p.tag + '</span>'
+      + '</div>'
+      + '<div class="day-headline">'
+        + '<div>'
+          + '<div class="day-title">' + d.title + '</div>'
+          + '<div class="day-subtitle">' + d.subtitle + '</div>'
+        + '</div>'
+        + '<div class="day-num-bg">' + String(d.num).padStart(2,"0") + '</div>'
+      + '</div>'
+      + '<div class="day-body">'
+        + '<div class="day-content-col"><div class="schedule">' + rows + '</div></div>'
+        + '<div class="day-map-col"><div style="position:relative;height:100%">'
+          + '<div class="day-map" id="map-' + d.id + '" data-lat="' + d.lat + '" data-lng="' + d.lng + '" data-zoom="' + d.zoom + '" style="cursor:pointer" onclick="openGoogleMaps(' + d.lat + ',' + d.lng + ')"></div>'
+          + '<span class="map-open-btn" onclick="openGoogleMaps(' + d.lat + ',' + d.lng + ')">&#8599;&nbsp;Expand</span>'
+        + '</div></div>'
+      + '</div>'
+      + (d.accom.key
+          ? '<div class="day-accom ' + st.c + ' has-modal" onclick="openAccomModal(\'' + d.accom.key + '\')">'
+          : '<div class="day-accom ' + st.c + '">')
+      + '<span class="accom-status-text">' + st.text + '</span>'
+      + (d.accom.label ? '<span class="accom-sep">&middot;</span><span class="accom-label">' + d.accom.label + '</span>' : '')
+      + (d.accom.name  ? '<span class="accom-name">' + d.accom.name + '</span>' : '')
+      + (d.accom.note  ? '<span class="accom-note">' + d.accom.note + '</span>' : '')
+      + (d.accom.key   ? '<span class="accom-detail-hint">Details &rsaquo;</span>' : '')
+      + '</div>'
+      + (d.recs && d.recs.length
+          ? '<div class="day-recs"><div class="recs-hd">Recommendations</div><div class="recs-grid">'
+            + d.recs.map(function(r){
+                return '<div class="rec-item"><span class="rec-cat">' + r.cat + '</span>'
+                  + '<span class="rec-body"><span class="rec-text">' + r.text + '</span>'
+                  + (r.note ? '<span class="rec-note">— ' + r.note + '</span>' : '')
+                  + '</span></div>';
+              }).join("")
+            + '</div></div>'
+          : '')
+      + '</section>';
+  });
+  window._MDATA = MDATA;
+}
+
+function initMaps() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting && !e.target.dataset.init) {
+        e.target.dataset.init = "1";
+        var el = e.target;
+        var lt = parseFloat(el.dataset.lat), ln = parseFloat(el.dataset.lng), zm = parseInt(el.dataset.zoom);
+        var ms = (window._MDATA && window._MDATA[el.id]) || [];
+        var m = L.map(el, {center:[lt,ln],zoom:zm,zoomControl:false,scrollWheelZoom:false,attributionControl:false,dragging:false});
+        L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{subdomains:"abcd",maxZoom:19}).addTo(m);
+        ms.forEach(function(mk) {
+          var ic = L.divIcon({html:'<div style="width:10px;height:10px;border-radius:50%;background:'+mk.c+';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35)"></div>',iconSize:[10,10],iconAnchor:[5,5],className:""});
+          L.marker([mk.lat,mk.lng],{icon:ic}).addTo(m).bindTooltip(mk.label,{permanent:false,direction:"top",offset:[0,-8]});
+        });
+        if (ms.length > 1) {
+          L.polyline(ms.map(function(mk){return[mk.lat,mk.lng];}),{color:ms[0].c,weight:1.5,opacity:.4,dashArray:"5 4"}).addTo(m);
+        }
+      }
+    });
+  }, {rootMargin:"400px 0px"});
+  document.querySelectorAll(".day-map").forEach(function(el){obs.observe(el);});
+}
+
+function initSpy() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        var id = e.target.id;
+        document.querySelectorAll(".top-nav-day").forEach(function(el){el.classList.remove("active");});
+        var match = document.getElementById("tnav-" + id);
+        if (match) { match.classList.add("active"); match.scrollIntoView({block:"nearest",inline:"center"}); }
+      }
+    });
+  }, {rootMargin:"-12% 0px -68% 0px"});
+  document.querySelectorAll(".day-section").forEach(function(el){obs.observe(el);});
+}
+
+function openAccomModal(key) {
+  var data = _ACCOMDATA[key];
+  if (!data) return;
+  document.getElementById("accom-modal-title").textContent = data.title;
+  var body = "";
+  data.rows.forEach(function(r) {
+    var val = r.map
+      ? '<a href="https://www.google.com/maps/search/?api=1&query=' + r.map + '" target="_blank">' + r.val + ' ↗</a>'
+      : r.val;
+    body += '<div class="accom-modal-row">'
+      + '<div class="accom-modal-icon">' + r.icon + '</div>'
+      + '<div class="accom-modal-cell">'
+        + '<div class="accom-modal-lbl">' + r.label + '</div>'
+        + '<div class="accom-modal-val">' + val + '</div>'
+      + '</div></div>';
+  });
+  document.getElementById("accom-modal-body").innerHTML = body;
+  document.getElementById("accom-modal-overlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeAccomModal(e) {
+  if (e && e.target !== document.getElementById("accom-modal-overlay")) return;
+  document.getElementById("accom-modal-overlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+document.addEventListener("keydown", function(e){if(e.key==="Escape")closeAccomModal();});
+function goDay(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
+function goTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
+function openGoogleMaps(lat,lng){window.open("https://www.google.com/maps/search/?api=1&query="+lat+","+lng,"_blank");}
+
+
+function toggleRecs() {
+  var on = document.body.classList.toggle("show-recs");
+  localStorage.setItem("gt_recs", on ? "1" : "0");
+}
+
+buildTopNav();
+buildDays();
+if(localStorage.getItem('gt_recs')==='1'){document.body.classList.add('show-recs');}
+window.addEventListener("load", function(){initMaps();initSpy();});
+</script>
+</body>
+</html>
