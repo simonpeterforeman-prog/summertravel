@@ -85,7 +85,6 @@ body {
   background: #fff; border-bottom: 1px solid var(--border);
   height: var(--nav-h);
   width: 100%;
-  overflow: hidden;
 }
 .top-nav-inner {
   display: flex; align-items: stretch;
@@ -118,7 +117,7 @@ body {
 .top-nav-day.active .top-nav-date { color: var(--ink-2); }
 
 /* ━━━━ MAIN ━━━━ */
-.main-wrap { max-width: 900px; margin: 0 auto; width: 100%; }
+.main-wrap { max-width: 900px; margin: 0 auto; width: 100%; overflow-x: hidden; }
 
 /* ━━━━ SECTION ━━━━ */
 .section-hd { padding: 40px 40px 0; }
@@ -295,14 +294,17 @@ body {
   .hero-subtitle { font-size: 15px; }
   .hero-pills { display: none; }
   .section-hd { padding: 28px 20px 0; }
-  #days-container { padding: 16px 20px 48px; }
+  #days-container { padding: 16px 12px 48px; }
   .day-map-col { display: none; }
-  .day-headline { padding: 16px 20px 14px; }
+  .day-headline { padding: 16px 16px 14px; }
   .day-num-bg { font-size: 44px; }
   .day-title { font-size: 20px; }
-  .schedule-row { padding: 9px 20px; }
-  .day-topbar { padding: 8px 20px; }
-  .day-accom { padding: 10px 20px; }
+  .schedule-row { padding: 9px 16px; }
+  .day-topbar { padding: 8px 16px; }
+  .day-accom { padding: 10px 16px; flex-wrap: wrap; }
+  .day-section { max-width: 100%; }
+  .sched-time { min-width: 64px; }
+  .sched-main strong, .sched-note { word-break: break-word; }
   .top-nav-day { padding: 0 14px; }
   .recs-label-full { display: none; }
   .recs-label-short { display: inline !important; }
