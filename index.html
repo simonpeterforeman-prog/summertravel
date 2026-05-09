@@ -1102,6 +1102,8 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
     <button class="sb-section-link active" onclick="goTo('days')">Day by Day</button>
     <div class="sb-days" id="sb-days"></div>
     <div class="sb-divider"></div>
+    <button class="sb-section-link" onclick="goTo('roadtrip-map')">Road Trip Map</button>
+    <div class="sb-divider"></div>
     <button class="sb-section-link" onclick="goTo('checklist')">Booking Checklist</button>
     <div class="sb-divider"></div>
     <button class="sb-section-link" onclick="goTo('budget')">Budget</button>
@@ -1113,6 +1115,7 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
     <span class="mob-brand">High <span>&amp;</span> Wide</span>
     <div class="mob-pills">
       <span class="mob-pill active" onclick="goTo('days')">Days</span>
+      <span class="mob-pill" onclick="goTo('roadtrip-map')">Map</span>
       <span class="mob-pill" onclick="goTo('checklist')">Checklist</span>
       <span class="mob-pill" onclick="goTo('budget')">Budget</span>
     </div>
@@ -1132,10 +1135,18 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
     <div class="hero-date">Jul 3&ndash;19, 2026</div>
   </div>
 
-  <div id="sierra-route" class="section-wrap">
+  <div id="days" class="section-wrap">
+    <div class="section-hd">
+      <div class="section-label">The Trip</div>
+      <h2 class="section-title">Day by Day</h2>
+    </div>
+    <div id="days-container"></div>
+  </div>
+
+  <div id="roadtrip-map" class="section-wrap">
     <div class="section-hd">
       <div class="section-label">Jul 8 &ndash; 14 &middot; BUR to Bay Area</div>
-      <h2 class="section-title">Sierra Route</h2>
+      <h2 class="section-title">Road Trip Map</h2>
     </div>
     <div class="global-pad">
       <div id="sierra-map"></div>
@@ -1145,14 +1156,6 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
         <span style="margin-left:4px;color:#999;">Tap any marker for details</span>
       </div>
     </div>
-  </div>
-
-  <div id="days" class="section-wrap">
-    <div class="section-hd">
-      <div class="section-label">The Trip</div>
-      <h2 class="section-title">Day by Day</h2>
-    </div>
-    <div id="days-container"></div>
   </div>
 
   <div id="checklist" class="section-wrap">
@@ -1420,14 +1423,14 @@ function initSierraMap(){
   var map=L.map('sierra-map',{scrollWheelZoom:false}).setView([37.2,-119.0],7);
   el._smap=map;
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'&copy; OSM &copy; CARTO',subdomains:'abcd',maxZoom:19}).addTo(map);
-  var route=[[34.2007,-118.3585],[35.02,-118.15],[35.62,-117.72],[36.6071,-118.0626],[36.7277,-118.1552],[37.3635,-118.3957],[37.5907,-118.8616],[37.6485,-118.9721],[37.7826,-119.0730],[37.9583,-119.1186],[38.2566,-119.2322],[37.9583,-119.1186],[37.9107,-119.2553],[37.8736,-119.3607],[37.8407,-120.2309],[37.5630,-122.3255]];
+  var route=[[34.2007,-118.3585],[35.02,-118.15],[35.62,-117.72],[36.6071,-118.0626],[36.7277,-118.1552],[37.3635,-118.3957],[37.5907,-118.8616],[37.6485,-118.9721],[37.9583,-119.1186],[38.2566,-119.2322],[37.9583,-119.1186],[37.9107,-119.2553],[37.8736,-119.3607],[37.8407,-120.2309],[37.5630,-122.3255]];
   L.polyline(route,{color:'#E8431C',weight:3,opacity:0.65,dashArray:'8,5'}).addTo(map);
   var nights=[
     {lat:34.2007,lng:-118.3585,lbl:'✈',title:'Burbank Airport (BUR)',note:'Pick up Grandpa · 11:51am · Jul 8'},
     {lat:36.6071,lng:-118.0626,lbl:'1',title:'Lone Pine',note:'Night 1 · Jul 8 · Dow Villa Motel (recommended)'},
-    {lat:37.7826,lng:-119.0730,lbl:'2',title:'June Lake',note:'Night 2 · Jul 9 · June Lake Motel (recommended)'},
+    {lat:37.3635,lng:-118.3957,lbl:'2',title:'Bishop',note:'Night 2 · Jul 9 · Bishop Village Motel or similar'},
     {lat:37.6485,lng:-118.9721,lbl:'3',title:'Mammoth Lakes',note:'Nights 3–5 · Jul 10–12 · Airbnb booked ✓'},
-    {lat:38.2566,lng:-119.2322,lbl:'4',title:'Bridgeport area',note:'Night 6 · Jul 12 · Lee Vining or Bridgeport TBD'},
+    {lat:37.9583,lng:-119.1186,lbl:'4',title:'Lee Vining',note:'Night 6 · Jul 12 · Tioga Pass east gate · Murphey\'s Motel'},
     {lat:37.8407,lng:-120.2309,lbl:'5',title:'Groveland',note:'Night 7 · Jul 13 · Yosemite Westgate Lodge (recommended)'},
     {lat:37.5630,lng:-122.3255,lbl:'6',title:'San Mateo → Mill Valley',note:'Jul 14 · Dan\'s house Mill Valley Jul 15–17'}
   ];
@@ -1441,7 +1444,8 @@ function initSierraMap(){
     {lat:37.3635,lng:-118.3957,title:'Bishop',note:'Lunch · Erick Schat\'s Bakkerij is legendary'},
     {lat:37.5907,lng:-118.8616,title:'Convict Lake',note:'Stunning alpine lake · short loop walk · free'},
     {lat:37.6577,lng:-118.8300,title:'Hot Creek',note:'Volcanic hot springs overlook · free · unique'},
-    {lat:38.3148,lng:-119.2176,title:'Travertine Hot Springs',note:'Free soak on BLM land · near Bridgeport'},
+    {lat:37.7826,lng:-119.0730,title:'June Lake Loop',note:'Scenic detour off 395 · worth a stop on Jul 10 drive to Mammoth'},
+    {lat:38.3148,lng:-119.2176,title:'Travertine Hot Springs',note:'Free soak on BLM land · 15 min north of Lee Vining'},
     {lat:37.8736,lng:-119.3607,title:'Tuolumne Meadows',note:'Yosemite high country · timed entry permit needed'}
   ];
   stops.forEach(function(s){
