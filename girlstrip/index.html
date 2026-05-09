@@ -306,7 +306,7 @@ body {
   .sched-main strong, .sched-note { word-break: break-word; }
   .top-nav-day { padding: 0 14px; }
   #pw-row { flex-direction: column; gap: 10px; }
-  #pw-input { width: 220px; max-width: 80vw; font-size: 16px; }
+  #pw-input { width: 220px; max-width: 80vw; }
   #pw-submit { padding: 12px 28px; height: 44px; }
   .recs-label-full { display: none; }
   .recs-label-short { display: inline !important; }
@@ -332,7 +332,7 @@ body {
 #pw-row { display: flex; align-items: stretch; gap: 12px; max-width: 90vw; }
 #pw-input {
   background: transparent; border: 1px solid #444;
-  color: #fff; font-family: var(--body); font-size: 13px; font-weight: 300;
+  color: #fff; font-family: var(--body); font-size: 16px; font-weight: 300;
   letter-spacing: 0.12em; text-align: center; padding: 9px 20px;
   width: 220px; max-width: 60vw; outline: none;
 }
@@ -416,7 +416,7 @@ body.show-recs .recs-switch::after { transform: translateX(12px); }
   <div id="pw-gate-title">Girls Trip</div>
   <form id="pw-form" id="pw-gate-form">
     <div id="pw-row">
-      <input id="pw-input" type="password" placeholder="password" autocomplete="off" autofocus>
+      <input id="pw-input" type="password" placeholder="password" autocomplete="off">
       <button id="pw-submit" type="submit">Enter</button>
     </div>
     <div id="pw-error">Incorrect password</div>
