@@ -89,9 +89,9 @@ body {
   display: flex; align-items: stretch;
   overflow-x: scroll; scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  width: calc(100% - 80px);
-  max-width: calc(900px - 80px);
-  padding: 0 0 0 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 80px 0 0;
   height: 100%;
 }
 .top-nav-inner::-webkit-scrollbar { display: none; }
@@ -131,7 +131,7 @@ body {
 }
 
 /* ━━━━ DAY CARDS ━━━━ */
-#days-container { padding: 24px 40px 64px; display: flex; flex-direction: column; gap: 1px; }
+#days-container { padding: 24px 40px 70vh; display: flex; flex-direction: column; gap: 1px; }
 
 .day-section {
   background: var(--surface);
@@ -288,12 +288,12 @@ body {
 
 /* ━━━━ RESPONSIVE ━━━━ */
 @media (max-width: 768px) {
-  .hero { padding: 36px 24px 32px; }
+  .hero { padding: 36px 24px 18px; }
   .hero-title { font-size: 32px; white-space: normal; }
   .hero-subtitle { font-size: 15px; }
   .hero-pills { display: none; }
   .section-hd { padding: 28px 20px 0; }
-  #days-container { padding: 16px 12px 48px; }
+  #days-container { padding: 16px 12px 70vh; }
   .day-map-col { display: none; }
   .day-headline { padding: 16px 16px 14px; }
   .day-num-bg { font-size: 44px; }
@@ -312,6 +312,27 @@ body {
   .recs-label-short { display: inline !important; }
   .recs-toggle { flex-direction: column; gap: 0; justify-content: center; padding: 0 12px; }
   .recs-label-short { line-height: 1; margin-bottom: 2px; }
+  body { font-size: 16px; }
+  .hero-eyebrow { font-size: 10px; }
+  .day-counter { font-size: 10px; }
+  .day-weekdate { font-size: 12px; }
+  .day-phase-tag { font-size: 10px; }
+  .day-title { font-size: 22px; }
+  .day-subtitle { font-size: 12px; }
+  .sched-time { font-size: 11px; }
+  .sched-main strong { font-size: 15px; }
+  .sched-note { font-size: 13px; }
+  .accom-status-text { font-size: 10px; }
+  .accom-label { font-size: 11px; }
+  .accom-name { font-size: 15px; }
+  .accom-note { font-size: 13px; }
+  .accom-detail-hint { font-size: 11px; }
+  .top-nav-num { font-size: 11px; }
+  .top-nav-date { font-size: 12px; }
+  .recs-hd { font-size: 10px; }
+  .rec-cat { font-size: 10px; }
+  .rec-text { font-size: 15px; }
+  .rec-note { font-size: 13px; }
 }
 .recs-label-short { display: none; }
 
@@ -714,7 +735,7 @@ function closeAccomModal(e) {
 }
 
 document.addEventListener("keydown", function(e){if(e.key==="Escape")closeAccomModal();});
-function goDay(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
+function goDay(id){var el=document.getElementById(id);if(el){el.scrollIntoView({behavior:"smooth",block:"start"});document.querySelectorAll(".top-nav-day").forEach(function(n){n.classList.remove("active");});var m=document.getElementById("tnav-"+id);if(m){m.classList.add("active");m.scrollIntoView({block:"nearest",inline:"center"});}}}
 function goTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
 function openGoogleMaps(lat,lng){window.open("https://www.google.com/maps/search/?api=1&query="+lat+","+lng,"_blank");}
 
