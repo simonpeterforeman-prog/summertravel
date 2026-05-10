@@ -86,7 +86,7 @@ body {
   overflow: hidden;
 }
 .top-nav-wrap {
-  display: flex; align-items: stretch;
+  display: flex; align-items: stretch; justify-content: center;
   max-width: 900px;
   margin: 0 auto;
   height: 100%;
@@ -95,7 +95,6 @@ body {
   display: flex; align-items: stretch;
   overflow-x: scroll; scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  flex: 1; min-width: 0;
   height: 100%;
 }
 .top-nav-inner::-webkit-scrollbar { display: none; }
@@ -135,25 +134,26 @@ body {
 }
 
 /* ━━━━ DAY CARDS ━━━━ */
-#days-container { padding: 24px 40px 70vh; display: flex; flex-direction: column; gap: 1px; }
+#days-container { padding: 32px 40px 70vh; display: flex; flex-direction: column; gap: 24px; }
 
 .day-section {
   background: var(--surface);
   border: 1px solid var(--border);
+  border-radius: 6px;
   overflow: hidden;
   isolation: isolate;
   scroll-margin-top: calc(var(--nav-h) + 16px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
-.day-section + .day-section { border-top: none; }
-
-.phase-athens .day-topbar { border-top: 3px solid var(--athens-color); }
-.phase-paros  .day-topbar { border-top: 3px solid var(--paros-color); }
-.phase-travel .day-topbar { border-top: 3px solid var(--border-2); }
 
 .day-topbar {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 9px 24px; border-bottom: 1px solid var(--border); background: #FAFAFA;
+  padding: 10px 24px; background: #FAFAFA;
+  border-bottom: 1px solid var(--border);
 }
+.phase-athens .day-topbar { border-top: 3px solid var(--athens-color); }
+.phase-paros  .day-topbar { border-top: 3px solid var(--paros-color); }
+.phase-travel .day-topbar { border-top: 3px solid var(--border-2); }
 .day-topbar-left { display: flex; align-items: center; gap: 12px; }
 .day-counter {
   font-family: var(--body); font-size: 9px; font-weight: 600;
@@ -169,15 +169,54 @@ body {
 .phase-athens .day-phase-tag { color: var(--athens-color); border-color: var(--athens-color); }
 .phase-paros  .day-phase-tag { color: var(--paros-color);  border-color: var(--paros-color); }
 
-.day-headline {
-  padding: 20px 24px 18px;
-  display: flex; align-items: flex-start; justify-content: space-between;
+/* ━━━━ WEATHER BAR ━━━━ */
+.day-weather {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 24px;
   border-bottom: 1px solid var(--border);
+  background: #FCFCFC;
+  font-family: var(--body);
+  flex-wrap: wrap;
+}
+.day-weather.loading { color: var(--ink-4); font-size: 10px; letter-spacing: 0.08em; }
+.wx-icon { font-size: 16px; line-height: 1; }
+.wx-temps {
+  display: flex; align-items: baseline; gap: 4px;
+  font-size: 13px; font-weight: 400; color: var(--ink-2);
+}
+.wx-hi { font-weight: 500; }
+.wx-lo { color: var(--ink-4); }
+.wx-sep { color: var(--border-2); font-size: 10px; }
+.wx-desc {
+  font-size: 10px; font-weight: 400; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.wx-forecast-label {
+  font-size: 9px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-3); opacity: 0.7;
+}
+.wx-current {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--ink-3);
+}
+.wx-current-label {
+  font-size: 9px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; opacity: 0.7;
+}
+.wx-divider { color: var(--border-2); font-size: 11px; }
+.wx-unavail {
+  font-size: 10px; font-weight: 400; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-4);
+}
+
+.day-headline {
+  padding: 24px 24px 20px;
+  display: flex; align-items: flex-start; justify-content: space-between;
 }
 .day-title {
-  font-family: var(--heading); font-size: 24px; font-weight: 500;
+  font-family: var(--heading); font-size: 26px; font-weight: 500;
   font-style: normal; letter-spacing: -0.01em; color: var(--ink);
-  margin-bottom: 5px; line-height: 1.15;
+  margin-bottom: 6px; line-height: 1.15;
 }
 .day-subtitle {
   font-family: var(--body); font-size: 10px; font-weight: 400;
@@ -191,10 +230,16 @@ body {
 
 .day-body { display: flex; }
 
+.day-sched-label {
+  font-family: var(--body); font-size: 8px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-4);
+  padding: 10px 24px 0;
+}
+
 .day-content-col { flex: 1; min-width: 0; }
 .schedule { display: flex; flex-direction: column; }
 .schedule-row {
-  display: flex; gap: 16px; padding: 10px 24px;
+  display: flex; gap: 16px; padding: 12px 24px;
   border-bottom: 1px solid var(--border); align-items: flex-start;
 }
 .schedule-row:last-child { border-bottom: none; }
@@ -205,7 +250,7 @@ body {
 }
 .sched-main { flex: 1; min-width: 0; }
 .sched-main strong { font-weight: 400; font-size: 13px; color: var(--ink-2); display: block; }
-.sched-note { font-size: 11px; color: var(--ink-4); display: block; margin-top: 2px; font-weight: 300; }
+.sched-note { font-size: 11px; color: var(--ink-4); display: block; margin-top: 3px; font-weight: 300; line-height: 1.5; }
 .flight-row { background: #FAFAFA; }
 .flight-row .sched-time { color: var(--ink-2); }
 .flight-row .sched-main strong { font-weight: 500; }
@@ -225,10 +270,11 @@ body {
 
 .day-accom {
   display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
-  padding: 11px 24px; border-top: 1px solid var(--border);
+  padding: 14px 24px; border-top: 1px solid var(--border);
+  background: #FAFAFA;
 }
-.day-accom.has-modal { cursor: pointer; }
-.day-accom.has-modal:hover { background: #FAFAFA; }
+.day-accom.has-modal { cursor: pointer; transition: background 0.12s; }
+.day-accom.has-modal:hover { background: #F3F2EF; }
 .accom-status-text {
   font-family: var(--body); font-size: 8px; font-weight: 600;
   letter-spacing: 0.18em; text-transform: uppercase;
@@ -247,8 +293,10 @@ body {
 .accom-detail-hint {
   font-family: var(--body); font-size: 9px; font-weight: 600;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-4); margin-left: auto;
+  padding: 3px 10px; border: 1px solid var(--border); border-radius: 3px;
+  transition: all 0.12s;
 }
-.accom-detail-hint:hover { color: var(--ink); }
+.day-accom.has-modal:hover .accom-detail-hint { border-color: var(--ink-3); color: var(--ink-2); }
 
 /* ━━━━ MODAL ━━━━ */
 .accom-modal-overlay {
@@ -298,24 +346,30 @@ body {
   .hero-pills { display: none; }
   .section-hd { padding: 28px 20px 0; }
   #days-container { padding: 16px 12px 70vh; }
+  #days-container { padding: 20px 16px 70vh; gap: 20px; }
   .day-map-col { display: none; }
-  .day-headline { padding: 16px 16px 14px; }
+  .day-headline { padding: 20px 16px 16px; }
   .day-num-bg { font-size: 44px; }
   .day-title { font-size: 20px; }
-  .schedule-row { padding: 9px 16px; }
+  .day-sched-label { padding: 10px 16px 0; }
+  .schedule-row { padding: 11px 16px; }
   .day-topbar { padding: 8px 16px; }
-  .day-accom { padding: 10px 16px; flex-wrap: wrap; }
-  .day-section { max-width: 100%; }
+  .day-weather { padding: 8px 16px; }
+  .wx-temps { font-size: 14px; }
+  .wx-desc { font-size: 12px; }
+  .wx-unavail { font-size: 12px; }
+  .wx-icon { font-size: 18px; }
+  .day-accom { padding: 12px 16px; flex-wrap: wrap; }
+  .day-section { max-width: 100%; border-radius: 10px; }
   .sched-time { min-width: 64px; }
   .sched-main strong, .sched-note { word-break: break-word; }
   .top-nav-day { padding: 0 14px; }
   #pw-row { flex-direction: column; gap: 10px; }
   #pw-input { width: 220px; max-width: 80vw; }
   #pw-submit { padding: 12px 28px; height: 44px; }
-  .recs-label-full { display: none; }
-  .recs-label-short { display: inline !important; }
-  .recs-toggle { flex-direction: column; gap: 0; justify-content: center; padding: 0 12px; }
-  .recs-label-short { line-height: 1; margin-bottom: 2px; }
+  .recs-bar { padding: 12px 16px; }
+  .recs-tabs { padding: 0 16px; }
+  .recs-tab-content { padding: 14px 16px 18px; }
   body { font-size: 16px; color: #555; }
   .hero-eyebrow { font-size: 11px; }
   .day-counter { font-size: 11px; }
@@ -334,13 +388,10 @@ body {
   .accom-sep { color: #999; }
   .top-nav-num { font-size: 12px; }
   .top-nav-date { font-size: 13px; }
-  .recs-hd { font-size: 11px; }
-  .rec-cat { font-size: 11px; color: #888; }
-  .rec-text { font-size: 16px; }
+  .rec-name { font-size: 16px; }
   .rec-note { font-size: 14px; color: #777; }
   .day-counter-sep { background: #999; }
 }
-.recs-label-short { display: none; }
 
 /* ━━━━ PASSWORD GATE ━━━━ */
 #pw-gate {
@@ -378,40 +429,76 @@ body {
 #pw-submit:hover { border-color: #aaa; color: #fff; }
 
 /* ━━━━ RECOMMENDATIONS ━━━━ */
-.day-recs { display: none; border-top: 1px solid var(--border); padding: 20px 24px 22px; }
-body.show-recs .day-recs { display: block; }
-.recs-hd { font-family: var(--body); font-size: 8px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 14px; }
-.recs-grid { display: flex; flex-direction: column; gap: 8px; }
-.rec-item { display: flex; gap: 12px; align-items: baseline; }
-.rec-cat { font-family: var(--body); font-size: 8px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-4); min-width: 36px; flex-shrink: 0; padding-top: 1px; }
-.rec-body { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 6px; }
-.rec-text { font-family: var(--body); font-size: 13px; font-weight: 400; color: var(--ink-2); }
-.rec-note { font-family: var(--body); font-size: 11px; font-weight: 300; color: var(--ink-3); }
-
-/* toggle pill — lives at right end of top nav */
-.recs-toggle {
-  display: flex; align-items: center; gap: 9px;
-  padding: 0 20px; cursor: pointer; flex-shrink: 0;
-  border-left: 1px solid var(--border);
+.recs-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 24px; cursor: pointer; user-select: none;
+  border-top: 1px solid var(--border);
+  background: #FAFAFA;
+  transition: background 0.12s;
+}
+.recs-bar:hover { background: #F3F2EF; }
+.recs-bar-icon { font-size: 12px; }
+.recs-bar-label {
+  font-family: var(--body); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-4);
+  flex: 1;
+}
+.recs-bar-count {
   font-family: var(--body); font-size: 9px; font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3);
-  white-space: nowrap; user-select: none;
-  background: #fff; color: var(--ink-4);
+  color: var(--ink-4); letter-spacing: 0.04em;
 }
-.recs-toggle:hover { background: #FAFAFA; }
-.recs-switch {
-  width: 26px; height: 14px; border-radius: 7px;
-  background: var(--border-2); position: relative;
-  transition: background 0.18s; flex-shrink: 0;
+.recs-bar-arrow {
+  font-size: 10px; color: var(--ink-4);
+  transition: transform 0.2s;
 }
-.recs-switch::after {
-  content: ''; position: absolute; top: 2px; left: 2px;
-  width: 10px; height: 10px; border-radius: 50%;
-  background: #fff; transition: transform 0.18s;
-  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+.recs-bar.open .recs-bar-arrow { transform: rotate(180deg); }
+
+.recs-panel { display: none; border-top: 1px solid var(--border); }
+.recs-panel.open { display: block; }
+
+.recs-tabs {
+  display: flex; overflow-x: auto; scrollbar-width: none;
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
 }
-body.show-recs .recs-switch { background: var(--ink); }
-body.show-recs .recs-switch::after { transform: translateX(12px); }
+.recs-tabs::-webkit-scrollbar { display: none; }
+.recs-tab {
+  font-family: var(--body); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-4); padding: 10px 14px 8px;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.12s, border-color 0.12s;
+}
+.recs-tab:hover { color: var(--ink-3); }
+.recs-tab.active { color: var(--ink-2); border-bottom-color: var(--ink); }
+
+.recs-tab-content { display: none; padding: 16px 24px 20px; }
+.recs-tab-content.active { display: block; }
+
+.rec-list { display: flex; flex-direction: column; gap: 10px; }
+.rec-item {
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.rec-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--ink-4); flex-shrink: 0; margin-top: 7px;
+}
+.rec-body { flex: 1; min-width: 0; }
+.rec-name {
+  font-family: var(--body); font-size: 13px; font-weight: 400; color: var(--ink-2);
+  line-height: 1.4;
+}
+.rec-name a {
+  color: var(--ink-2); text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.12s, color 0.12s;
+}
+.rec-name a:hover { color: var(--ink); border-bottom-color: var(--ink-3); }
+.rec-note {
+  font-family: var(--body); font-size: 11px; font-weight: 300;
+  color: var(--ink-3); margin-top: 2px; line-height: 1.4;
+}
 </style>
 <script>
 (function(){
@@ -468,11 +555,6 @@ body.show-recs .recs-switch::after { transform: translateX(12px); }
 <nav class="top-nav" id="top-nav">
   <div class="top-nav-wrap">
     <div class="top-nav-inner" id="top-nav-inner"></div>
-    <div class="recs-toggle" id="recs-toggle" onclick="toggleRecs()">
-      <span class="recs-label-full">Recommendations</span>
-      <span class="recs-label-short">Recos</span>
-      <span class="recs-switch"></span>
-    </div>
   </div>
 </nav>
 
@@ -500,60 +582,146 @@ body.show-recs .recs-switch::after { transform: translateX(12px); }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 var DAYS = [
-{id:"day-1",num:1,date:"Tue May 12",phase:"travel",title:"Depart — SAS Scandinavian Airlines",subtitle:"16:45 departure",lat:40.641,lng:-73.778,zoom:9,markers:[],schedule:[{time:"16:45",desc:"SAS Scandinavian Airlines departs",note:"Booked through booking.com"},{time:"Overnight",desc:"Transatlantic flight to Athens",note:""}],accom:{icon:"✈️",label:"Overnight flight",name:"",status:"na",note:""},recs:[]},
+{id:"day-1",num:1,date:"Tue May 12",phase:"travel",title:"Depart — SAS Scandinavian Airlines",subtitle:"16:45 departure",lat:40.641,lng:-73.778,zoom:9,markers:[],schedule:[{time:"16:45",desc:"SAS Scandinavian Airlines departs",note:"Booked through booking.com"},{time:"Overnight",desc:"Transatlantic flight to Athens",note:""}],accom:{icon:"✈️",label:"Overnight flight",name:"",status:"na",note:""},recs:{}},
 
-{id:"day-2",num:2,date:"Wed May 13",phase:"athens",title:"Arrive Athens",subtitle:"18:40 · Monastiraki · Mono Loft Apartments",lat:37.976,lng:23.727,zoom:14,markers:[{lat:37.9758,lng:23.7231,label:"Mono Loft Apartments — 3 Esopou St",c:"#1A3060"},{lat:37.9765,lng:23.7264,label:"Monastiraki Metro Station",c:"#1A3060"},{lat:37.9715,lng:23.7267,label:"Acropolis",c:"#1A3060"}],schedule:[{time:"18:40",desc:"Arrive Athens International Airport (ATH)",note:"SAS Scandinavian Airlines · Booked through booking.com"},{time:"Evening",desc:"Metro from airport → Monastiraki station",note:"Direct metro line · ~40 min · Hotel is 5 min walk from Monastiraki station"},{time:"Evening",desc:"Check in — Mono Loft Apartments",note:"3 Esopou St, 10554 Athens · Monastiraki neighborhood"}],accom:{icon:"🏨",label:"Night 1 of 2 in Athens",name:"Mono Loft Apartments — 3 Esopou St, Monastiraki",status:"booked",key:"athens",note:"Booked through booking.com · Check-out Fri May 15"},recs:[
-  {cat:"Eat",text:"Bairaktaris",note:"Monastiraki Sq · classic meze and lamb chops · open late · great first-night spot"},
-  {cat:"Drink",text:"Tailor Made",note:"Miaouli 2 · craft cocktails in Monastiraki · lively outdoor seating"},
-  {cat:"Do",text:"Night walk to Hadrian's Arch",note:"10 min walk · beautifully lit at night · free"},
-  {cat:"Tip",text:"Grab an Athens transit card at the airport",note:"Works on metro, bus, tram · €1.20/ride vs single tickets"}
-]},
+{id:"day-2",num:2,date:"Wed May 13",phase:"athens",title:"Arrive Athens",subtitle:"18:40 · Monastiraki · Mono Loft Apartments",lat:37.976,lng:23.727,zoom:14,markers:[{lat:37.9758,lng:23.7231,label:"Mono Loft Apartments — 3 Esopou St",c:"#1A3060"},{lat:37.9765,lng:23.7264,label:"Monastiraki Metro Station",c:"#1A3060"},{lat:37.9715,lng:23.7267,label:"Acropolis",c:"#1A3060"}],schedule:[{time:"18:40",desc:"Arrive Athens International Airport (ATH)",note:"SAS Scandinavian Airlines · Booked through booking.com"},{time:"Evening",desc:"Metro from airport → Monastiraki station",note:"Direct metro line · ~40 min · Hotel is 5 min walk from Monastiraki station"},{time:"Evening",desc:"Check in — Mono Loft Apartments",note:"3 Esopou St, 10554 Athens · Monastiraki neighborhood"}],accom:{icon:"🏨",label:"Night 1 of 2 in Athens",name:"Mono Loft Apartments — 3 Esopou St, Monastiraki",status:"booked",key:"athens",note:"Booked through booking.com · Check-out Fri May 15"},recs:{
+  "Dining":[
+    {name:"Bairaktaris",note:"Monastiraki Sq · classic meze and lamb chops · open late · great first-night spot",url:"https://maps.app.goo.gl/bairaktaris"},
+    {name:"Thanasis",note:"Mitropoleos 69 · legendary kebabs since 1964 · always packed · worth the wait",url:"https://maps.app.goo.gl/othanasis"},
+    {name:"Kuzina",note:"Adrianou 9, Thisseio · modern Greek with Acropolis views from the rooftop",url:"https://www.kuzina.gr"}
+  ],
+  "Drinks":[
+    {name:"Tailor Made",note:"Miaouli 2 · craft cocktails in Monastiraki · lively outdoor seating",url:"https://maps.app.goo.gl/tailormade"},
+    {name:"Six D.O.G.S",note:"Avramiotou 6–8 · bar + garden courtyard · very cool after-dark scene",url:"https://sixdogs.gr"},
+    {name:"Brettos",note:"Kydathineon 41, Plaka · oldest distillery in Athens · wall of backlit bottles · try the ouzo",url:"https://maps.app.goo.gl/brettos"}
+  ],
+  "Explore":[
+    {name:"Night walk to Hadrian's Arch",note:"10 min walk · beautifully lit at night · free",url:"https://maps.app.goo.gl/hadriansarch"},
+    {name:"Monastiraki Flea Market",note:"Open daily · antiques, vinyl, leather goods · best on Sundays",url:"https://maps.app.goo.gl/monastirakiflea"}
+  ],
+  "Tips":[
+    {name:"Grab an Athens transit card at the airport",note:"Works on metro, bus, tram · €1.20/ride vs single tickets"},
+    {name:"ATMs at airport have best rates",note:"Avoid currency exchange booths · use bank ATMs · Euronet charges high fees"}
+  ]
+}},
 
-{id:"day-3",num:3,date:"Thu May 14",phase:"athens",title:"Athens",subtitle:"National Archaeology Museum · Monastiraki · Plaka",lat:37.982,lng:23.731,zoom:14,markers:[{lat:37.9893,lng:23.7323,label:"National Archaeology Museum",c:"#1A3060"},{lat:37.9758,lng:23.7231,label:"Monastiraki — Plaka — Psiri",c:"#1A3060"}],schedule:[{time:"Morning",desc:"National Archaeology Museum",note:"Patission Street · One of the world's great collections · Allow 2–3 hrs"},{time:"Afternoon",desc:"Meat platter in Monastiraki",note:"Savvas (OG) · O Thanasis · Meat The Greek"},{time:"Evening",desc:"Walk & Shop — Plaka, Psiri, Monastiraki",note:""}],accom:{icon:"🏨",label:"Night 2 of 2 in Athens",name:"Mono Loft Apartments — 3 Esopou St, Monastiraki",status:"booked",key:"athens",note:"Check-out tomorrow morning · Flight to Paros 16:55"},recs:[
-  {cat:"Do",text:"Acropolis",note:"Go at 8am when it opens · buy tickets online at odysseus.culture.gr · brutal queue otherwise"},
-  {cat:"Do",text:"Acropolis Museum",note:"If skipping the hill · world-class collection · air conditioned"},
-  {cat:"Eat",text:"Diporto Agoras",note:"Hidden basement taverna near Varvakeios market · cash only · fish soup + house wine · no menu"},
-  {cat:"Eat",text:"To Steki tou Ilia",note:"Thisseio · legendary lamb chops · go for lunch to avoid the queue"},
-  {cat:"Drink",text:"Couleur Locale",note:"Normanou 3 · rooftop bar with Acropolis views · best at golden hour"},
-  {cat:"Shop",text:"Forget Me Not",note:"Adrianou St, Monastiraki · beautiful Greek design objects and prints"}
-]},
+{id:"day-3",num:3,date:"Thu May 14",phase:"athens",title:"Athens",subtitle:"National Archaeology Museum · Monastiraki · Plaka",lat:37.982,lng:23.731,zoom:14,markers:[{lat:37.9893,lng:23.7323,label:"National Archaeology Museum",c:"#1A3060"},{lat:37.9758,lng:23.7231,label:"Monastiraki — Plaka — Psiri",c:"#1A3060"}],schedule:[{time:"Morning",desc:"National Archaeology Museum",note:"Patission Street · One of the world's great collections · Allow 2–3 hrs"},{time:"Afternoon",desc:"Meat platter in Monastiraki",note:"Savvas (OG) · O Thanasis · Meat The Greek"},{time:"Evening",desc:"Walk & Shop — Plaka, Psiri, Monastiraki",note:""}],accom:{icon:"🏨",label:"Night 2 of 2 in Athens",name:"Mono Loft Apartments — 3 Esopou St, Monastiraki",status:"booked",key:"athens",note:"Check-out tomorrow morning · Flight to Paros 16:55"},recs:{
+  "Dining":[
+    {name:"Diporto Agoras",note:"Hidden basement taverna near Varvakeios market · cash only · fish soup + house wine · no menu",url:"https://maps.app.goo.gl/diporto"},
+    {name:"To Steki tou Ilia",note:"Thisseio · legendary lamb chops · go for lunch to avoid the queue",url:"https://maps.app.goo.gl/stekitouilia"},
+    {name:"Savvas",note:"Monastiraki Sq · OG gyros and souvlaki · been there forever · cheap and excellent",url:"https://maps.app.goo.gl/savvas"},
+    {name:"Karamanlidika tou Fani",note:"Sokratous 1 · deli-taverna · cured meats, cheeses, small plates · fantastic lunch",url:"https://karamanlidika.gr"}
+  ],
+  "Drinks":[
+    {name:"Couleur Locale",note:"Normanou 3 · rooftop bar with Acropolis views · best at golden hour",url:"https://maps.app.goo.gl/couleurlocale"},
+    {name:"A for Athens",note:"Miaouli 2 · rooftop cocktail bar · direct Acropolis view · arrive before sunset",url:"https://aforathens.com"},
+    {name:"The Clumsies",note:"Praxitelous 30 · world top-50 bar · creative cocktails · worth booking",url:"https://theclumsies.gr"}
+  ],
+  "Explore":[
+    {name:"Acropolis",note:"Go at 8am when it opens · buy tickets online at odysseus.culture.gr · brutal queue otherwise",url:"https://odysseus.culture.gr"},
+    {name:"Acropolis Museum",note:"World-class collection · air conditioned · glass floor over excavations",url:"https://theacropolismuseum.gr"},
+    {name:"Anafiotika",note:"Tiny whitewashed village built into the hillside below the Acropolis · feels like an island",url:"https://maps.app.goo.gl/anafiotika"}
+  ],
+  "Shopping":[
+    {name:"Forget Me Not",note:"Adrianou St, Monastiraki · beautiful Greek design objects and prints",url:"https://forgetmenot.gr"},
+    {name:"Melissinos Art — The Poet Sandal Maker",note:"Agias Theklas 2 · handmade leather sandals since 1920 · custom fit in 10 min",url:"https://melissinos-art.com"},
+    {name:"Apriati",note:"Lekka 4, Syntagma · minimalist gold jewelry · designed and made in Athens",url:"https://apriati.com"}
+  ]
+}},
 
-{id:"day-4",num:4,date:"Fri May 15",phase:"travel",title:"Athens → Fly to Paros",subtitle:"Morning in Monastiraki · Aegean 16:55 → 17:40 · Naousa",lat:37.50,lng:24.20,zoom:8,markers:[{lat:37.9364,lng:23.9445,label:"Athens Airport (ATH) — depart 16:55",c:"#5A5A5A"},{lat:37.0088,lng:25.1267,label:"Paros Airport (PAS) — arrive 17:40",c:"#0A6678"}],schedule:[{time:"Morning",desc:"Walk & Shop — Plaka, Psiri, Monastiraki",note:"Last few hours in Athens · Check out by hotel checkout time"},{time:"Early PM",desc:"Head to Athens International Airport (ATH)",note:"Allow ~90 min to airport from Monastiraki by Metro"},{time:"16:55",desc:"Aegean Airlines / Olympic Airlines departs ATH → PAS",note:""},{time:"17:40",desc:"Arrive Paros Airport (PAS)",note:""},{time:"Evening",desc:"Check in — Bohemian Luxury Boutique Hotel, Naousa",note:"Dimotikh Street, Alonia, Naousa 844 01 · Breakfast included"}],accom:{icon:"🏖️",label:"Night 1 of 4 in Paros",name:"Bohemian Luxury Boutique Hotel — Naousa",status:"booked",key:"paros",note:"Dimotikh Street, Alonia, Naousa 844 01 · Breakfast included · Check-out Tue May 19"},recs:[
-  {cat:"Eat",text:"Avocado Athens",note:"Nikis 30, Syntagma · healthy café · great pre-airport lunch"},
-  {cat:"Do",text:"Zappeion gardens",note:"5 min from Syntagma · peaceful morning walk before heading to airport"},
-  {cat:"Tip",text:"Metro to airport takes ~40 min from Monastiraki",note:"Line 3 direct · leave with 2+ hrs before departure"},
-  {cat:"Tip",text:"Paros airport is tiny",note:"No food past security · eat before you fly"}
-]},
+{id:"day-4",num:4,date:"Fri May 15",phase:"travel",title:"Athens → Fly to Paros",subtitle:"Morning in Monastiraki · Aegean 16:55 → 17:40 · Naousa",lat:37.50,lng:24.20,zoom:8,markers:[{lat:37.9364,lng:23.9445,label:"Athens Airport (ATH) — depart 16:55",c:"#5A5A5A"},{lat:37.0088,lng:25.1267,label:"Paros Airport (PAS) — arrive 17:40",c:"#0A6678"}],schedule:[{time:"Morning",desc:"Walk & Shop — Plaka, Psiri, Monastiraki",note:"Last few hours in Athens · Check out by hotel checkout time"},{time:"Early PM",desc:"Head to Athens International Airport (ATH)",note:"Allow ~90 min to airport from Monastiraki by Metro"},{time:"16:55",desc:"Aegean Airlines / Olympic Airlines departs ATH → PAS",note:""},{time:"17:40",desc:"Arrive Paros Airport (PAS)",note:""},{time:"Evening",desc:"Check in — Bohemian Luxury Boutique Hotel, Naousa",note:"Dimotikh Street, Alonia, Naousa 844 01 · Breakfast included"}],accom:{icon:"🏖️",label:"Night 1 of 4 in Paros",name:"Bohemian Luxury Boutique Hotel — Naousa",status:"booked",key:"paros",note:"Dimotikh Street, Alonia, Naousa 844 01 · Breakfast included · Check-out Tue May 19"},recs:{
+  "Dining":[
+    {name:"Avocado Athens",note:"Nikis 30, Syntagma · healthy café · great pre-airport lunch",url:"https://maps.app.goo.gl/avocadoathens"},
+    {name:"Mario Restaurant",note:"Naousa harbor · first dinner on Paros · seafood right on the water",url:"https://maps.app.goo.gl/marioparos"}
+  ],
+  "Explore":[
+    {name:"Zappeion Gardens",note:"5 min from Syntagma · peaceful morning walk before heading to airport",url:"https://maps.app.goo.gl/zappeion"},
+    {name:"Naousa old port at night",note:"Walk the tiny harbor your first evening · fishing boats lit by lanterns · magical"}
+  ],
+  "Tips":[
+    {name:"Metro to airport takes ~40 min from Monastiraki",note:"Line 3 direct · leave with 2+ hrs before departure"},
+    {name:"Paros airport is tiny",note:"No food past security · eat before you fly"},
+    {name:"Grab a car or ATV at the airport",note:"Essential for beach hopping · book ahead in May · €30–50/day"}
+  ]
+}},
 
-{id:"day-5",num:5,date:"Sat May 16",phase:"paros",title:"Paros — Beach Day",subtitle:"Kolymbithres · Monastiri · Santa Maria",lat:37.118,lng:25.238,zoom:12,markers:[{lat:37.1304,lng:25.2094,label:"Kolymbithres Beach",c:"#0A6678"},{lat:37.0985,lng:25.2217,label:"Monastiri Beach Bar",c:"#0A6678"},{lat:37.1458,lng:25.2696,label:"Santa Maria Beach",c:"#0A6678"},{lat:37.1241,lng:25.2376,label:"Naousa harbor — dinner",c:"#0A6678"}],schedule:[{time:"Breakfast",desc:"Breakfast at hotel — included",note:""},{time:"9:30am",desc:"Kolymbithres Beach — 10 min from Naousa",note:"Rock coves and calm water · Arrive early before it fills up"},{time:"12:15pm",desc:"Lunch — Monastiri Beach Bar Restaurant",note:"5 min drive · Grilled meats, seafood, salads · Right on the water"},{time:"2:30pm",desc:"Santa Maria Beach — 10 min drive",note:"More lively · Music, drinks, loungers for rent"},{time:"Evening",desc:"Sunset drinks + dinner by Naousa harbor",note:""}],accom:{icon:"🏖️",label:"Night 2 of 4 in Paros",name:"Bohemian Luxury Boutique Hotel — Naousa",status:"booked",key:"paros",note:"Breakfast included"},recs:[
-  {cat:"Beach",text:"Lageri Beach",note:"Remote and wild · 20 min from Naousa · no facilities · worth the hike"},
-  {cat:"Eat",text:"Soso",note:"Naousa · best restaurant on the island · book ahead · creative Greek cuisine"},
-  {cat:"Drink",text:"Barbarossa Wine Bar",note:"Right on Naousa harbor · local wine · excellent mezze · perfect at sunset"},
-  {cat:"Do",text:"Rent scooters or a buggy",note:"Best way to explore the island · €25–35/day · essential for beach hopping"},
-  {cat:"Tip",text:"Kolymbithres fills up fast",note:"Arrive before 10am for the best rock coves · no lounger rental, bring a mat"}
-]},
+{id:"day-5",num:5,date:"Sat May 16",phase:"paros",title:"Paros — Beach Day",subtitle:"Kolymbithres · Monastiri · Santa Maria",lat:37.118,lng:25.238,zoom:12,markers:[{lat:37.1304,lng:25.2094,label:"Kolymbithres Beach",c:"#0A6678"},{lat:37.0985,lng:25.2217,label:"Monastiri Beach Bar",c:"#0A6678"},{lat:37.1458,lng:25.2696,label:"Santa Maria Beach",c:"#0A6678"},{lat:37.1241,lng:25.2376,label:"Naousa harbor — dinner",c:"#0A6678"}],schedule:[{time:"Breakfast",desc:"Breakfast at hotel — included",note:""},{time:"9:30am",desc:"Kolymbithres Beach — 10 min from Naousa",note:"Rock coves and calm water · Arrive early before it fills up"},{time:"12:15pm",desc:"Lunch — Monastiri Beach Bar Restaurant",note:"5 min drive · Grilled meats, seafood, salads · Right on the water"},{time:"2:30pm",desc:"Santa Maria Beach — 10 min drive",note:"More lively · Music, drinks, loungers for rent"},{time:"Evening",desc:"Sunset drinks + dinner by Naousa harbor",note:""}],accom:{icon:"🏖️",label:"Night 2 of 4 in Paros",name:"Bohemian Luxury Boutique Hotel — Naousa",status:"booked",key:"paros",note:"Breakfast included"},recs:{
+  "Dining":[
+    {name:"Soso",note:"Naousa · best restaurant on the island · book ahead · creative Greek cuisine",url:"https://www.sosoparos.com"},
+    {name:"The Lemon Tree",note:"Naousa harbor · fresh fish, great salads, right on the water",url:"https://maps.app.goo.gl/lemontreeparos"},
+    {name:"Taverna Glafkos",note:"Naousa · local favorite · grilled octopus and fresh catch · no-frills excellence",url:"https://maps.app.goo.gl/glafkos"}
+  ],
+  "Drinks":[
+    {name:"Barbarossa Wine Bar",note:"Right on Naousa harbor · local wine · excellent mezze · perfect at sunset",url:"https://maps.app.goo.gl/barbarossa"},
+    {name:"Sommaripa Fortress Bar",note:"Naousa · built into the old Venetian fortress · cocktails with harbor views",url:"https://maps.app.goo.gl/sommaripa"},
+    {name:"Fotis Bar",note:"Naousa back streets · cheap drinks, local crowd, great music · find it by sound",url:"https://maps.app.goo.gl/fotisbar"}
+  ],
+  "Beaches":[
+    {name:"Lageri Beach",note:"Remote and wild · 20 min from Naousa · no facilities · worth the hike",url:"https://maps.app.goo.gl/lageribeach"},
+    {name:"Piperi Beach",note:"Closest to Naousa · 5 min walk · tiny and charming · good for a quick swim",url:"https://maps.app.goo.gl/piperiparos"}
+  ],
+  "Tips":[
+    {name:"Rent scooters or a buggy",note:"Best way to explore the island · €25–35/day · essential for beach hopping"},
+    {name:"Kolymbithres fills up fast",note:"Arrive before 10am for the best rock coves · no lounger rental, bring a mat"}
+  ]
+}},
 
-{id:"day-6",num:6,date:"Sun May 17",phase:"paros",title:"Antiparos — Day Trip",subtitle:"Ferry from Paros · beaches · Antiparos town",lat:37.030,lng:25.080,zoom:12,markers:[{lat:37.0396,lng:25.0788,label:"Antiparos town + beaches",c:"#0A6678"},{lat:37.0741,lng:25.1476,label:"Pounda ferry port — depart from here",c:"#0A6678"}],schedule:[{time:"Breakfast",desc:"Breakfast at hotel — included",note:""},{time:"Morning",desc:"Drive to Pounda ferry port — ferry to Antiparos",note:"Pounda is ~25 min from Naousa · Short ferry crossing · Car ferry or passenger only"},{time:"Day",desc:"Antiparos — beaches and the main town",note:"Small, quieter island · Great for a full day of exploring"},{time:"Evening",desc:"Ferry back to Paros — return to Naousa",note:""}],accom:{icon:"🏖️",label:"Night 3 of 4 in Paros",name:"Bohemian Luxury Boutique Hotel — Naousa",status:"booked",key:"paros",note:"Breakfast included"},recs:[
-  {cat:"Do",text:"Cave of Antiparos",note:"Giant stalactite cave · open daily · one of the deepest caves in Greece · €4 entry"},
-  {cat:"Beach",text:"Sifneiko Beach",note:"10 min walk from Antiparos town · calm and quiet · good snorkeling"},
-  {cat:"Eat",text:"Tikoli",note:"Antiparos main street · excellent mezze and grilled fish · try the local octopus"},
-  {cat:"Tip",text:"Take the car ferry from Pounda",note:"€10 return per car · don't take the passenger ferry from Parikia — it's much further"}
-]},
+{id:"day-6",num:6,date:"Sun May 17",phase:"paros",title:"Antiparos — Day Trip",subtitle:"Ferry from Paros · beaches · Antiparos town",lat:37.030,lng:25.080,zoom:12,markers:[{lat:37.0396,lng:25.0788,label:"Antiparos town + beaches",c:"#0A6678"},{lat:37.0741,lng:25.1476,label:"Pounda ferry port — depart from here",c:"#0A6678"}],schedule:[{time:"Breakfast",desc:"Breakfast at hotel — included",note:""},{time:"Morning",desc:"Drive to Pounda ferry port — ferry to Antiparos",note:"Pounda is ~25 min from Naousa · Short ferry crossing · Car ferry or passenger only"},{time:"Day",desc:"Antiparos — beaches and the main town",note:"Small, quieter island · Great for a full day of exploring"},{time:"Evening",desc:"Ferry back to Paros — return to Naousa",note:""}],accom:{icon:"🏖️",label:"Night 3 of 4 in Paros",name:"Bohemian Luxury Boutique Hotel — Naousa",status:"booked",key:"paros",note:"Breakfast included"},recs:{
+  "Dining":[
+    {name:"Tikoli",note:"Antiparos main street · excellent mezze and grilled fish · try the local octopus",url:"https://maps.app.goo.gl/tikoli"},
+    {name:"Argo Restaurant",note:"Antiparos harbor · fresh seafood with a view · relaxed pace",url:"https://maps.app.goo.gl/argoantiparos"},
+    {name:"Captain Pipinos",note:"Antiparos · legendary fish taverna · go for the catch of the day",url:"https://maps.app.goo.gl/captainpipinos"}
+  ],
+  "Explore":[
+    {name:"Cave of Antiparos",note:"Giant stalactite cave · open daily · one of the deepest caves in Greece · €6 entry",url:"https://maps.app.goo.gl/antiparoscave"},
+    {name:"Antiparos Castle (Kastro)",note:"Venetian-era fortified settlement in the center of town · free to walk through",url:"https://maps.app.goo.gl/antiparoskastro"}
+  ],
+  "Beaches":[
+    {name:"Sifneiko Beach",note:"10 min walk from Antiparos town · calm and quiet · good snorkeling",url:"https://maps.app.goo.gl/sifneiko"},
+    {name:"Camping Beach",note:"Long sandy beach south of town · loungers available · clearest water on the island",url:"https://maps.app.goo.gl/campingbeach"}
+  ],
+  "Tips":[
+    {name:"Take the car ferry from Pounda",note:"€10 return per car · don't take the passenger ferry from Parikia — it's much further"},
+    {name:"Last ferry back is ~10pm",note:"Check the schedule at the port · don't miss it or you're sleeping on Antiparos"}
+  ]
+}},
 
-{id:"day-7",num:7,date:"Mon May 18",phase:"paros",title:"Paros — South Beaches",subtitle:"Golden Beach · Faragas · Kalogeros · last evening Naousa",lat:37.075,lng:25.290,zoom:12,markers:[{lat:37.0647,lng:25.3037,label:"Golden Beach",c:"#0A6678"},{lat:37.0476,lng:25.2701,label:"Faragas Beach",c:"#0A6678"},{lat:37.0290,lng:25.2190,label:"Kalogeros Beach — clay cliffs",c:"#0A6678"}],schedule:[{time:"Breakfast",desc:"Breakfast at hotel — included",note:""},{time:"10:00am",desc:"Golden Beach — 25 min drive from Naousa",note:"Long sandy beach · Paddleboarding available · Lunch at Blue Restaurant Bar on the sand"},{time:"2:30pm",desc:"Faragas Beach — 20 min drive",note:"Smaller, quieter, scenic · Good contrast to Golden Beach"},{time:"Late PM",desc:"Kalogeros Beach (optional) — 15 min detour",note:"Natural clay cliffs · Fun mud mask moment"},{time:"Evening",desc:"Last evening in Naousa — harbor dinner",note:"Check out tomorrow · Flight to Athens 16:55"}],accom:{icon:"🏖️",label:"Night 4 of 4 in Paros",name:"Bohemian Luxury Boutique Hotel — Naousa",status:"booked",key:"paros",note:"Check-out tomorrow Tue May 19 · Breakfast included"},recs:[
-  {cat:"Beach",text:"Tserdakia Beach",note:"Near Golden Beach · much less crowded · good for snorkeling"},
-  {cat:"Eat",text:"Pervolaria",note:"Naousa · garden courtyard · wine and cheese plates · perfect last-night dinner"},
-  {cat:"Tip",text:"Kalogeros clay is real",note:"Slather it on, let it dry in the sun, rinse in the sea · full spa treatment for free"},
-  {cat:"Do",text:"Naousa old town at night",note:"White cube streets lit by lanterns · best walk on your last evening"}
-]},
+{id:"day-7",num:7,date:"Mon May 18",phase:"paros",title:"Paros — South Beaches",subtitle:"Golden Beach · Faragas · Kalogeros · last evening Naousa",lat:37.075,lng:25.290,zoom:12,markers:[{lat:37.0647,lng:25.3037,label:"Golden Beach",c:"#0A6678"},{lat:37.0476,lng:25.2701,label:"Faragas Beach",c:"#0A6678"},{lat:37.0290,lng:25.2190,label:"Kalogeros Beach — clay cliffs",c:"#0A6678"}],schedule:[{time:"Breakfast",desc:"Breakfast at hotel — included",note:""},{time:"10:00am",desc:"Golden Beach — 25 min drive from Naousa",note:"Long sandy beach · Paddleboarding available · Lunch at Blue Restaurant Bar on the sand"},{time:"2:30pm",desc:"Faragas Beach — 20 min drive",note:"Smaller, quieter, scenic · Good contrast to Golden Beach"},{time:"Late PM",desc:"Kalogeros Beach (optional) — 15 min detour",note:"Natural clay cliffs · Fun mud mask moment"},{time:"Evening",desc:"Last evening in Naousa — harbor dinner",note:"Check out tomorrow · Flight to Athens 16:55"}],accom:{icon:"🏖️",label:"Night 4 of 4 in Paros",name:"Bohemian Luxury Boutique Hotel — Naousa",status:"booked",key:"paros",note:"Check-out tomorrow Tue May 19 · Breakfast included"},recs:{
+  "Dining":[
+    {name:"Pervolaria",note:"Naousa · garden courtyard · wine and cheese plates · perfect last-night dinner",url:"https://maps.app.goo.gl/pervolaria"},
+    {name:"Blue Restaurant Bar",note:"Right on Golden Beach · seafood and cocktails with your feet in the sand",url:"https://maps.app.goo.gl/bluegoldenbeach"},
+    {name:"Siparos",note:"Naousa · upscale taverna · excellent wine list · book for your last evening",url:"https://maps.app.goo.gl/siparos"}
+  ],
+  "Beaches":[
+    {name:"Tserdakia Beach",note:"Near Golden Beach · much less crowded · good for snorkeling",url:"https://maps.app.goo.gl/tserdakia"},
+    {name:"Faragas Beach",note:"Small cove with turquoise water · natural shade from the cliffs · peaceful",url:"https://maps.app.goo.gl/faragas"}
+  ],
+  "Explore":[
+    {name:"Naousa old town at night",note:"White cube streets lit by lanterns · best walk on your last evening",url:"https://maps.app.goo.gl/naousaoldtown"},
+    {name:"Lefkes village",note:"Mountain village in the interior · marble-paved streets · Byzantine churches · 20 min drive",url:"https://maps.app.goo.gl/lefkes"}
+  ],
+  "Tips":[
+    {name:"Kalogeros clay is real",note:"Slather it on, let it dry in the sun, rinse in the sea · full spa treatment for free"},
+    {name:"Pack tonight",note:"Check-out tomorrow morning · flight to Athens in the afternoon"}
+  ]
+}},
 
-{id:"day-8",num:8,date:"Tue May 19",phase:"travel",title:"Paros → Athens Airport Hotel",subtitle:"Aegean 16:55 → 17:40 · Holiday Inn Attica Ave",lat:37.95,lng:23.93,zoom:11,markers:[{lat:37.0088,lng:25.1267,label:"Paros Airport (PAS) — depart 16:55",c:"#5A5A5A"},{lat:37.9364,lng:23.9445,label:"Athens Airport (ATH) — arrive 17:40",c:"#5A5A5A"},{lat:37.9656,lng:23.9236,label:"Holiday Inn Attica Ave — airport hotel",c:"#5A5A5A"}],schedule:[{time:"Morning",desc:"Check out — Bohemian Luxury Boutique Hotel",note:"Last morning in Paros · Breakfast included"},{time:"Afternoon",desc:"Head to Paros Airport (PAS)",note:""},{time:"16:55",desc:"Aegean Airlines / Olympic Airlines departs PAS → ATH",note:""},{time:"17:40",desc:"Arrive Athens International Airport (ATH)",note:""},{time:"Evening",desc:"Check in — Holiday Inn Athens Attica Ave Airport West",note:"Attica Avenue 40.2 km, between exits 17 and 18, Paiania · Booked through Capital One · Early departure tomorrow 07:45"}],accom:{icon:"🏨",label:"Night before departure",name:"Holiday Inn Athens Attica Ave Airport West",status:"booked",key:"airport",note:"Paiania, Attiki · Booked through Capital One · 5 min to terminal"},recs:[
-  {cat:"Do",text:"Morning walk through Naousa",note:"The white cube streets are magical before the crowds · grab a last coffee at the harbor"},
-  {cat:"Eat",text:"Levantis",note:"If you have time in Parikia on the way to the airport · best lamb in Paros"},
-  {cat:"Tip",text:"Hotel is 5 min from ATH terminal",note:"Set an early alarm · SAS departs 07:45 · check in closes ~1 hr before"}
-]},
+{id:"day-8",num:8,date:"Tue May 19",phase:"travel",title:"Paros → Athens Airport Hotel",subtitle:"Aegean 16:55 → 17:40 · Holiday Inn Attica Ave",lat:37.95,lng:23.93,zoom:11,markers:[{lat:37.0088,lng:25.1267,label:"Paros Airport (PAS) — depart 16:55",c:"#5A5A5A"},{lat:37.9364,lng:23.9445,label:"Athens Airport (ATH) — arrive 17:40",c:"#5A5A5A"},{lat:37.9656,lng:23.9236,label:"Holiday Inn Attica Ave — airport hotel",c:"#5A5A5A"}],schedule:[{time:"Morning",desc:"Check out — Bohemian Luxury Boutique Hotel",note:"Last morning in Paros · Breakfast included"},{time:"Afternoon",desc:"Head to Paros Airport (PAS)",note:""},{time:"16:55",desc:"Aegean Airlines / Olympic Airlines departs PAS → ATH",note:""},{time:"17:40",desc:"Arrive Athens International Airport (ATH)",note:""},{time:"Evening",desc:"Check in — Holiday Inn Athens Attica Ave Airport West",note:"Attica Avenue 40.2 km, between exits 17 and 18, Paiania · Booked through Capital One · Early departure tomorrow 07:45"}],accom:{icon:"🏨",label:"Night before departure",name:"Holiday Inn Athens Attica Ave Airport West",status:"booked",key:"airport",note:"Paiania, Attiki · Booked through Capital One · 5 min to terminal"},recs:{
+  "Dining":[
+    {name:"Levantis",note:"If you have time in Parikia on the way to the airport · best lamb in Paros",url:"https://maps.app.goo.gl/levantis"},
+    {name:"Marathi Fish Taverna",note:"On the road to the airport · grilled fish with lemon and olive oil · simple and perfect",url:"https://maps.app.goo.gl/marathiparos"}
+  ],
+  "Explore":[
+    {name:"Morning walk through Naousa",note:"The white cube streets are magical before the crowds · grab a last coffee at the harbor"},
+    {name:"Parikia old town",note:"If you have time before the airport · charming Venetian quarter · Panagia Ekatontapiliani church",url:"https://maps.app.goo.gl/parikia"}
+  ],
+  "Tips":[
+    {name:"Hotel is 5 min from ATH terminal",note:"Set an early alarm · SAS departs 07:45 · check in closes ~1 hr before"},
+    {name:"No need for a rental car in Athens",note:"Metro + taxis are easy and cheap · avoid Athens traffic"}
+  ]
+}},
 
-{id:"day-9",num:9,date:"Wed May 20",phase:"travel",title:"Fly Home — SAS",subtitle:"07:45 departs ATH · arrives 14:40",lat:37.936,lng:23.944,zoom:11,markers:[{lat:37.9364,lng:23.9445,label:"Athens Airport (ATH) — depart 07:45",c:"#5A5A5A"}],schedule:[{time:"Early",desc:"Transfer to Athens Airport (ATH)",note:"Hotel is 5 min from terminal"},{time:"07:45",desc:"SAS Scandinavian Airlines departs ATH",note:"Booked through booking.com"},{time:"14:40",desc:"Arrive home",note:""}],accom:{icon:"✈️",label:"Home",name:"",status:"na",note:""},recs:[]}
+{id:"day-9",num:9,date:"Wed May 20",phase:"travel",title:"Fly Home — SAS",subtitle:"07:45 departs ATH · arrives 14:40",lat:37.936,lng:23.944,zoom:11,markers:[{lat:37.9364,lng:23.9445,label:"Athens Airport (ATH) — depart 07:45",c:"#5A5A5A"}],schedule:[{time:"Early",desc:"Transfer to Athens Airport (ATH)",note:"Hotel is 5 min from terminal"},{time:"07:45",desc:"SAS Scandinavian Airlines departs ATH",note:"Booked through booking.com"},{time:"14:40",desc:"Arrive home",note:""}],accom:{icon:"✈️",label:"Home",name:"",status:"na",note:""},recs:{}}
 ];
 
 var PM = {
@@ -639,6 +807,7 @@ function buildDays() {
         + '</div>'
         + '<span class="day-phase-tag">' + p.tag + '</span>'
       + '</div>'
+      + '<div class="day-weather loading" id="wx-' + d.id + '">Loading weather…</div>'
       + '<div class="day-headline">'
         + '<div>'
           + '<div class="day-title">' + d.title + '</div>'
@@ -646,8 +815,8 @@ function buildDays() {
         + '</div>'
         + '<div class="day-num-bg">' + String(d.num).padStart(2,"0") + '</div>'
       + '</div>'
-      + '<div class="day-body">'
-        + '<div class="day-content-col"><div class="schedule">' + rows + '</div></div>'
+      + '<div class="day-body" style="border-top:1px solid var(--border)">'
+        + '<div class="day-content-col"><div class="day-sched-label">Schedule</div><div class="schedule">' + rows + '</div></div>'
         + '<div class="day-map-col"><div style="position:relative;height:100%">'
           + '<div class="day-map" id="map-' + d.id + '" data-lat="' + d.lat + '" data-lng="' + d.lng + '" data-zoom="' + d.zoom + '" style="cursor:pointer" onclick="openGoogleMaps(' + d.lat + ',' + d.lng + ')"></div>'
           + '<span class="map-open-btn" onclick="openGoogleMaps(' + d.lat + ',' + d.lng + ')">&#8599;&nbsp;Expand</span>'
@@ -662,16 +831,35 @@ function buildDays() {
       + (d.accom.note  ? '<span class="accom-note">' + d.accom.note + '</span>' : '')
       + (d.accom.key   ? '<span class="accom-detail-hint">Details &rsaquo;</span>' : '')
       + '</div>'
-      + (d.recs && d.recs.length
-          ? '<div class="day-recs"><div class="recs-hd">Recommendations</div><div class="recs-grid">'
-            + d.recs.map(function(r){
-                return '<div class="rec-item"><span class="rec-cat">' + r.cat + '</span>'
-                  + '<span class="rec-body"><span class="rec-text">' + r.text + '</span>'
-                  + (r.note ? '<span class="rec-note">— ' + r.note + '</span>' : '')
-                  + '</span></div>';
-              }).join("")
-            + '</div></div>'
-          : '')
+      + (function(){
+          var cats = d.recs ? Object.keys(d.recs) : [];
+          var total = 0; cats.forEach(function(c){ total += d.recs[c].length; });
+          if (!total) return '';
+          var html = '<div class="recs-bar" onclick="toggleRecsPanel(this)">'
+            + '<span class="recs-bar-icon">✦</span>'
+            + '<span class="recs-bar-label">Recommendations</span>'
+            + '<span class="recs-bar-count">' + total + '</span>'
+            + '<span class="recs-bar-arrow">▾</span>'
+            + '</div>';
+          html += '<div class="recs-panel"><div class="recs-tabs">';
+          cats.forEach(function(c, i){
+            html += '<span class="recs-tab' + (i===0?' active':'') + '" data-tab="' + d.id + '-' + i + '" onclick="switchRecTab(this)">' + c + '</span>';
+          });
+          html += '</div>';
+          cats.forEach(function(c, i){
+            html += '<div class="recs-tab-content' + (i===0?' active':'') + '" id="rtc-' + d.id + '-' + i + '">';
+            html += '<div class="rec-list">';
+            d.recs[c].forEach(function(r){
+              html += '<div class="rec-item"><span class="rec-dot"></span><div class="rec-body">';
+              html += '<div class="rec-name">' + (r.url ? '<a href="' + r.url + '" target="_blank">' + r.name + '</a>' : r.name) + '</div>';
+              if (r.note) html += '<div class="rec-note">' + r.note + '</div>';
+              html += '</div></div>';
+            });
+            html += '</div></div>';
+          });
+          html += '</div>';
+          return html;
+        }())
       + '</section>';
   });
   window._MDATA = MDATA;
@@ -747,15 +935,140 @@ function goTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({be
 function openGoogleMaps(lat,lng){window.open("https://www.google.com/maps/search/?api=1&query="+lat+","+lng,"_blank");}
 
 
-function toggleRecs() {
-  var on = document.body.classList.toggle("show-recs");
-  localStorage.setItem("gt_recs", on ? "1" : "0");
+function toggleRecsPanel(bar) {
+  bar.classList.toggle("open");
+  var panel = bar.nextElementSibling;
+  if (panel) panel.classList.toggle("open");
+}
+
+function switchRecTab(tab) {
+  var tabs = tab.parentElement;
+  var panel = tabs.parentElement;
+  tabs.querySelectorAll(".recs-tab").forEach(function(t){ t.classList.remove("active"); });
+  tab.classList.add("active");
+  panel.querySelectorAll(".recs-tab-content").forEach(function(c){ c.classList.remove("active"); });
+  var target = document.getElementById("rtc-" + tab.dataset.tab);
+  if (target) target.classList.add("active");
 }
 
 buildTopNav();
 buildDays();
-if(localStorage.getItem('gt_recs')==='1'){document.body.classList.add('show-recs');}
-window.addEventListener("load", function(){initMaps();initSpy();});
+var TRIP_YEAR = 2026;
+var WX_ICONS = {0:"☀️",1:"🌤️",2:"⛅",3:"☁️",45:"🌫️",48:"🌫️",51:"🌦️",53:"🌦️",55:"🌧️",61:"🌧️",63:"🌧️",65:"🌧️",71:"🌨️",73:"🌨️",75:"🌨️",80:"🌦️",81:"🌧️",82:"🌧️",95:"⛈️",96:"⛈️",99:"⛈️"};
+var WX_DESC = {0:"Clear",1:"Mostly clear",2:"Partly cloudy",3:"Overcast",45:"Fog",48:"Fog",51:"Light drizzle",53:"Drizzle",55:"Heavy drizzle",61:"Light rain",63:"Rain",65:"Heavy rain",71:"Light snow",73:"Snow",75:"Heavy snow",80:"Showers",81:"Showers",82:"Heavy showers",95:"Thunderstorm",96:"Thunderstorm",99:"Thunderstorm"};
+
+function parseDate(dateStr) {
+  var months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  var pts = dateStr.split(" ");
+  return new Date(TRIP_YEAR, months[pts[1]], parseInt(pts[2]));
+}
+
+function toISO(d) {
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+
+function fetchWeather() {
+  var locs = {};
+  DAYS.forEach(function(d) {
+    var key = d.lat + "," + d.lng;
+    if (!locs[key]) locs[key] = [];
+    locs[key].push(d);
+  });
+
+  Object.keys(locs).forEach(function(key) {
+    var days = locs[key];
+    var lat = days[0].lat, lng = days[0].lng;
+    var dates = days.map(function(d) { return parseDate(d.date); });
+    var minDate = toISO(new Date(Math.min.apply(null, dates)));
+    var maxDate = toISO(new Date(Math.max.apply(null, dates)));
+    var tz = lng > 0 ? "Europe/Athens" : "America/New_York";
+
+    var currentUrl = "https://api.open-meteo.com/v1/forecast"
+      + "?latitude=" + lat + "&longitude=" + lng
+      + "&current=temperature_2m,weather_code"
+      + "&temperature_unit=fahrenheit"
+      + "&timezone=" + tz;
+
+    var forecastUrl = "https://api.open-meteo.com/v1/forecast"
+      + "?latitude=" + lat + "&longitude=" + lng
+      + "&daily=temperature_2m_max,temperature_2m_min,weather_code"
+      + "&temperature_unit=fahrenheit"
+      + "&timezone=" + tz
+      + "&start_date=" + minDate + "&end_date=" + maxDate;
+
+    var currentP = fetch(currentUrl).then(function(r) { return r.json(); }).catch(function() { return {}; });
+    var forecastP = fetch(forecastUrl).then(function(r) { return r.json(); }).catch(function() { return {}; });
+
+    Promise.all([currentP, forecastP]).then(function(results) {
+      var curData = results[0], fData = results[1];
+      var current = null;
+      if (curData.current) {
+        current = {
+          temp: Math.round(curData.current.temperature_2m),
+          code: curData.current.weather_code
+        };
+      }
+      var dateMap = {};
+      if (fData.daily) {
+        fData.daily.time.forEach(function(t, i) {
+          dateMap[t] = {
+            hi: Math.round(fData.daily.temperature_2m_max[i]),
+            lo: Math.round(fData.daily.temperature_2m_min[i]),
+            code: fData.daily.weather_code[i]
+          };
+        });
+      }
+      days.forEach(function(d) {
+        var iso = toISO(parseDate(d.date));
+        var forecast = dateMap[iso] || null;
+        renderWx(d.id, d.date, forecast, current);
+      });
+    });
+  });
+}
+
+function renderWx(id, dateStr, forecast, current) {
+  var el = document.getElementById("wx-" + id);
+  if (!el) return;
+  el.classList.remove("loading");
+  var html = "";
+
+  if (forecast) {
+    var icon = WX_ICONS[forecast.code] || "🌡️";
+    var desc = WX_DESC[forecast.code] || "—";
+    html += '<span class="wx-forecast-label">Forecast</span>'
+      + '<span class="wx-icon">' + icon + '</span>'
+      + '<span class="wx-temps"><span class="wx-hi">' + forecast.hi + '°</span>'
+      + '<span class="wx-sep">/</span>'
+      + '<span class="wx-lo">' + forecast.lo + '°</span></span>'
+      + '<span class="wx-desc">' + desc + '</span>';
+    if (current) {
+      var cIcon = WX_ICONS[current.code] || "🌡️";
+      var cDesc = WX_DESC[current.code] || "—";
+      html += '<span class="wx-divider">·</span>'
+        + '<span class="wx-current"><span class="wx-current-label">Now</span> '
+        + cIcon + ' ' + current.temp + '° ' + cDesc + '</span>';
+    }
+  } else if (current) {
+    var cIcon = WX_ICONS[current.code] || "🌡️";
+    var cDesc = WX_DESC[current.code] || "—";
+    html += '<span class="wx-icon">' + cIcon + '</span>'
+      + '<span class="wx-current"><span class="wx-current-label">Now</span> '
+      + current.temp + '°</span>'
+      + '<span class="wx-desc">' + cDesc + '</span>';
+    var tripDate = parseDate(dateStr);
+    var avail = new Date(tripDate.getTime() - 16 * 86400000);
+    var mo = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][avail.getMonth()];
+    html += '<span class="wx-divider">·</span>'
+      + '<span class="wx-unavail">Forecast available ~' + mo + ' ' + avail.getDate() + '</span>';
+  } else {
+    html = '<span class="wx-unavail">Weather unavailable</span>';
+  }
+
+  el.innerHTML = html;
+}
+
+window.addEventListener("load", function(){initMaps();initSpy();fetchWeather();});
 </script>
 </body>
 </html>

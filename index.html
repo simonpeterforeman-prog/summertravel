@@ -1088,6 +1088,49 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
 .route-legend { display: flex; gap: 20px; margin-top: 10px; font-size: 12px; color: var(--muted); flex-wrap: wrap; align-items: center; }
 .route-legend-dot { display: inline-block; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
 @media (max-width: 768px) { #sierra-map { height: 320px; } }
+
+/* ━━━━ WEATHER BAR ━━━━ */
+.day-weather {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 56px;
+  border-bottom: 1px solid var(--border);
+  background: #FCFCFC;
+  font-family: var(--body);
+  flex-wrap: wrap;
+}
+.day-weather.loading { color: var(--ink-3); font-size: 10px; letter-spacing: 0.08em; }
+.wx-icon { font-size: 16px; line-height: 1; }
+.wx-temps {
+  display: flex; align-items: baseline; gap: 4px;
+  font-size: 13px; font-weight: 400; color: var(--ink-2);
+}
+.wx-hi { font-weight: 500; }
+.wx-lo { color: var(--ink-3); }
+.wx-sep { color: var(--border-2); font-size: 10px; }
+.wx-desc {
+  font-size: 10px; font-weight: 400; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.wx-forecast-label {
+  font-size: 9px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-3); opacity: 0.7;
+}
+.wx-current {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--ink-3);
+}
+.wx-current-label {
+  font-size: 9px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; opacity: 0.7;
+}
+.wx-divider { color: var(--border-2); font-size: 11px; }
+.wx-unavail {
+  font-size: 10px; font-weight: 400; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+@media (max-width: 768px) {
+  .day-weather { padding: 8px 20px; }
+}
 </style>
 </head>
 <body>
@@ -1309,7 +1352,7 @@ var SM={"book":{text:"To Book",c:"book"},"booked":{text:"Booked",c:"booked"},"fr
 
 function buildSidebar(){var c=document.getElementById("sb-days"),s=document.getElementById("mob-strip");DAYS.forEach(function(d){var p=PM[d.phase]||PM.travel;var n=document.createElement("div");n.className="sb-day "+p.sc;n.id="sbn-"+d.id;n.onclick=function(){goDay(d.id);};var pts=d.date.split(" ");n.innerHTML='<span class="sb-day-num">'+String(d.num).padStart(2,"0")+'</span><span class="sb-day-date">'+pts[1]+" "+pts[2]+'</span><span class="sb-day-title">'+d.title+'</span>';c.appendChild(n);var ch=document.createElement("div");ch.className="mob-chip "+p.cc;ch.id="mbc-"+d.id;ch.onclick=function(){goDay(d.id);};ch.innerHTML='<span class="mob-chip-num">'+String(d.num).padStart(2,"0")+'</span><span class="mob-chip-date">'+pts[1]+' '+pts[2]+'</span>';s.appendChild(ch);});}
 
-function buildDays(){var MDATA={};var c=document.getElementById("days-container");DAYS.forEach(function(d){var p=PM[d.phase]||PM.travel;var st=SM[d.accom.status]||SM.na;MDATA["map-"+d.id]=d.markers;var rows=d.schedule.map(function(s){var isRun=s.time.indexOf('Run')>-1||s.time.indexOf('Rest')>-1;return'<div class="schedule-row'+(isRun?' run-row':'')+'"><div class="sched-time">'+s.time+'</div><div class="sched-main"><strong>'+s.desc+'</strong>'+(s.note?'<span class="sched-note">'+s.note+'</span>':"")+'</div></div>';}).join("");c.innerHTML+='<section class="day-section '+p.cls+'" id="'+d.id+'"><div class="day-topbar"><div class="day-topbar-left"><span class="day-counter">Day '+String(d.num).padStart(2,"0")+' / 17</span><span class="day-counter-sep"></span><span class="day-weekdate">'+d.date+'</span></div><span class="day-phase-tag">'+p.tag+'</span></div><div class="day-headline"><div><div class="day-title">'+d.title+'</div><div class="day-subtitle">'+d.subtitle+'</div></div><div class="day-num-bg">'+String(d.num).padStart(2,"0")+'</div></div><div class="day-body"><div class="day-content-col"><div class="schedule">'+rows+'</div></div><div class="day-map-col"><div style="position:relative"><div class="day-map" id="map-'+d.id+'" data-lat="'+d.lat+'" data-lng="'+d.lng+'" data-zoom="'+d.zoom+'" style="cursor:pointer" onclick="openGoogleMaps('+d.lat+','+d.lng+')"></div><span class="map-open-btn" onclick="openGoogleMaps('+d.lat+','+d.lng+')">&#8599;&nbsp;Expand</span></div></div></div>'+(d.accom.key?'<div class="day-accom '+st.c+' has-modal" onclick="openAccomModal(\''+d.accom.key+'\')">':'<div class="day-accom '+st.c+'">')+(d.accom.key&&_ACCOMDATA[d.accom.key]&&_ACCOMDATA[d.accom.key].thumb?'<img class="day-accom-thumb" src="'+_ACCOMDATA[d.accom.key].thumb+'" alt="">':''  )+"<span class=\"accom-status-text\">"+st.text+"</span><span class=\"accom-sep\">&middot;</span><span class=\"accom-label\">"+d.accom.label+"</span><span class=\"accom-name\">"+d.accom.name+"</span>"+(d.accom.note?"<span class=\"accom-note\">"+d.accom.note+"</span>":"")+(d.accom.key?"<span class=\"accom-detail-hint\">Details &rsaquo;</span>":"")+"</div></section>";});window._MDATA=MDATA;}
+function buildDays(){var MDATA={};var c=document.getElementById("days-container");DAYS.forEach(function(d){var p=PM[d.phase]||PM.travel;var st=SM[d.accom.status]||SM.na;MDATA["map-"+d.id]=d.markers;var rows=d.schedule.map(function(s){var isRun=s.time.indexOf('Run')>-1||s.time.indexOf('Rest')>-1;return'<div class="schedule-row'+(isRun?' run-row':'')+'"><div class="sched-time">'+s.time+'</div><div class="sched-main"><strong>'+s.desc+'</strong>'+(s.note?'<span class="sched-note">'+s.note+'</span>':"")+'</div></div>';}).join("");c.innerHTML+='<section class="day-section '+p.cls+'" id="'+d.id+'"><div class="day-topbar"><div class="day-topbar-left"><span class="day-counter">Day '+String(d.num).padStart(2,"0")+' / 17</span><span class="day-counter-sep"></span><span class="day-weekdate">'+d.date+'</span></div><span class="day-phase-tag">'+p.tag+'</span></div><div class="day-weather loading" id="wx-'+d.id+'">Loading weather…</div><div class="day-headline"><div><div class="day-title">'+d.title+'</div><div class="day-subtitle">'+d.subtitle+'</div></div><div class="day-num-bg">'+String(d.num).padStart(2,"0")+'</div></div><div class="day-body"><div class="day-content-col"><div class="schedule">'+rows+'</div></div><div class="day-map-col"><div style="position:relative"><div class="day-map" id="map-'+d.id+'" data-lat="'+d.lat+'" data-lng="'+d.lng+'" data-zoom="'+d.zoom+'" style="cursor:pointer" onclick="openGoogleMaps('+d.lat+','+d.lng+')"></div><span class="map-open-btn" onclick="openGoogleMaps('+d.lat+','+d.lng+')">&#8599;&nbsp;Expand</span></div></div></div>'+(d.accom.key?'<div class="day-accom '+st.c+' has-modal" onclick="openAccomModal(\''+d.accom.key+'\')">':'<div class="day-accom '+st.c+'">')+(d.accom.key&&_ACCOMDATA[d.accom.key]&&_ACCOMDATA[d.accom.key].thumb?'<img class="day-accom-thumb" src="'+_ACCOMDATA[d.accom.key].thumb+'" alt="">':''  )+"<span class=\"accom-status-text\">"+st.text+"</span><span class=\"accom-sep\">&middot;</span><span class=\"accom-label\">"+d.accom.label+"</span><span class=\"accom-name\">"+d.accom.name+"</span>"+(d.accom.note?"<span class=\"accom-note\">"+d.accom.note+"</span>":"")+(d.accom.key?"<span class=\"accom-detail-hint\">Details &rsaquo;</span>":"")+"</div></section>";});window._MDATA=MDATA;}
 
 function initMaps(){var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting&&!e.target.dataset.init){e.target.dataset.init="1";var el=e.target,lt=parseFloat(el.dataset.lat),ln=parseFloat(el.dataset.lng),zm=parseInt(el.dataset.zoom),ms=(window._MDATA&&window._MDATA[el.id])||[];var m=L.map(el,{center:[lt,ln],zoom:zm,zoomControl:false,scrollWheelZoom:false,attributionControl:false,dragging:false});L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:14}).addTo(m);ms.forEach(function(mk){var ic=L.divIcon({html:'<div style="width:10px;height:10px;border-radius:50%;background:'+mk.c+';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35)"></div>',iconSize:[10,10],iconAnchor:[5,5],className:""});L.marker([mk.lat,mk.lng],{icon:ic}).addTo(m).bindTooltip(mk.label,{permanent:false,direction:"top",offset:[0,-8]});});if(ms.length>1){L.polyline(ms.map(function(mk){return[mk.lat,mk.lng];}),{color:ms[0].c,weight:1.5,opacity:.4,dashArray:"5 4"}).addTo(m);}}});},{rootMargin:"400px 0px"});document.querySelectorAll(".day-map").forEach(function(el){obs.observe(el);});}
 
@@ -1459,7 +1502,122 @@ function initSierraMap(){
 }
 
 buildSidebar();buildDays();
-window.addEventListener("load",function(){initMaps();initSpy();initSierraMap();});
+
+var TRIP_YEAR = 2026;
+var WX_ICONS = {0:"☀️",1:"🌤️",2:"⛅",3:"☁️",45:"🌫️",48:"🌫️",51:"🌦️",53:"🌦️",55:"🌧️",61:"🌧️",63:"🌧️",65:"🌧️",71:"🌨️",73:"🌨️",75:"🌨️",80:"🌦️",81:"🌧️",82:"🌧️",95:"⛈️",96:"⛈️",99:"⛈️"};
+var WX_DESC = {0:"Clear",1:"Mostly clear",2:"Partly cloudy",3:"Overcast",45:"Fog",48:"Fog",51:"Light drizzle",53:"Drizzle",55:"Heavy drizzle",61:"Light rain",63:"Rain",65:"Heavy rain",71:"Light snow",73:"Snow",75:"Heavy snow",80:"Showers",81:"Showers",82:"Heavy showers",95:"Thunderstorm",96:"Thunderstorm",99:"Thunderstorm"};
+
+function parseDate(dateStr) {
+  var months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  var pts = dateStr.split(" ");
+  return new Date(TRIP_YEAR, months[pts[1]], parseInt(pts[2]));
+}
+
+function toISO(d) {
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+
+function fetchWeather() {
+  var locs = {};
+  DAYS.forEach(function(d) {
+    var key = d.lat + "," + d.lng;
+    if (!locs[key]) locs[key] = [];
+    locs[key].push(d);
+  });
+
+  Object.keys(locs).forEach(function(key) {
+    var days = locs[key];
+    var lat = days[0].lat, lng = days[0].lng;
+    var dates = days.map(function(d) { return parseDate(d.date); });
+    var minDate = toISO(new Date(Math.min.apply(null, dates)));
+    var maxDate = toISO(new Date(Math.max.apply(null, dates)));
+
+    var currentUrl = "https://api.open-meteo.com/v1/forecast"
+      + "?latitude=" + lat + "&longitude=" + lng
+      + "&current=temperature_2m,weather_code"
+      + "&temperature_unit=fahrenheit"
+      + "&timezone=America/Los_Angeles";
+
+    var forecastUrl = "https://api.open-meteo.com/v1/forecast"
+      + "?latitude=" + lat + "&longitude=" + lng
+      + "&daily=temperature_2m_max,temperature_2m_min,weather_code"
+      + "&temperature_unit=fahrenheit"
+      + "&timezone=America/Los_Angeles"
+      + "&start_date=" + minDate + "&end_date=" + maxDate;
+
+    var currentP = fetch(currentUrl).then(function(r) { return r.json(); }).catch(function() { return {}; });
+    var forecastP = fetch(forecastUrl).then(function(r) { return r.json(); }).catch(function() { return {}; });
+
+    Promise.all([currentP, forecastP]).then(function(results) {
+      var curData = results[0], fData = results[1];
+      var current = null;
+      if (curData.current) {
+        current = {
+          temp: Math.round(curData.current.temperature_2m),
+          code: curData.current.weather_code
+        };
+      }
+      var dateMap = {};
+      if (fData.daily) {
+        fData.daily.time.forEach(function(t, i) {
+          dateMap[t] = {
+            hi: Math.round(fData.daily.temperature_2m_max[i]),
+            lo: Math.round(fData.daily.temperature_2m_min[i]),
+            code: fData.daily.weather_code[i]
+          };
+        });
+      }
+      days.forEach(function(d) {
+        var iso = toISO(parseDate(d.date));
+        var forecast = dateMap[iso] || null;
+        renderWx(d.id, d.date, forecast, current);
+      });
+    });
+  });
+}
+
+function renderWx(id, dateStr, forecast, current) {
+  var el = document.getElementById("wx-" + id);
+  if (!el) return;
+  el.classList.remove("loading");
+  var html = "";
+
+  if (forecast) {
+    var icon = WX_ICONS[forecast.code] || "🌡️";
+    var desc = WX_DESC[forecast.code] || "—";
+    html += '<span class="wx-forecast-label">Forecast</span>'
+      + '<span class="wx-icon">' + icon + '</span>'
+      + '<span class="wx-temps"><span class="wx-hi">' + forecast.hi + '°</span>'
+      + '<span class="wx-sep">/</span>'
+      + '<span class="wx-lo">' + forecast.lo + '°</span></span>'
+      + '<span class="wx-desc">' + desc + '</span>';
+    if (current) {
+      var cIcon = WX_ICONS[current.code] || "🌡️";
+      var cDesc = WX_DESC[current.code] || "—";
+      html += '<span class="wx-divider">·</span>'
+        + '<span class="wx-current"><span class="wx-current-label">Now</span> '
+        + cIcon + ' ' + current.temp + '° ' + cDesc + '</span>';
+    }
+  } else if (current) {
+    var cIcon = WX_ICONS[current.code] || "🌡️";
+    var cDesc = WX_DESC[current.code] || "—";
+    html += '<span class="wx-icon">' + cIcon + '</span>'
+      + '<span class="wx-current"><span class="wx-current-label">Now</span> '
+      + current.temp + '°</span>'
+      + '<span class="wx-desc">' + cDesc + '</span>';
+    var tripDate = parseDate(dateStr);
+    var avail = new Date(tripDate.getTime() - 16 * 86400000);
+    var mo = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][avail.getMonth()];
+    html += '<span class="wx-divider">·</span>'
+      + '<span class="wx-unavail">Forecast available ~' + mo + ' ' + avail.getDate() + '</span>';
+  } else {
+    html = '<span class="wx-unavail">Weather unavailable</span>';
+  }
+
+  el.innerHTML = html;
+}
+
+window.addEventListener("load",function(){initMaps();initSpy();initSierraMap();fetchWeather();});
 </script>
 </body>
 </html>
