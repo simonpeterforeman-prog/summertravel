@@ -298,16 +298,17 @@ body {
 }
 .recs-bar:hover { background: #E4E4E2; }
 .recs-bar.open { background: #E4E4E2; }
-.recs-bar-icon { font-size: 12px; }
+.recs-bar-icon {
+  font-size: 16px; line-height: 1; color: var(--ink-3);
+  transition: transform 0.25s ease;
+  display: inline-block;
+}
+.recs-bar.open .recs-bar-icon { transform: rotate(90deg); }
 .recs-bar-label {
   font-family: var(--body); font-size: 9px; font-weight: 600;
   letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3);
 }
-.recs-bar-arrow {
-  font-size: 10px; color: var(--ink-4);
-  transition: transform 0.2s;
-}
-.recs-bar.open .recs-bar-arrow { transform: rotate(180deg); }
+.recs-bar-arrow { display: none; }
 
 /* ━━━━ DETAILS LINK ━━━━ */
 .accom-details-link {
@@ -837,7 +838,7 @@ function buildDays() {
                 var total = 0; cats.forEach(function(c){ total += d.recs[c].length; });
                 if (!total) return '';
                 var html = '<div class="recs-bar" onclick="toggleRecsPanel(this)">'
-                  + '<span class="recs-bar-icon">⚑</span>'
+                  + '<span class="recs-bar-icon">›</span>'
                   + '<span class="recs-bar-label">Recommendations</span>'
                   + '<span class="recs-bar-arrow">▾</span>'
                   + '</div>';
