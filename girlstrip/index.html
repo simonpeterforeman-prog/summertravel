@@ -287,53 +287,47 @@ body {
 }
 .accom-name  { font-family: var(--body); font-size: 13px; font-weight: 300; color: var(--ink-2); }
 .accom-note  { font-size: 11px; color: var(--ink-4); flex: 1 0 100%; margin-top: 2px; }
-.accom-detail-hint {
-  font-family: var(--body); font-size: 9px; font-weight: 600;
-  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-4); margin-left: auto;
-  padding: 3px 10px; border: 1px solid var(--border); border-radius: 3px;
-  transition: all 0.12s;
+/* ━━━━ BOTTOM ACTIONS ━━━━ */
+.day-actions {
+  display: flex; gap: 0;
+  border-top: 1px solid var(--border);
 }
-.day-accom.has-modal:hover .accom-detail-hint { border-color: var(--ink-3); color: var(--ink-2); }
+.day-action-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 24px; cursor: pointer; user-select: none;
+  background: #FAFAFA; transition: background 0.12s;
+  border-right: 1px solid var(--border);
+}
+.day-action-btn:last-child { border-right: none; }
+.day-action-btn:hover { background: #F3F2EF; }
+.day-action-btn.open { background: #F3F2EF; }
+.day-action-icon { font-size: 12px; }
+.day-action-label {
+  font-family: var(--body); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-4);
+}
+.day-action-arrow {
+  font-size: 10px; color: var(--ink-4);
+  transition: transform 0.2s;
+}
+.day-action-btn.open .day-action-arrow { transform: rotate(180deg); }
 
-/* ━━━━ MODAL ━━━━ */
-.accom-modal-overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,.4); z-index: 1000;
-  align-items: center; justify-content: center; padding: 20px;
-}
-.accom-modal-overlay.open { display: flex; }
-.accom-modal {
-  background: var(--surface); width: 100%; max-width: 460px;
-  max-height: 80vh; overflow-y: auto;
-  box-shadow: 0 8px 40px rgba(0,0,0,.15); border: 1px solid var(--border);
-}
-.accom-modal-hd {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 24px 16px; border-bottom: 1px solid var(--border);
-  position: sticky; top: 0; background: var(--surface); z-index: 10;
-}
-.accom-modal-title {
-  font-family: var(--heading); font-size: 18px; font-weight: 500; color: var(--ink);
-}
-.accom-modal-close {
-  font-family: var(--body); font-size: 9px; font-weight: 600;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--ink-4); cursor: pointer; border: none; background: none;
-}
-.accom-modal-body { padding: 8px 0 16px; }
-.accom-modal-row {
+/* ━━━━ DETAILS PANEL ━━━━ */
+.details-panel { display: none; border-top: 1px solid var(--border); }
+.details-panel.open { display: block; }
+.details-row {
   display: flex; gap: 14px; padding: 11px 24px;
   border-bottom: 1px solid var(--border); align-items: flex-start;
 }
-.accom-modal-row:last-child { border-bottom: none; }
-.accom-modal-icon { font-size: 14px; flex-shrink: 0; width: 20px; text-align: center; padding-top: 1px; }
-.accom-modal-cell { flex: 1; }
-.accom-modal-lbl {
+.details-row:last-child { border-bottom: none; }
+.details-icon { font-size: 14px; flex-shrink: 0; width: 20px; text-align: center; padding-top: 1px; }
+.details-cell { flex: 1; }
+.details-lbl {
   font-family: var(--body); font-size: 8px; font-weight: 600;
   letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 3px;
 }
-.accom-modal-val { font-size: 13px; color: var(--ink-2); font-weight: 300; line-height: 1.5; }
-.accom-modal-val a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+.details-val { font-size: 13px; color: var(--ink-2); font-weight: 300; line-height: 1.5; }
+.details-val a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
 
 /* ━━━━ RESPONSIVE ━━━━ */
 @media (max-width: 768px) {
@@ -364,9 +358,10 @@ body {
   #pw-row { flex-direction: column; gap: 10px; }
   #pw-input { width: 220px; max-width: 80vw; }
   #pw-submit { padding: 12px 28px; height: 44px; }
-  .recs-bar { padding: 12px 16px; }
+  .day-action-btn { padding: 12px 16px; }
   .recs-tabs { padding: 0 16px; }
   .recs-tab-content { padding: 14px 16px 18px; }
+  .details-row { padding: 11px 16px; }
   body { font-size: 16px; color: #555; }
   .hero-eyebrow { font-size: 11px; }
   .day-counter { font-size: 11px; }
@@ -381,7 +376,7 @@ body {
   .accom-label { font-size: 12px; color: #888; }
   .accom-name { font-size: 16px; }
   .accom-note { font-size: 14px; color: #777; }
-  .accom-detail-hint { font-size: 12px; }
+  .day-action-label { font-size: 12px; }
   .accom-sep { color: #999; }
   .top-nav-num { font-size: 12px; }
   .top-nav-date { font-size: 13px; }
@@ -426,30 +421,6 @@ body {
 #pw-submit:hover { border-color: #aaa; color: #fff; }
 
 /* ━━━━ RECOMMENDATIONS ━━━━ */
-.recs-bar {
-  display: flex; align-items: center; gap: 8px;
-  padding: 12px 24px; cursor: pointer; user-select: none;
-  border-top: 1px solid var(--border);
-  background: #FAFAFA;
-  transition: background 0.12s;
-}
-.recs-bar:hover { background: #F3F2EF; }
-.recs-bar-icon { font-size: 12px; }
-.recs-bar-label {
-  font-family: var(--body); font-size: 9px; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-4);
-  flex: 1;
-}
-.recs-bar-count {
-  font-family: var(--body); font-size: 9px; font-weight: 500;
-  color: var(--ink-4); letter-spacing: 0.04em;
-}
-.recs-bar-arrow {
-  font-size: 10px; color: var(--ink-4);
-  transition: transform 0.2s;
-}
-.recs-bar.open .recs-bar-arrow { transform: rotate(180deg); }
-
 .recs-panel { display: none; border-top: 1px solid var(--border); }
 .recs-panel.open { display: block; }
 
@@ -565,16 +536,6 @@ body {
 
 </div>
 
-<!-- HOTEL MODAL -->
-<div class="accom-modal-overlay" id="accom-modal-overlay" onclick="closeAccomModal(event)">
-  <div class="accom-modal">
-    <div class="accom-modal-hd">
-      <div class="accom-modal-title" id="accom-modal-title"></div>
-      <button class="accom-modal-close" onclick="closeAccomModal()">&#x2715;</button>
-    </div>
-    <div class="accom-modal-body" id="accom-modal-body"></div>
-  </div>
-</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
@@ -819,42 +780,56 @@ function buildDays() {
           + '<span class="map-open-btn" onclick="openGoogleMaps(' + d.lat + ',' + d.lng + ')">&#8599;&nbsp;Expand</span>'
         + '</div></div>'
       + '</div>'
-      + (d.accom.key
-          ? '<div class="day-accom ' + st.c + ' has-modal" onclick="openAccomModal(\'' + d.accom.key + '\')">'
-          : '<div class="day-accom ' + st.c + '">')
+      + '<div class="day-accom ' + st.c + '">'
       + '<span class="accom-status-text">' + st.text + '</span>'
       + (d.accom.label ? '<span class="accom-sep">&middot;</span><span class="accom-label">' + d.accom.label + '</span>' : '')
       + (d.accom.name  ? '<span class="accom-name">' + d.accom.name + '</span>' : '')
       + (d.accom.note  ? '<span class="accom-note">' + d.accom.note + '</span>' : '')
-      + (d.accom.key   ? '<span class="accom-detail-hint">Details &rsaquo;</span>' : '')
       + '</div>'
       + (function(){
+          var hasDetails = !!d.accom.key;
           var cats = d.recs ? Object.keys(d.recs) : [];
           var total = 0; cats.forEach(function(c){ total += d.recs[c].length; });
-          if (!total) return '';
-          var html = '<div class="recs-bar" onclick="toggleRecsPanel(this)">'
-            + '<span class="recs-bar-icon">✦</span>'
-            + '<span class="recs-bar-label">Recommendations</span>'
-            + '<span class="recs-bar-count">' + total + '</span>'
-            + '<span class="recs-bar-arrow">▾</span>'
-            + '</div>';
-          html += '<div class="recs-panel"><div class="recs-tabs">';
-          cats.forEach(function(c, i){
-            html += '<span class="recs-tab' + (i===0?' active':'') + '" data-tab="' + d.id + '-' + i + '" onclick="switchRecTab(this)">' + c + '</span>';
-          });
+          var hasRecs = total > 0;
+          if (!hasDetails && !hasRecs) return '';
+          var html = '<div class="day-actions">';
+          if (hasDetails) {
+            html += '<div class="day-action-btn" onclick="toggleDetailsPanel(this)" data-key="' + d.accom.key + '">'
+              + '<span class="day-action-icon">🏨</span>'
+              + '<span class="day-action-label">Details</span>'
+              + '<span class="day-action-arrow">▾</span>'
+              + '</div>';
+          }
+          if (hasRecs) {
+            html += '<div class="day-action-btn" onclick="toggleRecsPanel(this)">'
+              + '<span class="day-action-icon">✦</span>'
+              + '<span class="day-action-label">Recommendations</span>'
+              + '<span class="day-action-arrow">▾</span>'
+              + '</div>';
+          }
           html += '</div>';
-          cats.forEach(function(c, i){
-            html += '<div class="recs-tab-content' + (i===0?' active':'') + '" id="rtc-' + d.id + '-' + i + '">';
-            html += '<div class="rec-list">';
-            d.recs[c].forEach(function(r){
-              html += '<div class="rec-item"><span class="rec-dot"></span><div class="rec-body">';
-              html += '<div class="rec-name">' + (r.url ? '<a href="' + r.url + '" target="_blank">' + r.name + '</a>' : r.name) + '</div>';
-              if (r.note) html += '<div class="rec-note">' + r.note + '</div>';
+          if (hasDetails) {
+            html += '<div class="details-panel" data-key="' + d.accom.key + '"></div>';
+          }
+          if (hasRecs) {
+            html += '<div class="recs-panel"><div class="recs-tabs">';
+            cats.forEach(function(c, i){
+              html += '<span class="recs-tab' + (i===0?' active':'') + '" data-tab="' + d.id + '-' + i + '" onclick="switchRecTab(this)">' + c + '</span>';
+            });
+            html += '</div>';
+            cats.forEach(function(c, i){
+              html += '<div class="recs-tab-content' + (i===0?' active':'') + '" id="rtc-' + d.id + '-' + i + '">';
+              html += '<div class="rec-list">';
+              d.recs[c].forEach(function(r){
+                html += '<div class="rec-item"><span class="rec-dot"></span><div class="rec-body">';
+                html += '<div class="rec-name">' + (r.url ? '<a href="' + r.url + '" target="_blank">' + r.name + '</a>' : r.name) + '</div>';
+                if (r.note) html += '<div class="rec-note">' + r.note + '</div>';
+                html += '</div></div>';
+              });
               html += '</div></div>';
             });
-            html += '</div></div>';
-          });
-          html += '</div>';
+            html += '</div>';
+          }
           return html;
         }())
       + '</section>';
@@ -899,42 +874,40 @@ function initSpy() {
   document.querySelectorAll(".day-section").forEach(function(el){obs.observe(el);});
 }
 
-function openAccomModal(key) {
-  var data = _ACCOMDATA[key];
-  if (!data) return;
-  document.getElementById("accom-modal-title").textContent = data.title;
-  var body = "";
-  data.rows.forEach(function(r) {
-    var val = r.map
-      ? '<a href="https://www.google.com/maps/search/?api=1&query=' + r.map + '" target="_blank">' + r.val + ' ↗</a>'
-      : r.val;
-    body += '<div class="accom-modal-row">'
-      + '<div class="accom-modal-icon">' + r.icon + '</div>'
-      + '<div class="accom-modal-cell">'
-        + '<div class="accom-modal-lbl">' + r.label + '</div>'
-        + '<div class="accom-modal-val">' + val + '</div>'
-      + '</div></div>';
-  });
-  document.getElementById("accom-modal-body").innerHTML = body;
-  document.getElementById("accom-modal-overlay").classList.add("open");
-  document.body.style.overflow = "hidden";
+function toggleDetailsPanel(btn) {
+  btn.classList.toggle("open");
+  var section = btn.closest(".day-section") || btn.closest("section");
+  var panel = section.querySelector('.details-panel[data-key="' + btn.dataset.key + '"]');
+  if (!panel) return;
+  if (!panel.dataset.built) {
+    var data = _ACCOMDATA[btn.dataset.key];
+    if (!data) return;
+    var html = "";
+    data.rows.forEach(function(r) {
+      var val = r.map
+        ? '<a href="https://www.google.com/maps/search/?api=1&query=' + r.map + '" target="_blank">' + r.val + ' ↗</a>'
+        : r.val;
+      html += '<div class="details-row">'
+        + '<div class="details-icon">' + r.icon + '</div>'
+        + '<div class="details-cell">'
+          + '<div class="details-lbl">' + r.label + '</div>'
+          + '<div class="details-val">' + val + '</div>'
+        + '</div></div>';
+    });
+    panel.innerHTML = html;
+    panel.dataset.built = "1";
+  }
+  panel.classList.toggle("open");
 }
-
-function closeAccomModal(e) {
-  if (e && e.target !== document.getElementById("accom-modal-overlay")) return;
-  document.getElementById("accom-modal-overlay").classList.remove("open");
-  document.body.style.overflow = "";
-}
-
-document.addEventListener("keydown", function(e){if(e.key==="Escape")closeAccomModal();});
 function goDay(id){var el=document.getElementById(id);if(el){el.scrollIntoView({behavior:"smooth",block:"start"});document.querySelectorAll(".top-nav-day").forEach(function(n){n.classList.remove("active");});var m=document.getElementById("tnav-"+id);if(m){m.classList.add("active");m.scrollIntoView({block:"nearest",inline:"center"});}}}
 function goTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
 function openGoogleMaps(lat,lng){window.open("https://www.google.com/maps/search/?api=1&query="+lat+","+lng,"_blank");}
 
 
-function toggleRecsPanel(bar) {
-  bar.classList.toggle("open");
-  var panel = bar.nextElementSibling;
+function toggleRecsPanel(btn) {
+  btn.classList.toggle("open");
+  var section = btn.closest(".day-section") || btn.closest("section");
+  var panel = section.querySelector('.recs-panel');
   if (panel) panel.classList.toggle("open");
 }
 
