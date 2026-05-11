@@ -287,30 +287,34 @@ body {
 }
 .accom-name  { font-family: var(--body); font-size: 13px; font-weight: 300; color: var(--ink-2); }
 .accom-note  { font-size: 11px; color: var(--ink-4); flex: 1 0 100%; margin-top: 2px; }
-/* ━━━━ BOTTOM ACTIONS ━━━━ */
-.day-actions {
-  display: flex; gap: 0;
-  border-top: 1px solid var(--border);
-}
-.day-action-btn {
+/* ━━━━ RECS BAR ━━━━ */
+.recs-bar {
   display: flex; align-items: center; gap: 8px;
   padding: 12px 24px; cursor: pointer; user-select: none;
+  border-top: 1px solid var(--border);
   background: #FAFAFA; transition: background 0.12s;
-  border-right: 1px solid var(--border);
 }
-.day-action-btn:last-child { border-right: none; }
-.day-action-btn:hover { background: #F3F2EF; }
-.day-action-btn.open { background: #F3F2EF; }
-.day-action-icon { font-size: 12px; }
-.day-action-label {
+.recs-bar:hover { background: #F3F2EF; }
+.recs-bar.open { background: #F3F2EF; }
+.recs-bar-icon { font-size: 12px; }
+.recs-bar-label {
   font-family: var(--body); font-size: 9px; font-weight: 600;
   letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-4);
 }
-.day-action-arrow {
+.recs-bar-arrow {
   font-size: 10px; color: var(--ink-4);
   transition: transform 0.2s;
 }
-.day-action-btn.open .day-action-arrow { transform: rotate(180deg); }
+.recs-bar.open .recs-bar-arrow { transform: rotate(180deg); }
+
+/* ━━━━ DETAILS LINK ━━━━ */
+.accom-details-link {
+  font-family: var(--body); font-size: 11px; font-weight: 400;
+  color: var(--ink-3); cursor: pointer;
+  border-bottom: 1px solid var(--border-2);
+  transition: color 0.12s, border-color 0.12s;
+}
+.accom-details-link:hover { color: var(--ink); border-color: var(--ink-3); }
 
 /* ━━━━ DETAILS PANEL ━━━━ */
 .details-panel { display: none; border-top: 1px solid var(--border); }
@@ -358,7 +362,7 @@ body {
   #pw-row { flex-direction: column; gap: 10px; }
   #pw-input { width: 220px; max-width: 80vw; }
   #pw-submit { padding: 12px 28px; height: 44px; }
-  .day-action-btn { padding: 12px 16px; }
+  .recs-bar { padding: 12px 16px; }
   .recs-tabs { padding: 0 16px; }
   .recs-tab-content { padding: 14px 16px 18px; }
   .details-row { padding: 11px 16px; }
@@ -376,7 +380,8 @@ body {
   .accom-label { font-size: 12px; color: #888; }
   .accom-name { font-size: 16px; }
   .accom-note { font-size: 14px; color: #777; }
-  .day-action-label { font-size: 12px; }
+  .recs-bar-label { font-size: 12px; }
+  .accom-details-link { font-size: 14px; }
   .accom-sep { color: #999; }
   .top-nav-num { font-size: 12px; }
   .top-nav-date { font-size: 13px; }
@@ -780,58 +785,44 @@ function buildDays() {
           + '<span class="map-open-btn" onclick="openGoogleMaps(' + d.lat + ',' + d.lng + ')">&#8599;&nbsp;Expand</span>'
         + '</div></div>'
       + '</div>'
+      + (function(){
+          var cats = d.recs ? Object.keys(d.recs) : [];
+          var total = 0; cats.forEach(function(c){ total += d.recs[c].length; });
+          if (!total) return '';
+          var html = '<div class="recs-bar" onclick="toggleRecsPanel(this)">'
+            + '<span class="recs-bar-icon">✦</span>'
+            + '<span class="recs-bar-label">Recommendations</span>'
+            + '<span class="recs-bar-arrow">▾</span>'
+            + '</div>';
+          html += '<div class="recs-panel"><div class="recs-tabs">';
+          cats.forEach(function(c, i){
+            html += '<span class="recs-tab' + (i===0?' active':'') + '" data-tab="' + d.id + '-' + i + '" onclick="switchRecTab(this)">' + c + '</span>';
+          });
+          html += '</div>';
+          cats.forEach(function(c, i){
+            html += '<div class="recs-tab-content' + (i===0?' active':'') + '" id="rtc-' + d.id + '-' + i + '">';
+            html += '<div class="rec-list">';
+            d.recs[c].forEach(function(r){
+              html += '<div class="rec-item"><span class="rec-dot"></span><div class="rec-body">';
+              html += '<div class="rec-name">' + (r.url ? '<a href="' + r.url + '" target="_blank">' + r.name + '</a>' : r.name) + '</div>';
+              if (r.note) html += '<div class="rec-note">' + r.note + '</div>';
+              html += '</div></div>';
+            });
+            html += '</div></div>';
+          });
+          html += '</div>';
+          return html;
+        }())
       + '<div class="day-accom ' + st.c + '">'
       + '<span class="accom-status-text">' + st.text + '</span>'
       + (d.accom.label ? '<span class="accom-sep">&middot;</span><span class="accom-label">' + d.accom.label + '</span>' : '')
       + (d.accom.name  ? '<span class="accom-name">' + d.accom.name + '</span>' : '')
-      + (d.accom.note  ? '<span class="accom-note">' + d.accom.note + '</span>' : '')
+      + (d.accom.note  ? '<span class="accom-note">' + d.accom.note
+          + (d.accom.key ? ' · <span class="accom-details-link" onclick="toggleDetailsPanel(this)" data-key="' + d.accom.key + '">Details</span>' : '')
+          + '</span>'
+        : (d.accom.key ? '<span class="accom-note"><span class="accom-details-link" onclick="toggleDetailsPanel(this)" data-key="' + d.accom.key + '">Details</span></span>' : ''))
       + '</div>'
-      + (function(){
-          var hasDetails = !!d.accom.key;
-          var cats = d.recs ? Object.keys(d.recs) : [];
-          var total = 0; cats.forEach(function(c){ total += d.recs[c].length; });
-          var hasRecs = total > 0;
-          if (!hasDetails && !hasRecs) return '';
-          var html = '<div class="day-actions">';
-          if (hasDetails) {
-            html += '<div class="day-action-btn" onclick="toggleDetailsPanel(this)" data-key="' + d.accom.key + '">'
-              + '<span class="day-action-icon">🏨</span>'
-              + '<span class="day-action-label">Details</span>'
-              + '<span class="day-action-arrow">▾</span>'
-              + '</div>';
-          }
-          if (hasRecs) {
-            html += '<div class="day-action-btn" onclick="toggleRecsPanel(this)">'
-              + '<span class="day-action-icon">✦</span>'
-              + '<span class="day-action-label">Recommendations</span>'
-              + '<span class="day-action-arrow">▾</span>'
-              + '</div>';
-          }
-          html += '</div>';
-          if (hasDetails) {
-            html += '<div class="details-panel" data-key="' + d.accom.key + '"></div>';
-          }
-          if (hasRecs) {
-            html += '<div class="recs-panel"><div class="recs-tabs">';
-            cats.forEach(function(c, i){
-              html += '<span class="recs-tab' + (i===0?' active':'') + '" data-tab="' + d.id + '-' + i + '" onclick="switchRecTab(this)">' + c + '</span>';
-            });
-            html += '</div>';
-            cats.forEach(function(c, i){
-              html += '<div class="recs-tab-content' + (i===0?' active':'') + '" id="rtc-' + d.id + '-' + i + '">';
-              html += '<div class="rec-list">';
-              d.recs[c].forEach(function(r){
-                html += '<div class="rec-item"><span class="rec-dot"></span><div class="rec-body">';
-                html += '<div class="rec-name">' + (r.url ? '<a href="' + r.url + '" target="_blank">' + r.name + '</a>' : r.name) + '</div>';
-                if (r.note) html += '<div class="rec-note">' + r.note + '</div>';
-                html += '</div></div>';
-              });
-              html += '</div></div>';
-            });
-            html += '</div>';
-          }
-          return html;
-        }())
+      + (d.accom.key ? '<div class="details-panel" data-key="' + d.accom.key + '"></div>' : '')
       + '</section>';
   });
   window._MDATA = MDATA;
@@ -874,13 +865,12 @@ function initSpy() {
   document.querySelectorAll(".day-section").forEach(function(el){obs.observe(el);});
 }
 
-function toggleDetailsPanel(btn) {
-  btn.classList.toggle("open");
-  var section = btn.closest(".day-section") || btn.closest("section");
-  var panel = section.querySelector('.details-panel[data-key="' + btn.dataset.key + '"]');
+function toggleDetailsPanel(link) {
+  var section = link.closest(".day-section") || link.closest("section");
+  var panel = section.querySelector('.details-panel[data-key="' + link.dataset.key + '"]');
   if (!panel) return;
   if (!panel.dataset.built) {
-    var data = _ACCOMDATA[btn.dataset.key];
+    var data = _ACCOMDATA[link.dataset.key];
     if (!data) return;
     var html = "";
     data.rows.forEach(function(r) {
@@ -904,10 +894,9 @@ function goTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({be
 function openGoogleMaps(lat,lng){window.open("https://www.google.com/maps/search/?api=1&query="+lat+","+lng,"_blank");}
 
 
-function toggleRecsPanel(btn) {
-  btn.classList.toggle("open");
-  var section = btn.closest(".day-section") || btn.closest("section");
-  var panel = section.querySelector('.recs-panel');
+function toggleRecsPanel(bar) {
+  bar.classList.toggle("open");
+  var panel = bar.nextElementSibling;
   if (panel) panel.classList.toggle("open");
 }
 
