@@ -288,7 +288,6 @@ body {
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-4);
 }
 .accom-name  { font-family: var(--body); font-size: 13px; font-weight: 300; color: var(--ink-2); flex: 1 0 100%; }
-.accom-name .accom-status-text { margin-left: 8px; vertical-align: middle; position: relative; top: -1px; }
 .accom-note  { font-size: 11px; color: var(--ink-4); flex: 1 0 100%; margin-top: 2px; }
 /* ━━━━ RECS BAR ━━━━ */
 .recs-bar {
@@ -869,8 +868,8 @@ function buildDays() {
         + '</div>'
       + '</div>'
       + '<div class="day-accom ' + st.c + '">'
-      + (d.accom.label ? '<span class="accom-label">' + d.accom.label + '</span>' : '')
-      + (d.accom.name  ? '<span class="accom-name">' + d.accom.name + ' <span class="accom-status-text">' + st.text + '</span></span>' : '')
+      + (d.accom.label ? '<span class="accom-label">' + d.accom.label + '</span><span class="accom-status-text">' + st.text + '</span>' : '')
+      + (d.accom.name  ? '<span class="accom-name">' + d.accom.name + '</span>' : '')
       + (d.accom.note  ? '<span class="accom-note">' + d.accom.note
           + (d.accom.key ? ' · <span class="accom-details-link" onclick="toggleDetailsPanel(this)" data-key="' + d.accom.key + '">Details</span>' : '')
           + '</span>'
