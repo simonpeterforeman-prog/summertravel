@@ -148,7 +148,7 @@ body {
 
 .day-topbar {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 24px; background: #FAFAFA;
+  padding: 10px 24px; background: #fff;
   border-bottom: 1px solid var(--border);
 }
 .day-topbar-left { display: flex; align-items: center; gap: 12px; }
@@ -171,7 +171,7 @@ body {
   display: flex; align-items: center; gap: 8px;
   padding: 8px 24px;
   border-bottom: 1px solid var(--border);
-  background: #FCFCFC;
+  background: #fff;
   font-family: var(--body);
   flex-wrap: wrap;
 }
@@ -262,7 +262,7 @@ body {
 .sched-main { flex: 1; min-width: 0; }
 .sched-main strong { font-weight: 400; font-size: 13px; color: var(--ink-2); display: block; }
 .sched-note { font-size: 11px; color: var(--ink-4); display: block; margin-top: 3px; font-weight: 300; line-height: 1.5; }
-.flight-row { background: #FAFAFA; }
+.flight-row { background: #fff; }
 .flight-row .sched-time { color: var(--ink-2); }
 .flight-row .sched-main strong { font-weight: 500; }
 
@@ -270,7 +270,7 @@ body {
 .day-accom {
   display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
   padding: 14px 24px; border-top: 1px solid var(--border);
-  background: #FAFAFA;
+  background: #fff;
 }
 .day-accom.has-modal { cursor: pointer; transition: background 0.12s; }
 .day-accom.has-modal:hover { background: #F3F2EF; }
@@ -287,21 +287,22 @@ body {
   font-family: var(--body); font-size: 9px; font-weight: 600;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-4);
 }
-.accom-name  { font-family: var(--body); font-size: 13px; font-weight: 300; color: var(--ink-2); }
+.accom-name  { font-family: var(--body); font-size: 13px; font-weight: 300; color: var(--ink-2); flex: 1 0 100%; }
+.accom-name .accom-status-text { margin-left: 8px; vertical-align: middle; position: relative; top: -1px; }
 .accom-note  { font-size: 11px; color: var(--ink-4); flex: 1 0 100%; margin-top: 2px; }
 /* ━━━━ RECS BAR ━━━━ */
 .recs-bar {
   display: flex; align-items: center; gap: 8px;
   padding: 12px 24px; cursor: pointer; user-select: none;
   border-top: 1px solid var(--border);
-  background: #FAFAFA; transition: background 0.12s;
+  background: #EDEDEC; transition: background 0.12s;
 }
-.recs-bar:hover { background: #F3F2EF; }
-.recs-bar.open { background: #F3F2EF; }
+.recs-bar:hover { background: #E4E4E2; }
+.recs-bar.open { background: #E4E4E2; }
 .recs-bar-icon { font-size: 12px; }
 .recs-bar-label {
   font-family: var(--body); font-size: 9px; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-4);
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3);
 }
 .recs-bar-arrow {
   font-size: 10px; color: var(--ink-4);
@@ -833,7 +834,7 @@ function buildDays() {
                 var total = 0; cats.forEach(function(c){ total += d.recs[c].length; });
                 if (!total) return '';
                 var html = '<div class="recs-bar" onclick="toggleRecsPanel(this)">'
-                  + '<span class="recs-bar-icon">✦</span>'
+                  + '<span class="recs-bar-icon">⚑</span>'
                   + '<span class="recs-bar-label">Recommendations</span>'
                   + '<span class="recs-bar-arrow">▾</span>'
                   + '</div>';
@@ -864,9 +865,8 @@ function buildDays() {
         + '</div>'
       + '</div>'
       + '<div class="day-accom ' + st.c + '">'
-      + '<span class="accom-status-text">' + st.text + '</span>'
-      + (d.accom.label ? '<span class="accom-sep">&middot;</span><span class="accom-label">' + d.accom.label + '</span>' : '')
-      + (d.accom.name  ? '<span class="accom-name">' + d.accom.name + '</span>' : '')
+      + (d.accom.label ? '<span class="accom-label">' + d.accom.label + '</span>' : '')
+      + (d.accom.name  ? '<span class="accom-name">' + d.accom.name + ' <span class="accom-status-text">' + st.text + '</span></span>' : '')
       + (d.accom.note  ? '<span class="accom-note">' + d.accom.note
           + (d.accom.key ? ' · <span class="accom-details-link" onclick="toggleDetailsPanel(this)" data-key="' + d.accom.key + '">Details</span>' : '')
           + '</span>'
