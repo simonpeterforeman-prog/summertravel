@@ -71,21 +71,13 @@ body {
   font-size: 15px;
   line-height: 1.6;
   color: var(--ink);
-  background: var(--bg);
+  background: var(--sidebar-bg);
   margin: 0;
 }
 
 /* ━━━━ SIDEBAR ━━━━ */
 .sidebar {
-  width: var(--sidebar-w);
-  flex-shrink: 0;
-  background: var(--sidebar-bg);
-  position: fixed;
-  top: 0; left: 0; bottom: 0;
-  overflow-y: auto;
-  z-index: 300;
-  display: flex;
-  flex-direction: column;
+  display: none;
 }
 .sidebar::-webkit-scrollbar { width: 2px; }
 .sidebar::-webkit-scrollbar-thumb { background: #333; }
@@ -193,9 +185,9 @@ body {
 
 .sb-divider { height: 1px; background: #222; margin: 12px 24px; }
 
-/* ━━━━ MOBILE NAV ━━━━ */
+/* ━━━━ TOP NAV ━━━━ */
 .mobile-nav {
-  display: none;
+  display: flex;
   position: sticky;
   top: 0;
   z-index: 500;
@@ -204,12 +196,22 @@ body {
   box-shadow: 0 1px 0 #222;
 }
 .mob-top {
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+  overflow: hidden;
+}
+.mob-strip {
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+.mob-top {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 18px;
+  flex-direction: column;
+  padding: 14px 18px 10px;
   border-bottom: 1px solid #2a2a2a;
-  min-height: 52px;
+  gap: 6px;
 }
 .mob-brand {
   font-family: var(--heading);
@@ -217,87 +219,77 @@ body {
   font-weight: 700;
   color: #fff;
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 .mob-brand span { color: var(--accent); }
-.mob-pills { display: flex; gap: 0; }
-.mob-pill {
-  font-family: var(--heading);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 0 14px;
-  color: #555;
-  cursor: pointer;
-  transition: color 0.15s;
-  border: none;
-  background: none;
-  border-right: 1px solid #2a2a2a;
-  line-height: 1;
-}
-.mob-pill:last-child { border-right: none; }
-.mob-pill.active { color: #fff; }
-.mob-pill:hover { color: #ccc; }
+.mob-pills { display: none; }
 
 .mob-strip {
   display: flex;
   overflow-x: auto;
-  padding: 8px 14px;
-  gap: 6px;
+  padding: 0 14px;
+  gap: 0;
   scrollbar-width: none;
-  border-top: 1px solid #1a1a1a;
+  border-top: 1px solid #222;
 }
 .mob-strip::-webkit-scrollbar { display: none; }
+.mob-tab {
+  flex-shrink: 0;
+  font-family: var(--heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  border-right: 1px solid #222;
+}
+.mob-tab:last-child { border-right: none; }
+.mob-tab.active { color: #fff; border-bottom-color: var(--accent); }
+.mob-tab:hover { color: #ccc; }
+.mob-tab-sep {
+  flex-shrink: 0;
+  width: 1px;
+  background: #333;
+  align-self: stretch;
+  margin: 6px 0;
+}
 .mob-chip {
   flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 5px 12px;
-  border-radius: 100px;
-  border: 1px solid #2a2a2a;
+  padding: 10px 14px;
+  border-radius: 0;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-right: 1px solid #222;
   cursor: pointer;
   transition: all 0.15s;
   white-space: nowrap;
 }
+.mob-chip:last-child { border-right: none; }
 .mob-chip-num { font-family: var(--heading); font-size: 9px; font-weight: 700; color: #555; }
 .mob-chip-date { font-family: var(--heading); font-size: 10px; font-weight: 500; color: #555; }
-.mob-chip.active { background: #222; border-color: #444; }
+.mob-chip.active { border-bottom-color: #fff; }
 .mob-chip.active .mob-chip-num, .mob-chip.active .mob-chip-date { color: #ddd; }
-.mob-chip.active.phase-la { border-color: rgba(74,144,217,0.5); }
-.mob-chip.active.phase-395 { border-color: rgba(76,175,124,0.5); }
-.mob-chip.active.phase-bay { border-color: rgba(245,166,35,0.5); }
+.mob-chip.active.phase-la { border-bottom-color: rgba(74,144,217,0.7); }
+.mob-chip.active.phase-395 { border-bottom-color: rgba(76,175,124,0.7); }
+.mob-chip.active.phase-bay { border-bottom-color: rgba(245,166,35,0.7); }
 
 /* ━━━━ MAIN ━━━━ */
 .main {
-  margin-left: var(--sidebar-w);
+  margin-left: 0;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
-/* ━━━━ HERO ━━━━ */
-.hero {
-  background: var(--accent);
-  padding: 20px 48px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  gap: 32px;
-}
-.hero::after {
-  content: 'HIGH & WIDE';
-  position: absolute;
-  right: -10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--heading);
-  font-size: 96px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.03);
-  letter-spacing: -0.04em;
-  line-height: 1;
-  pointer-events: none;
-  white-space: nowrap;
-}
+/* ━━━━ HERO (removed – marquee now in nav) ━━━━ */
+.hero { display: none; }
 .hero-label { display: none; }
 .hero-h1 {
   font-family: var(--heading);
@@ -381,23 +373,21 @@ body {
   margin-bottom: 0;
 }
 
-/* ━━━━ DAY SECTIONS ━━━━ */
+/* ━━━━ DAY CARDS ━━━━ */
+#days-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 40px;
+}
 .day-section {
-  border-bottom: 1px solid var(--border);
   background: var(--surface);
-  scroll-margin-top: 16px;
+  scroll-margin-top: 120px;
   position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
 }
-.day-section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-}
-.day-section.phase-la::before   { background: var(--la-color); }
-.day-section.phase-395::before  { background: var(--sierra-color); }
-.day-section.phase-bay::before  { background: var(--bay-color); }
-.day-section.phase-travel::before { background: var(--travel-color); }
+.day-section::before { display: none; }
 
 .day-topbar {
   display: flex;
@@ -746,9 +736,67 @@ body {
 }
 @media (max-width: 768px) {
   .expand-bar { padding: 12px 20px; }
-  .accom-panel-body { padding: 16px 20px 20px; }
   .recs-tabs { padding: 0 20px; }
   .recs-pane { padding: 12px 20px 16px; }
+}
+
+/* accom inline tile */
+.accom-tile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 0 4px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.accom-tile-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.accom-tile-info { flex: 1; min-width: 0; }
+.accom-tile-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+.accom-tile-label {
+  font-family: var(--heading);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.accom-tile-name {
+  font-family: var(--heading);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.accom-details .expand-bar {
+  border-top: none;
+  background: transparent;
+  padding: 6px 0;
+}
+.accom-details .expand-bar:hover { background: transparent; }
+.accom-wrap {
+  padding: 0 56px 12px;
+  border-right: 1px solid var(--border);
+  margin-right: 300px;
+}
+@media (max-width: 960px) {
+  .accom-wrap { margin-right: 0; border-right: none; }
+}
+@media (max-width: 768px) {
+  .accom-wrap { padding: 0 20px; }
 }
 
 /* expand bar (shared: recs + accom) */
@@ -793,7 +841,7 @@ body {
 .expand-panel.open { opacity: 1; }
 
 /* accom panel body */
-.accom-panel-body { padding: 20px 56px 24px; }
+.accom-panel-body { padding: 8px 0 16px; }
 .accom-panel-name {
   font-family: var(--heading); font-size: 14px; font-weight: 600;
   color: var(--ink); margin-bottom: 12px;
@@ -965,40 +1013,83 @@ body {
 }
 
 /* budget */
-.budget-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 12px;
+.budget-ledger {
   margin-top: 4px;
   margin-bottom: 20px;
 }
-.budget-card {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 18px 20px;
-}
-.budget-card.done { background: #F6FDF9; border-color: #B8DECA; }
-.bcard-label {
+.ledger-section-title {
   font-family: var(--heading);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-3);
-  margin-bottom: 8px;
+  padding: 16px 0 8px;
+  border-bottom: 2px solid var(--ink);
 }
-.bcard-label.green { color: #1B6B3A; }
-.bcard-amount {
+.ledger-row {
+  display: flex;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid #F0F0EC;
+  gap: 12px;
+}
+.ledger-row:last-child { border-bottom: none; }
+.ledger-status {
+  width: 18px;
+  flex-shrink: 0;
+  font-size: 13px;
+  text-align: center;
+}
+.ledger-name {
+  flex: 1;
   font-family: var(--heading);
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-size: 13px;
+  font-weight: 500;
   color: var(--ink);
-  line-height: 1;
-  margin-bottom: 6px;
 }
-.bcard-note { font-size: 11px; color: var(--ink-3); line-height: 1.45; }
+.ledger-note {
+  font-size: 11px;
+  color: var(--ink-3);
+  font-weight: 400;
+  margin-top: 1px;
+}
+.ledger-amount {
+  font-family: var(--heading);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.ledger-row.projected .ledger-name,
+.ledger-row.projected .ledger-amount { color: var(--ink-3); }
+.ledger-row.projected .ledger-amount { font-weight: 500; }
+.ledger-subtotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 12px 0;
+  border-top: 2px solid var(--ink);
+  margin-top: 4px;
+}
+.ledger-subtotal-label {
+  font-family: var(--heading);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.ledger-subtotal-amount {
+  font-family: var(--heading);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.ledger-subtotal-amount.green { color: #1A6B3A; }
 
 .budget-total {
   background: var(--sidebar-bg);
@@ -1030,11 +1121,23 @@ body {
 .btotal-sub { font-size: 12px; color: #555; margin-top: 4px; }
 .btotal-booked { font-family: var(--heading); font-size: 28px; font-weight: 700; letter-spacing: -0.03em; color: #4CAF7C; line-height: 1; }
 
+/* ━━━━ BUDGET CARD ━━━━ */
+#budget {
+  background: var(--surface);
+  margin: 0 40px 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  scroll-margin-top: 120px;
+}
+#roadtrip-map {
+  background: transparent;
+  box-shadow: none;
+}
+
 /* ━━━━ FOOTER ━━━━ */
 footer {
-  background: var(--sidebar-bg);
+  background: transparent;
   padding: 28px 56px;
-  border-top: 1px solid #222;
+  border-top: none;
 }
 footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spacing: 0.06em; }
 
@@ -1049,18 +1152,12 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
 }
 @media (max-width: 768px) {
   .sidebar { display: none; }
-  .mobile-nav { display: flex; flex-direction: column; }
-  .main { margin-left: 0; }
-  .hero { padding: 14px 20px; gap: 16px; flex-wrap: wrap; }
-  .hero::after { display: none; }
-  .hero-h1 { font-size: 20px; }
-  .hero-sub { display: none; }
-  .hero-stats { gap: 16px; }
-  .hero-stat-n { font-size: 15px; }
+  #days-container { padding: 20px 16px; gap: 20px; }
+  #budget { margin: 0 16px 20px; }
   .day-topbar, .day-headline, .day-content-col { padding-left: 20px; padding-right: 20px; }
-  
+
   .accom-status-block { padding: 12px 14px; min-width: 64px; font-size: 8px; }
-  
+
   .day-map-col { padding: 16px 20px; }
   .section-hd { padding: 28px 20px 0; }
   .global-pad { padding: 0 20px 40px; }
@@ -1068,7 +1165,9 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
   .day-num-bg { display: none; }
 }
 @media (max-width: 480px) {
-  .budget-cards { grid-template-columns: 1fr 1fr; }
+  .ledger-row { padding: 8px 0; }
+  .ledger-name { font-size: 12px; }
+  .ledger-amount { font-size: 12px; }
 }
   100% { transform: translateX(-50%); }
 }
@@ -1092,7 +1191,7 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.09em;
-  color: #555;
+  color: #444;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -1130,10 +1229,22 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
   100% { transform: translateX(-50%); }
 }
 /* sierra route map */
-#sierra-map { height: 460px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-.route-legend { display: flex; gap: 20px; margin-top: 10px; font-size: 12px; color: var(--muted); flex-wrap: wrap; align-items: center; }
+.roadtrip-break {
+  padding: 40px 0 32px;
+}
+.roadtrip-title {
+  font-family: var(--heading);
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 24px;
+}
+#sierra-map { height: 580px; border-radius: 0; overflow: hidden; }
+.route-legend { display: flex; gap: 20px; margin-top: 10px; font-size: 12px; color: #666; flex-wrap: wrap; align-items: center; }
 .route-legend-dot { display: inline-block; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
-@media (max-width: 768px) { #sierra-map { height: 320px; } }
+@media (max-width: 768px) { #sierra-map { height: 320px; } .roadtrip-break { padding: 28px 0 24px; } }
 
 /* ━━━━ WEATHER BAR ━━━━ */
 .day-weather {
@@ -1191,22 +1302,18 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
     <button class="sb-section-link active" onclick="goTo('days')">Day by Day</button>
     <div class="sb-days" id="sb-days"></div>
     <div class="sb-divider"></div>
-    <button class="sb-section-link" onclick="goTo('roadtrip-map')">Road Trip Map</button>
-    <div class="sb-divider"></div>
-    <button class="sb-section-link" onclick="goTo('checklist')">Booking Checklist</button>
-    <div class="sb-divider"></div>
-    <button class="sb-section-link" onclick="goTo('budget')">Budget</button>
+    <button class="sb-section-link" onclick="goTo('budget')">Budget &amp; Bookings</button>
   </nav>
 </aside>
 
 <nav class="mobile-nav">
   <div class="mob-top">
     <span class="mob-brand">High <span>&amp;</span> Wide</span>
-    <div class="mob-pills">
-      <span class="mob-pill active" onclick="goTo('days')">Days</span>
-      <span class="mob-pill" onclick="goTo('roadtrip-map')">Map</span>
-      <span class="mob-pill" onclick="goTo('checklist')">Checklist</span>
-      <span class="mob-pill" onclick="goTo('budget')">Budget</span>
+    <div class="hero-scroll-wrap">
+      <div class="hero-scroll-track">
+        <span class="hero-scroll-item">Keep the kids off their phones for 17 days or die trying&nbsp;&nbsp;&middot;&nbsp;&nbsp;The Foreman Family California Road Trip&nbsp;&nbsp;&middot;&nbsp;&nbsp;Simon, Lorenzo &amp; Gia&nbsp;&nbsp;&middot;&nbsp;&nbsp;July 3&ndash;19, 2026&nbsp;&nbsp;&middot;&nbsp;&nbsp;Los Angeles &rarr; Highway 395 &rarr; Eastern Sierra &rarr; Marin County&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>
+        <span class="hero-scroll-item">Keep the kids off their phones for 17 days or die trying&nbsp;&nbsp;&middot;&nbsp;&nbsp;The Foreman Family California Road Trip&nbsp;&nbsp;&middot;&nbsp;&nbsp;Simon, Lorenzo &amp; Gia&nbsp;&nbsp;&middot;&nbsp;&nbsp;July 3&ndash;19, 2026&nbsp;&nbsp;&middot;&nbsp;&nbsp;Los Angeles &rarr; Highway 395 &rarr; Eastern Sierra &rarr; Marin County&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>
+      </div>
     </div>
   </div>
   <div class="mob-strip" id="mob-strip"></div>
@@ -1214,151 +1321,149 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
 
 <main class="main">
 
-  <div class="hero">
-    <div class="hero-scroll-wrap">
-    <div class="hero-scroll-track">
-      <span class="hero-scroll-item">Keep the kids off their phones for 17 days or die trying&nbsp;&nbsp;&middot;&nbsp;&nbsp;The Foreman Family California Road Trip&nbsp;&nbsp;&middot;&nbsp;&nbsp;Simon, Lorenzo &amp; Gia&nbsp;&nbsp;&middot;&nbsp;&nbsp;July 3&ndash;19, 2026&nbsp;&nbsp;&middot;&nbsp;&nbsp;Los Angeles &rarr; Highway 395 &rarr; Eastern Sierra &rarr; Marin County&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>
-      <span class="hero-scroll-item">Keep the kids off their phones for 17 days or die trying&nbsp;&nbsp;&middot;&nbsp;&nbsp;The Foreman Family California Road Trip&nbsp;&nbsp;&middot;&nbsp;&nbsp;Simon, Lorenzo &amp; Gia&nbsp;&nbsp;&middot;&nbsp;&nbsp;July 3&ndash;19, 2026&nbsp;&nbsp;&middot;&nbsp;&nbsp;Los Angeles &rarr; Highway 395 &rarr; Eastern Sierra &rarr; Marin County&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>
-    </div>
-  </div>
-    <div class="hero-date">Jul 3&ndash;19, 2026</div>
-  </div>
-
   <div id="days" class="section-wrap">
-    <div class="section-hd">
-      <div class="section-label">The Trip</div>
-      <h2 class="section-title">Day by Day</h2>
-    </div>
     <div id="days-container"></div>
   </div>
 
-  <div id="roadtrip-map" class="section-wrap">
-    <div class="section-hd">
-      <div class="section-label">Jul 8 &ndash; 14 &middot; BUR to Bay Area</div>
-      <h2 class="section-title">Road Trip Map</h2>
-    </div>
-    <div class="global-pad">
-      <div id="sierra-map"></div>
-      <div class="route-legend">
-        <span><span class="route-legend-dot" style="width:14px;height:14px;background:#1B4D2C;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"></span>Night stop</span>
-        <span><span class="route-legend-dot" style="width:10px;height:10px;background:#E8431C;"></span>Day stop / attraction</span>
-        <span style="margin-left:4px;color:#999;">Tap any marker for details</span>
-      </div>
-    </div>
-  </div>
-
-  <div id="checklist" class="section-wrap">
-    <div class="section-hd">
-      <div class="section-label">Action Items</div>
-      <h2 class="section-title">Booking Checklist</h2>
-    </div>
-    <div class="global-pad">
-      <div class="checklist-summary">
-  <div class="cs-item">
-    <span class="cs-label">Flights</span>
-    <span class="cs-amount">$1,979.43</span>
-  </div>
-  <div class="cs-item">
-    <span class="cs-label">Car Rental</span>
-    <span class="cs-amount">$1,583.92</span>
-  </div>
-  <div class="cs-item">
-    <span class="cs-label">LA Airbnb</span>
-    <span class="cs-amount">$1,487.00</span>
-  </div>
-  <div class="cs-item">
-    <span class="cs-label">Mammoth Airbnb</span>
-    <span class="cs-amount">$472.45</span>
-  </div>
-  <div class="cs-item">
-    <span class="cs-label">Dan&rsquo;s house (3 nights)</span>
-    <span class="cs-amount" style="color:#1A6B3A;">Free</span>
-  </div>
-  <div class="cs-item">
-    <span class="cs-label">Grandpa&rsquo;s flight</span>
-    <span class="cs-amount">$152.40</span>
-  </div>
-  <div class="cs-item">
-    <span class="cs-label">Lone Pine Airbnb</span>
-    <span class="cs-amount">$225.00</span>
-  </div>
-  <div class="cs-item">
-    <span class="cs-label">Bishop Motel 6</span>
-    <span class="cs-amount">$230.30</span>
-  </div>
-  <div class="cs-item">
-    <span class="cs-label">Virginia Creek Settlement</span>
-    <span class="cs-amount">$240.36</span>
-  </div>
-  <div class="cs-item cs-total">
-    <span class="cs-label">Booked &amp; paid so far</span>
-    <span class="cs-amount">$6,370.86</span>
-  </div>
-</div>
-<div class="checklist">
-
-        <div class="check-row"><div class="check-box"></div><span class="check-badge badge-soon">Soon</span><div class="check-content"><div class="check-main">Groveland hotel &mdash; night of Jul 13 (Yosemite west gate)</div><div class="check-detail">Yosemite Westgate Lodge or similar &middot; 11136 Hwy 120 &middot; 2 rooms &middot; Book ASAP</div></div><div class="check-cost">~$200&ndash;300</div></div>
-        <div class="check-row"><div class="check-box"></div><span class="check-badge badge-soon">Soon</span><div class="check-content"><div class="check-main">San Mateo hotel &mdash; night of Jul 18 (near Dad, Uber to SFO in AM)</div><div class="check-detail">Marriott Courtyard or Hyatt Place San Mateo &middot; Near Hwy 101 &middot; ~15 min Uber to SFO</div></div><div class="check-cost">~$160&ndash;200</div></div>
-
-        <div class="check-row done"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">FLL &rarr; LAX &middot; JetBlue Flight 1401 &middot; Jul 3</div><div class="check-detail">FLL 12:00pm &rarr; LAX 2:15pm &middot; Seats 22A, 22B, 22C &middot; Blue Basic</div></div><div class="check-cost">$1,979.43</div></div>
-
-        <div class="check-row done"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">SFO &rarr; FLL &middot; JetBlue Flight 378 &middot; Jul 19</div><div class="check-detail">SFO 10:57am &rarr; FLL 7:40pm &middot; Seats 20F, 21F, 22F &middot; included in above</div></div><div class="check-cost">&mdash;</div></div>
-
-        <div class="check-row done"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">Budget Ford Explorer &middot; LAX&rarr;SFO &middot; Jul 3&ndash;19</div><div class="check-detail">Conf: 45313664US4 &middot; LAX pickup 2:30pm &middot; SFO drop 9:00am &middot; Unlimited miles</div></div><div class="check-cost">$1,583.92</div></div>
-
-        <div class="check-row done" onclick="openAccomModal('la')" style="cursor:pointer"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">Airbnb &mdash; 4750 Lincoln Blvd, Marina del Rey &middot; Jul 3&ndash;8</div><div class="check-detail">Conf: HMJFZCPP89 &middot; Check-in Fri Jul 3 4pm &middot; Check-out Wed Jul 8 11am</div></div><div class="check-cost">$1,487.00</div><span class="accom-detail-hint" style="align-self:center;margin-left:auto;padding-left:8px">Details &rsaquo;</span></div>
-
-        <div class="check-row done" onclick="openAccomModal('mammoth')" style="cursor:pointer"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">Airbnb &mdash; 25 Lee Road #101, Mammoth Lakes &middot; Jul 10&ndash;12</div><div class="check-detail">Conf: HM3TZYPQ3C &middot; Check-in Fri Jul 10 4pm &middot; Check-out Sun Jul 12 10am</div></div><div class="check-cost">$472.45</div><span class="accom-detail-hint" style="align-self:center;margin-left:auto;padding-left:8px">Details &rsaquo;</span></div>
-        <div class="check-row done"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">Dan &amp; Juliet&rsquo;s house &mdash; 80 Lyon Place, Mill Valley &middot; Nights 1&ndash;3 (Jul 13&ndash;15)</div><div class="check-detail">Mon, Tue, Wed nights confirmed at Dan&rsquo;s &middot; Thank you Dan &amp; Juliet!</div></div><div class="check-cost">Free</div></div>
-        <div class="check-row done"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">Grandpa&rsquo;s flight &mdash; SFO &rarr; BUR, Wed Jul 8</div><div class="check-detail">United &middot; SFO 10:25am &rarr; BUR 11:51am &middot; 1h 26m &middot; Economy</div></div><div class="check-cost">$152.40</div></div>
-        <div class="check-row done"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">Tiny Log Cabin &mdash; Boulder Creek RV Resort, Lone Pine &middot; Jul 8&ndash;9</div><div class="check-detail">Conf: HMRDTHPPX2 &middot; 2550 U.S. 395, Lone Pine &middot; Check-in Jul 8 3pm &middot; Host: Kalpesh</div></div><div class="check-cost">$225.00</div></div>
-        <div class="check-row done"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">Motel 6 &mdash; Bishop, CA &middot; Jul 9&ndash;10</div><div class="check-detail">Conf: 5728346934 &middot; 1005 North Main Street, Bishop &middot; Booking.com</div></div><div class="check-cost">$230.30</div></div>
-        <div class="check-row done"><div class="check-box">&#10003;</div><span class="check-badge badge-done">Booked</span><div class="check-content"><div class="check-main">Virginia Creek Settlement &mdash; Bridgeport, CA &middot; Jul 12&ndash;13</div><div class="check-detail">Conf: 6057452712 &middot; 70847 Highway 395, Bridgeport &middot; Booking.com</div></div><div class="check-cost">$240.36</div></div>
-
-        <div class="check-section-title">Activities &amp; Reservations</div>
-
-
-        <div class="check-row"><div class="check-box"></div><span class="check-badge badge-now">This week</span><div class="check-content"><div class="check-main">Alcatraz Island &mdash; Fri Jul 17</div><div class="check-detail">alcatrazcruises.com &middot; July slots sell out weeks early &middot; ~$45/adult &middot; Ferry from Pier 33</div></div><div class="check-cost">~$135</div></div>
-
-
-
-        <div class="check-row"><div class="check-box"></div><span class="check-badge badge-june">Jun 30</span><div class="check-content"><div class="check-main">Yosemite timed-entry reservation &mdash; Mon Jul 13</div><div class="check-detail">recreation.gov &middot; Set alarm for 8am PT on Jun 30 &middot; Opens 2 weeks rolling</div></div><div class="check-cost">$35</div></div>
-
-        <div class="check-row"><div class="check-box"></div><span class="check-badge badge-june">Before trip</span><div class="check-content"><div class="check-main">Muir Woods parking &mdash; Wed Jul 15</div><div class="check-detail">gomuirwoods.com &middot; Or take the Sausalito ferry shuttle (no parking needed)</div></div><div class="check-cost">$9</div></div>
-
-        <div class="check-row"><div class="check-box"></div><span class="check-badge badge-june">Before trip</span><div class="check-content"><div class="check-main">Mono Lake canoe tour &mdash; Sun Jul 12</div><div class="check-detail">monolaketours.org &middot; ~$25/person &middot; Summer weekend mornings only</div></div><div class="check-cost">~$75</div></div>
-
-        <div class="check-row"><div class="check-box"></div><span class="check-badge badge-june">Before trip</span><div class="check-content"><div class="check-main">America the Beautiful Annual Pass</div><div class="check-detail">store.usgs.gov &middot; Covers Yosemite, Manzanar, Devils Postpile, Muir Woods + more</div></div><div class="check-cost">$80</div></div>
-
-
-
-      </div>
-    </div>
-  </div>
-
   <div id="budget" class="section-wrap">
-    <div class="section-hd">
-      <div class="section-label">The Numbers</div>
-      <h2 class="section-title">Full Trip Budget</h2>
-    </div>
-    <div class="global-pad">
-      <div class="budget-cards">
-        <div class="budget-card done"><div class="bcard-label green">&#10003; Flights &mdash; Booked</div><div class="bcard-amount">$1,979.43</div><div class="bcard-note">JetBlue FLL&rarr;LAX + SFO&rarr;FLL &middot; Blue Basic &middot; 3 pax both legs</div></div>
-        <div class="budget-card done"><div class="bcard-label green">&#10003; Car Rental &mdash; Booked</div><div class="bcard-amount">$1,583.92</div><div class="bcard-note">Budget Ford Explorer &middot; LAX&rarr;SFO &middot; 16 days &middot; Conf: 45313664US4</div></div>
-        <div class="budget-card done"><div class="bcard-label green">&#10003; Mammoth Lakes Airbnb &mdash; Booked</div><div class="bcard-amount">$472.45</div><div class="bcard-note">25 Lee Road #101, Mammoth Lakes &middot; Conf: HM3TZYPQ3C &middot; Jul 10&ndash;12 (2 nights)</div></div>
-        <div class="budget-card done"><div class="bcard-label green">&#10003; LA Airbnb &mdash; Booked</div><div class="bcard-amount">$1,487.00</div><div class="bcard-note">4750 Lincoln Blvd, Marina del Rey &middot; Conf: HMJFZCPP89 &middot; Jul 3&ndash;8 (5 nights)</div></div>
-        <div class="budget-card done"><div class="bcard-label green">&#10003; Grandpa&rsquo;s Flight &mdash; Booked</div><div class="bcard-amount">$152.40</div><div class="bcard-note">United &middot; SFO 10:25am &rarr; BUR 11:51am &middot; Wed Jul 8</div></div>
-        <div class="budget-card done"><div class="bcard-label green">&#10003; Bishop Motel 6 &mdash; Booked</div><div class="bcard-amount">$230.30</div><div class="bcard-note">1005 North Main Street, Bishop &middot; Conf: 5728346934 &middot; Jul 9&ndash;10 (1 night)</div></div>
-        <div class="budget-card done"><div class="bcard-label green">&#10003; Virginia Creek Settlement &mdash; Booked</div><div class="bcard-amount">$240.36</div><div class="bcard-note">70847 Highway 395, Bridgeport &middot; Conf: 6057452712 &middot; Jul 12&ndash;13 (1 night)</div></div>
-        <div class="budget-card"><div class="bcard-label">Gas &middot; 395 + Bay Area</div><div class="bcard-amount">$250&ndash;380</div><div class="bcard-note">~900 miles. Fill in Mammoth before heading north &mdash; Lee Vining is $5&ndash;6+/gal.</div></div>
-        <div class="budget-card"><div class="bcard-label">Accommodation ($1,487 confirmed)</div><div class="bcard-amount">$3,089&ndash;3,739</div><div class="bcard-note">Marin: 5 nights Travelodge Mill Valley OR Dan&rsquo;s house &middot; San Mateo: 1 night hotel &middot; All nights paid.</div></div>
-        <div class="budget-card"><div class="bcard-label">Food</div><div class="bcard-amount">$1,500&ndash;2,000</div><div class="bcard-note">~$100/day &middot; 3 people &middot; Groceries, 395 road food, Sausalito dinners.</div></div>
-        <div class="budget-card"><div class="bcard-label">Activities</div><div class="bcard-amount">~$559</div><div class="bcard-note">Alcatraz ($135) &middot; ATB Pass ($80) &middot; Bodie ($24) &middot; Mono canoe ($75) &middot; Misc ($245)</div></div>
-        <div class="budget-card" style="background:#FFFAEB;border-color:#FDE68A;"><div class="bcard-label" style="color:#92400E;">Per person (3 travelers)</div><div class="bcard-amount">~$2,400&ndash;3,296</div><div class="bcard-note">Grandpa adds a 4th share on road days.</div></div>
+    <div class="day-headline" style="border-bottom:1px solid var(--border);">
+      <div>
+        <div class="day-title">Budget</div>
+        <div class="day-subtitle">Bookings &amp; projected costs</div>
       </div>
+    </div>
+    <div class="global-pad" style="padding-top:0;">
+      <div class="budget-ledger">
+
+        <div class="ledger-section-title">Transport</div>
+        <div class="ledger-row">
+          <div class="ledger-status">&#10003;</div>
+          <div class="ledger-name">Flights &mdash; JetBlue FLL&harr;LAX<div class="ledger-note">Flight 1401 Jul 3 + Flight 378 Jul 19 &middot; 3 pax both legs</div></div>
+          <div class="ledger-amount">$1,979.43</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-status">&#10003;</div>
+          <div class="ledger-name">Car rental &mdash; Budget Ford Explorer<div class="ledger-note">LAX&rarr;SFO &middot; Jul 3&ndash;19 &middot; 16 days &middot; Conf: 45313664US4</div></div>
+          <div class="ledger-amount">$1,583.92</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-status">&#10003;</div>
+          <div class="ledger-name">Grandpa&rsquo;s flight &mdash; United SFO&rarr;BUR<div class="ledger-note">Wed Jul 8 &middot; 10:25am&rarr;11:51am</div></div>
+          <div class="ledger-amount">$152.40</div>
+        </div>
+        <div class="ledger-row projected">
+          <div class="ledger-status"></div>
+          <div class="ledger-name">Gas &mdash; 395 + Bay Area<div class="ledger-note">~900 miles &middot; Fill in Mammoth before heading north</div></div>
+          <div class="ledger-amount">~$315</div>
+        </div>
+        <div class="ledger-subtotal">
+          <div class="ledger-subtotal-label">Transport</div>
+          <div class="ledger-subtotal-amount">$4,031</div>
+        </div>
+
+        <div class="ledger-section-title">Accommodation</div>
+        <div class="ledger-row">
+          <div class="ledger-status">&#10003;</div>
+          <div class="ledger-name">LA Airbnb &mdash; Marina del Rey<div class="ledger-note">4750 Lincoln Blvd &middot; Jul 3&ndash;8 (5 nights) &middot; HMJFZCPP89</div></div>
+          <div class="ledger-amount">$1,487.00</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-status">&#10003;</div>
+          <div class="ledger-name">Lone Pine Airbnb &mdash; Tiny Log Cabin<div class="ledger-note">2550 U.S. 395 &middot; Jul 8&ndash;9 (1 night) &middot; HMRDTHPPX2</div></div>
+          <div class="ledger-amount">$225.00</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-status">&#10003;</div>
+          <div class="ledger-name">Bishop &mdash; Motel 6<div class="ledger-note">1005 North Main St &middot; Jul 9&ndash;10 (1 night) &middot; 5728346934</div></div>
+          <div class="ledger-amount">$230.30</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-status">&#10003;</div>
+          <div class="ledger-name">Mammoth Airbnb &mdash; 25 Lee Road #101<div class="ledger-note">Jul 10&ndash;12 (2 nights) &middot; HM3TZYPQ3C</div></div>
+          <div class="ledger-amount">$472.45</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-status">&#10003;</div>
+          <div class="ledger-name">Bridgeport &mdash; Virginia Creek Settlement<div class="ledger-note">70847 Hwy 395 &middot; Jul 12&ndash;13 (1 night) &middot; 6057452712</div></div>
+          <div class="ledger-amount">$240.36</div>
+        </div>
+        <div class="ledger-row projected">
+          <div class="ledger-status"></div>
+          <div class="ledger-name">Groveland hotel<div class="ledger-note">Jul 13 (1 night) &middot; Yosemite Westgate Lodge or similar &middot; To book</div></div>
+          <div class="ledger-amount">~$250</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-status">&#10003;</div>
+          <div class="ledger-name">Dan &amp; Juliet&rsquo;s house &mdash; Mill Valley<div class="ledger-note">80 Lyon Place &middot; Jul 13&ndash;17 (4 nights)</div></div>
+          <div class="ledger-amount" style="color:#1A6B3A;">Free</div>
+        </div>
+        <div class="ledger-row projected">
+          <div class="ledger-status"></div>
+          <div class="ledger-name">San Mateo hotel<div class="ledger-note">Jul 18 (1 night) &middot; Near Dad &middot; Uber to SFO in AM &middot; To book</div></div>
+          <div class="ledger-amount">~$180</div>
+        </div>
+        <div class="ledger-subtotal">
+          <div class="ledger-subtotal-label">Accommodation</div>
+          <div class="ledger-subtotal-amount">$3,085</div>
+        </div>
+
+        <div class="ledger-section-title">Activities &amp; Reservations</div>
+        <div class="ledger-row projected">
+          <div class="ledger-status"></div>
+          <div class="ledger-name">Alcatraz Island &mdash; Fri Jul 17<div class="ledger-note">alcatrazcruises.com &middot; ~$45/adult &middot; Ferry from Pier 33 &middot; Book ASAP</div></div>
+          <div class="ledger-amount">~$135</div>
+        </div>
+        <div class="ledger-row projected">
+          <div class="ledger-status"></div>
+          <div class="ledger-name">America the Beautiful Annual Pass<div class="ledger-note">store.usgs.gov &middot; Covers Yosemite, Manzanar, Devils Postpile, Muir Woods</div></div>
+          <div class="ledger-amount">$80</div>
+        </div>
+        <div class="ledger-row projected">
+          <div class="ledger-status"></div>
+          <div class="ledger-name">Mono Lake canoe tour &mdash; Sun Jul 12<div class="ledger-note">monolaketours.org &middot; ~$25/person &middot; Summer weekend mornings</div></div>
+          <div class="ledger-amount">~$75</div>
+        </div>
+        <div class="ledger-row projected">
+          <div class="ledger-status"></div>
+          <div class="ledger-name">Yosemite timed-entry &mdash; Mon Jul 13<div class="ledger-note">recreation.gov &middot; Alarm Jun 30 8am PT &middot; 2-week rolling window</div></div>
+          <div class="ledger-amount">$35</div>
+        </div>
+        <div class="ledger-row projected">
+          <div class="ledger-status"></div>
+          <div class="ledger-name">Muir Woods parking &mdash; Wed Jul 15<div class="ledger-note">gomuirwoods.com &middot; Or Sausalito ferry shuttle</div></div>
+          <div class="ledger-amount">$9</div>
+        </div>
+        <div class="ledger-row projected">
+          <div class="ledger-status"></div>
+          <div class="ledger-name">Bodie State Historic Park<div class="ledger-note">Entry fee &middot; Sun Jul 12</div></div>
+          <div class="ledger-amount">$24</div>
+        </div>
+        <div class="ledger-row projected">
+          <div class="ledger-status"></div>
+          <div class="ledger-name">Misc activities<div class="ledger-note">Parking, tips, incidentals</div></div>
+          <div class="ledger-amount">~$200</div>
+        </div>
+        <div class="ledger-subtotal">
+          <div class="ledger-subtotal-label">Activities</div>
+          <div class="ledger-subtotal-amount">~$558</div>
+        </div>
+
+        <div class="ledger-section-title">Food &amp; Daily</div>
+        <div class="ledger-row projected">
+          <div class="ledger-status"></div>
+          <div class="ledger-name">Food &amp; groceries<div class="ledger-note">~$100/day &middot; 3 people &middot; 17 days</div></div>
+          <div class="ledger-amount">~$1,700</div>
+        </div>
+        <div class="ledger-subtotal">
+          <div class="ledger-subtotal-label">Food</div>
+          <div class="ledger-subtotal-amount">~$1,700</div>
+        </div>
+
+      </div>
+
       <div class="budget-total">
-        <div><div class="btotal-label">Total estimate</div><div class="btotal-amount">$8,453&ndash;10,919</div><div class="btotal-sub">Marin: Travelodge or Dan&rsquo;s house (5 nights) &middot; San Mateo hotel 1 night &middot; Camping on 395 saves ~$600.</div></div>
-        <div style="text-align:right;"><div class="btotal-label">Booked &amp; prepaid</div><div class="btotal-booked">$6,370.86</div><div class="btotal-sub">Flights + Car + LA, Lone Pine &amp; Mammoth Airbnbs + Bishop Motel 6 + Virginia Creek + Grandpa&rsquo;s flight</div></div>
+        <div><div class="btotal-label">Total estimate</div><div class="btotal-amount">~$9,374</div><div class="btotal-sub">~$3,125 per person (3 travelers) &middot; Grandpa shares road costs</div></div>
+        <div style="text-align:right;"><div class="btotal-label">Booked &amp; prepaid</div><div class="btotal-booked">$6,370.86</div><div class="btotal-sub">68% locked in &middot; ~$3,003 remaining</div></div>
       </div>
     </div>
   </div>
@@ -1395,10 +1500,10 @@ var DAYS=[
 var PM={"travel":{tag:"Travel Day",cls:"phase-travel",sc:"phase-travel",cc:"phase-travel"},"la":{tag:"Los Angeles",cls:"phase-la",sc:"phase-la",cc:"phase-la"},"395":{tag:"Hwy 395",cls:"phase-395",sc:"phase-395",cc:"phase-395"},"bay":{tag:"Bay Area",cls:"phase-bay",sc:"phase-bay",cc:"phase-bay"}};
 var SM={"book":{text:"To Book",c:"book"},"booked":{text:"Booked",c:"booked"},"free":{text:"Free",c:"free"},"na":{text:"",c:"na"}};
 
-function buildSidebar(){var c=document.getElementById("sb-days"),s=document.getElementById("mob-strip");DAYS.forEach(function(d){var p=PM[d.phase]||PM.travel;var n=document.createElement("div");n.className="sb-day "+p.sc;n.id="sbn-"+d.id;n.onclick=function(){goDay(d.id);};var pts=d.date.split(" ");n.innerHTML='<span class="sb-day-date">'+pts[1]+" "+pts[2]+'</span><span class="sb-day-title">'+d.title+'</span>';c.appendChild(n);var ch=document.createElement("div");ch.className="mob-chip "+p.cc;ch.id="mbc-"+d.id;ch.onclick=function(){goDay(d.id);};ch.innerHTML='<span class="mob-chip-date">'+pts[1]+' '+pts[2]+'</span>';s.appendChild(ch);});}
+function buildSidebar(){var c=document.getElementById("sb-days"),s=document.getElementById("mob-strip");var dt=document.createElement("div");dt.className="mob-tab active";dt.id="mob-tab-days";dt.textContent="Days";dt.onclick=function(){goTo("days");};s.appendChild(dt);var bt=document.createElement("div");bt.className="mob-tab";bt.id="mob-tab-budget";bt.textContent="Budget";bt.onclick=function(){goTo("budget");};s.appendChild(bt);var sep=document.createElement("div");sep.className="mob-tab-sep";s.appendChild(sep);DAYS.forEach(function(d){var p=PM[d.phase]||PM.travel;var n=document.createElement("div");n.className="sb-day "+p.sc;n.id="sbn-"+d.id;n.onclick=function(){goDay(d.id);};var pts=d.date.split(" ");n.innerHTML='<span class="sb-day-date">'+pts[1]+" "+pts[2]+'</span><span class="sb-day-title">'+d.title+'</span>';c.appendChild(n);var ch=document.createElement("div");ch.className="mob-chip "+p.cc;ch.id="mbc-"+d.id;ch.onclick=function(){goDay(d.id);};ch.innerHTML='<span class="mob-chip-date">'+pts[1]+' '+pts[2]+'</span>';s.appendChild(ch);});}
 
 function ordDate(ds){var n=parseInt(ds.split(" ")[2]);var s=["th","st","nd","rd"];var v=n%100;return n+(s[(v-20)%10]||s[v]||s[0]);}
-function buildDays(){var MDATA={};var c=document.getElementById("days-container");DAYS.forEach(function(d){var p=PM[d.phase]||PM.travel;var st=SM[d.accom.status]||SM.na;MDATA["map-"+d.id]=d.markers;var rows=d.schedule.map(function(s){var isRun=s.time.indexOf('Run')>-1||s.time.indexOf('Rest')>-1;return'<div class="schedule-row'+(isRun?' run-row':'')+'"><div class="sched-time">'+s.time+'</div><div class="sched-main"><strong>'+s.desc+'</strong>'+(s.note?'<span class="sched-note">'+s.note+'</span>':"")+'</div></div>';}).join("");c.innerHTML+='<section class="day-section '+p.cls+'" id="'+d.id+'"><div class="day-topbar"><div class="day-topbar-left"><span class="day-counter">Day '+String(d.num).padStart(2,"0")+' / 17</span><span class="day-counter-sep"></span><span class="day-weekdate">'+d.date+'</span></div><span class="day-phase-tag">'+p.tag+'</span></div><div class="day-weather loading" id="wx-'+d.id+'">Loading weather…</div><div class="day-headline"><div><div class="day-title">'+d.title+'</div><div class="day-subtitle">'+d.subtitle+'</div></div><div class="day-num-bg">'+ordDate(d.date)+'</div></div><div class="day-body"><div class="day-content-col"><div class="schedule">'+rows+'</div></div><div class="day-map-col"><div style="position:relative"><div class="day-map" id="map-'+d.id+'" data-lat="'+d.lat+'" data-lng="'+d.lng+'" data-zoom="'+d.zoom+'" style="cursor:pointer" onclick="openGoogleMaps('+d.lat+','+d.lng+')"></div><span class="map-open-btn" onclick="openGoogleMaps('+d.lat+','+d.lng+')">&#8599;&nbsp;Expand</span></div></div></div>'+buildRecsHTML(d)+buildAccomHTML(d)+'</section>';});window._MDATA=MDATA;}
+function buildDays(){var MDATA={};var c=document.getElementById("days-container");DAYS.forEach(function(d){var p=PM[d.phase]||PM.travel;var st=SM[d.accom.status]||SM.na;MDATA["map-"+d.id]=d.markers;var rows=d.schedule.map(function(s){var isRun=s.time.indexOf('Run')>-1||s.time.indexOf('Rest')>-1;return'<div class="schedule-row'+(isRun?' run-row':'')+'"><div class="sched-time">'+s.time+'</div><div class="sched-main"><strong>'+s.desc+'</strong>'+(s.note?'<span class="sched-note">'+s.note+'</span>':"")+'</div></div>';}).join("");c.innerHTML+='<section class="day-section '+p.cls+'" id="'+d.id+'"><div class="day-topbar"><div class="day-topbar-left"><span class="day-counter">Day '+String(d.num).padStart(2,"0")+' / 17</span><span class="day-counter-sep"></span><span class="day-weekdate">'+d.date+'</span></div><span class="day-phase-tag">'+p.tag+'</span></div><div class="day-weather loading" id="wx-'+d.id+'">Loading weather…</div><div class="day-headline"><div><div class="day-title">'+d.title+'</div><div class="day-subtitle">'+d.subtitle+'</div></div><div class="day-num-bg">'+ordDate(d.date)+'</div></div><div class="day-body"><div class="day-content-col"><div class="schedule">'+rows+'</div></div><div class="day-map-col"><div style="position:relative"><div class="day-map" id="map-'+d.id+'" data-lat="'+d.lat+'" data-lng="'+d.lng+'" data-zoom="'+d.zoom+'" style="cursor:pointer" onclick="openGoogleMaps('+d.lat+','+d.lng+')"></div><span class="map-open-btn" onclick="openGoogleMaps('+d.lat+','+d.lng+')">&#8599;&nbsp;Expand</span></div></div></div>'+buildAccomHTML(d)+buildRecsHTML(d)+'</section>';if(d.num===5){c.innerHTML+='<div id="roadtrip-map" class="roadtrip-break"><h2 class="roadtrip-title">Road Trippin&#8217; with Gwamps</h2><div id="sierra-map"></div><div class="route-legend" style="justify-content:center;padding:12px 0 0;"><span><span class="route-legend-dot" style="width:14px;height:14px;background:#1B4D2C;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"></span>Night stop</span><span><span class="route-legend-dot" style="width:10px;height:10px;background:#E8431C;"></span>Day stop / attraction</span></div></div>';}});window._MDATA=MDATA;}
 
 function initMaps(){var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting&&!e.target.dataset.init){e.target.dataset.init="1";var el=e.target,lt=parseFloat(el.dataset.lat),ln=parseFloat(el.dataset.lng),zm=parseInt(el.dataset.zoom),ms=(window._MDATA&&window._MDATA[el.id])||[];var m=L.map(el,{center:[lt,ln],zoom:zm,zoomControl:false,scrollWheelZoom:false,attributionControl:false,dragging:false});L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:14}).addTo(m);ms.forEach(function(mk){var ic=L.divIcon({html:'<div style="width:10px;height:10px;border-radius:50%;background:'+mk.c+';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35)"></div>',iconSize:[10,10],iconAnchor:[5,5],className:""});L.marker([mk.lat,mk.lng],{icon:ic}).addTo(m).bindTooltip(mk.label,{permanent:false,direction:"top",offset:[0,-8]});});if(ms.length>1){L.polyline(ms.map(function(mk){return[mk.lat,mk.lng];}),{color:ms[0].c,weight:1.5,opacity:.4,dashArray:"5 4"}).addTo(m);}}});},{rootMargin:"400px 0px"});document.querySelectorAll(".day-map").forEach(function(el){obs.observe(el);});}
 
@@ -1559,47 +1664,46 @@ function buildRecsHTML(d) {
     panes += '</div>';
   });
   tabs += '</div>';
-  return '<div class="expand-bar" onclick="toggleExpandPanel(this)"><span class="expand-bar-icon">\u203a</span><span class="expand-bar-label">Recommendations</span></div><div class="expand-panel">' + tabs + panes + '</div>';
+  return '<div class="expand-bar" onclick="toggleExpandPanel(this)"><span class="expand-bar-icon">\u203a</span><span class="expand-bar-label">Daily Recommendations</span></div><div class="expand-panel">' + tabs + panes + '</div>';
 }
 
 function buildAccomHTML(d) {
   var st = SM[d.accom.status] || SM.na;
   if (st.c === 'na') return '';
-  var pillClass = st.c;
-  var pillText = st.text;
-  var bar = '<div class="expand-bar" onclick="toggleExpandPanel(this)"><span class="expand-bar-icon">\u203a</span><span class="expand-bar-label">Accommodation</span><div class="expand-bar-right">';
-  if (pillText) bar += '<span class="status-pill ' + pillClass + '">' + pillText + '</span>';
-  bar += '<span class="expand-bar-sub">' + d.accom.label + '</span></div></div>';
-  var panel = '<div class="expand-panel"><div class="accom-panel-body">';
   var data = d.accom.key ? _ACCOMDATA[d.accom.key] : null;
-  if (data && data.thumb) {
-    panel += '<img class="accom-panel-thumb" src="' + data.thumb + '" alt="">';
-  }
-  panel += '<div class="accom-panel-name">' + d.accom.name + '</div>';
+  var thumb = data && data.thumb ? '<img class="accom-tile-thumb" src="' + data.thumb + '" alt="">' : '';
+  var pill = st.text ? '<span class="status-pill ' + st.c + '">' + st.text + '</span>' : '';
+  var tile = '<div class="accom-tile" onclick="toggleExpandPanel(this.nextElementSibling.querySelector(\'.expand-bar\'))">';
+  tile += thumb;
+  tile += '<div class="accom-tile-info">';
+  tile += '<div class="accom-tile-top"><span class="accom-tile-label">' + d.accom.icon + ' ' + d.accom.label + '</span>' + pill + '</div>';
+  tile += '<div class="accom-tile-name">' + d.accom.name + '</div>';
+  tile += '</div></div>';
+  var details = '<div class="accom-details"><div class="expand-bar" onclick="toggleExpandPanel(this)"><span class="expand-bar-icon">\u203a</span><span class="expand-bar-label">Booking Details</span></div><div class="expand-panel"><div class="accom-panel-body">';
   if (data && data.rows) {
-    panel += '<div class="accom-panel-rows">';
+    details += '<div class="accom-panel-rows">';
     data.rows.forEach(function(r) {
       var val = r.map
         ? '<a href="https://www.google.com/maps/search/?api=1&query=' + r.map + '" target="_blank">' + r.val + ' \u2197</a>'
         : r.val;
-      panel += '<div class="accom-panel-row"><div class="accom-panel-icon">' + r.icon + '</div><div class="accom-panel-cell"><div class="accom-panel-lbl">' + r.label + '</div><div class="accom-panel-val">' + val + '</div></div></div>';
+      details += '<div class="accom-panel-row"><div class="accom-panel-icon">' + r.icon + '</div><div class="accom-panel-cell"><div class="accom-panel-lbl">' + r.label + '</div><div class="accom-panel-val">' + val + '</div></div></div>';
     });
-    panel += '</div>';
+    details += '</div>';
     if (data.code) {
-      panel += '<div class="accom-code-box" style="margin-top:14px"><div class="accom-code-lbl">Entry Code</div><div class="accom-code-num">' + data.code.num + '</div><div class="accom-code-note">' + data.code.note + '</div></div>';
+      details += '<div class="accom-code-box" style="margin-top:14px"><div class="accom-code-lbl">Entry Code</div><div class="accom-code-num">' + data.code.num + '</div><div class="accom-code-note">' + data.code.note + '</div></div>';
     }
     if (data.images && data.images.length > 1) {
-      panel += '<div class="accom-panel-gallery">';
+      details += '<div class="accom-panel-gallery">';
       data.images.forEach(function(url) {
-        panel += '<img src="' + url + '" alt="" onclick="window.open(\'' + url + '\',\'_blank\')">';
+        details += '<img src="' + url + '" alt="" onclick="window.open(\\\'' + url + '\\\',\\\'_blank\\\')">';
       });
-      panel += '</div>';
+      details += '</div>';
     }
   } else if (d.accom.note) {
-    panel += '<div class="rec-note">' + d.accom.note + '</div>';
+    details += '<div class="rec-note">' + d.accom.note + '</div>';
   }
-  panel += '</div></div>';
-  return bar + panel;
+  details += '</div></div></div>';
+  return '<div class="accom-wrap">' + tile + details + '</div>';
 }
 function goDay(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
 function goTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
@@ -1608,7 +1712,7 @@ function initSierraMap(){
   if(!window.L)return;
   var el=document.getElementById('sierra-map');
   if(!el||el._smap)return;
-  var map=L.map('sierra-map',{scrollWheelZoom:false}).setView([37.2,-119.0],7);
+  var map=L.map('sierra-map',{scrollWheelZoom:false}).setView([36.4,-119.2],7);
   el._smap=map;
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'&copy; OSM &copy; CARTO',subdomains:'abcd',maxZoom:19}).addTo(map);
   var route=[[34.2007,-118.3585],[35.02,-118.15],[35.62,-117.72],[36.6071,-118.0626],[36.7277,-118.1552],[37.3635,-118.3957],[37.5907,-118.8616],[37.6485,-118.9721],[37.9583,-119.1186],[38.2566,-119.2322],[37.9583,-119.1186],[37.9107,-119.2553],[37.8736,-119.3607],[37.8407,-120.2309],[37.5630,-122.3255]];
