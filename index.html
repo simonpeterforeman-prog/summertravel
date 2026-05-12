@@ -15,10 +15,12 @@
       var overlay=document.createElement('div');
       overlay.id='pw-gate';
       overlay.style.cssText='position:fixed;inset:0;background:#F7F6F3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:99999;font-family:sans-serif;visibility:visible;';
-      overlay.innerHTML='<div style="font-size:22px;font-weight:600;color:#111;letter-spacing:-.01em;">High &amp; Wide &middot; July 2026</div><input id="pw-input" type="password" placeholder="Password" style="padding:10px 16px;border:1.5px solid #ccc;border-radius:8px;font-size:16px;width:220px;outline:none;" autofocus><div id="pw-err" style="color:#C0392B;font-size:13px;height:16px;"></div>';
+      overlay.style.cssText='position:fixed;inset:0;background:#111;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;z-index:99999;font-family:sans-serif;visibility:visible;';
+      overlay.innerHTML='<div style="font-family:Space Grotesk,sans-serif;font-size:36px;font-weight:300;color:#fff;letter-spacing:-.01em;">High &amp; Wide</div><div style="display:flex;align-items:stretch;gap:12px;max-width:90vw;"><input id="pw-input" type="password" placeholder="PASSWORD" style="background:transparent;border:1px solid #444;color:#fff;font-family:Outfit,sans-serif;font-size:16px;font-weight:300;letter-spacing:0.12em;text-align:center;padding:9px 20px;width:220px;max-width:60vw;outline:none;" autofocus><button id="pw-btn" type="button" style="background:transparent;border:1px solid #444;color:#aaa;font-family:Outfit,sans-serif;font-size:9px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;padding:0 28px;cursor:pointer;">Enter</button></div><div id="pw-err" style="color:#C0392B;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;height:16px;"></div>';
       document.body.appendChild(overlay);
       var inp=document.getElementById('pw-input');
       inp.addEventListener('keydown',function(e){if(e.key==='Enter')attempt();});
+      document.getElementById('pw-btn').addEventListener('click',attempt);
       function attempt(){
         check(inp.value).then(function(ok){
           if(ok){sessionStorage.setItem('auth','1');overlay.remove();document.documentElement.style.visibility='';}
@@ -494,7 +496,7 @@ body {
   position: absolute;
   top: 8px;
   right: 8px;
-  z-index: 1000;
+  z-index: 10;
   background: rgba(255,255,255,0.95);
   border: 1px solid rgba(0,0,0,0.12);
   border-radius: 6px;
@@ -1163,6 +1165,19 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
   .global-pad { padding: 0 20px 40px; }
   footer { padding: 20px 20px; }
   .day-num-bg { display: none; }
+
+  body { font-size: 16px; }
+  .sched-main { font-size: 15px; }
+  .sched-note { font-size: 12px; }
+  .sched-time { font-size: 12px; }
+  .day-title { font-size: 24px; }
+  .day-subtitle { font-size: 13px; }
+  .day-weekdate { font-size: 14px; }
+  .accom-tile-name { font-size: 14px; }
+  .accom-tile-label { font-size: 10px; }
+  .expand-bar-label { font-size: 10px; }
+  .rec-name { font-size: 14px; }
+  .rec-note { font-size: 12px; }
 }
 @media (max-width: 480px) {
   .ledger-row { padding: 8px 0; }
