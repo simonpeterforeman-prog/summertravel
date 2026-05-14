@@ -1530,7 +1530,7 @@ function buildDays(){var MDATA={};var c=document.getElementById("days-container"
 
 function initMaps(){var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting&&!e.target.dataset.init){e.target.dataset.init="1";var el=e.target,lt=parseFloat(el.dataset.lat),ln=parseFloat(el.dataset.lng),zm=parseInt(el.dataset.zoom),ms=(window._MDATA&&window._MDATA[el.id])||[];var m=L.map(el,{center:[lt,ln],zoom:zm,zoomControl:false,scrollWheelZoom:false,attributionControl:false,dragging:false});L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:14}).addTo(m);ms.forEach(function(mk){var ic=L.divIcon({html:'<div style="width:10px;height:10px;border-radius:50%;background:'+mk.c+';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35)"></div>',iconSize:[10,10],iconAnchor:[5,5],className:""});L.marker([mk.lat,mk.lng],{icon:ic}).addTo(m).bindTooltip(mk.label,{permanent:false,direction:"top",offset:[0,-8]});});if(ms.length>1){L.polyline(ms.map(function(mk){return[mk.lat,mk.lng];}),{color:ms[0].c,weight:1.5,opacity:.4,dashArray:"5 4"}).addTo(m);}}});},{rootMargin:"400px 0px"});document.querySelectorAll(".day-map").forEach(function(el){obs.observe(el);});}
 
-function initSpy(){var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){var id=e.target.id;["sb-days","mob-strip"].forEach(function(cid){var p=document.getElementById(cid);if(!p)return;p.querySelectorAll('[id^="sbn-"],[id^="mbc-"]').forEach(function(el){el.classList.remove("active");});var match=document.getElementById(cid==="sb-days"?"sbn-"+id:"mbc-"+id);if(match){match.classList.add("active");match.scrollIntoView({block:"nearest",inline:"center"});}})}});},{rootMargin:"-12% 0px -68% 0px"});document.querySelectorAll(".day-section").forEach(function(el){obs.observe(el);});}
+function initSpy(){var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){if(window._budgetMode)return;var id=e.target.id;["sb-days","mob-strip"].forEach(function(cid){var p=document.getElementById(cid);if(!p)return;p.querySelectorAll('[id^="sbn-"],[id^="mbc-"]').forEach(function(el){el.classList.remove("active");});var match=document.getElementById(cid==="sb-days"?"sbn-"+id:"mbc-"+id);if(match){match.classList.add("active");match.scrollIntoView({block:"nearest",inline:"center"});}})}});},{rootMargin:"-12% 0px -68% 0px"});document.querySelectorAll(".day-section").forEach(function(el){obs.observe(el);});}
 
 function openGoogleMaps(lat, lng, title) {
   var url = 'https://www.google.com/maps/search/?api=1&query=' + lat + ',' + lng;
@@ -1753,8 +1753,9 @@ function buildAccomHTML(d) {
   details += '</div></div></div>';
   return '<div class="accom-wrap">' + tile + details + '</div>';
 }
-function goDay(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
-function goTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});document.querySelectorAll('.mob-tab').forEach(function(t){t.classList.remove('active');});var tab=document.getElementById('mob-tab-'+id);if(tab)tab.classList.add('active');var strip=document.querySelector('.mob-strip-scroll');if(strip){if(id==='budget'){strip.querySelectorAll('.mob-chip').forEach(function(c){c.classList.remove('active');});}}}
+var _budgetMode=false;
+function goDay(id){_budgetMode=false;document.querySelectorAll(".mob-tab").forEach(function(t){t.classList.remove("active");});var dt=document.getElementById("mob-tab-days");if(dt)dt.classList.add("active");var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
+function goTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});document.querySelectorAll('.mob-tab').forEach(function(t){t.classList.remove('active');});var tab=document.getElementById('mob-tab-'+id);if(tab)tab.classList.add('active');_budgetMode=(id==='budget');if(_budgetMode){var strip=document.querySelector('.mob-strip-scroll');if(strip)strip.querySelectorAll('.mob-chip').forEach(function(c){c.classList.remove('active');});}}
 
 
 function initSierraMap(){
@@ -1910,7 +1911,7 @@ function renderWx(id, dateStr, forecast, current) {
   el.innerHTML = html;
 }
 
-window.addEventListener("load",function(){initMaps();initSpy();initSierraMap();fetchWeather();});
+window.addEventListener("load",function(){initMaps();initSpy();initSierraMap();fetchWeather();var bel=document.getElementById("budget");if(bel){new IntersectionObserver(function(entries){entries.forEach(function(e){if(!e.isIntersecting&&window._budgetMode){_budgetMode=false;document.querySelectorAll(".mob-tab").forEach(function(t){t.classList.remove("active");});var dt=document.getElementById("mob-tab-days");if(dt)dt.classList.add("active");}});},{rootMargin:"-12% 0px -68% 0px"}).observe(bel);}});
 </script>
 </body>
 </html>
