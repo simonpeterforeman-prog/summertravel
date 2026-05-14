@@ -226,40 +226,42 @@ body {
 .mob-brand span { color: var(--accent); }
 .mob-pills { display: none; }
 
-.mob-strip {
+.mob-tabs-inline {
   display: flex;
-  overflow-x: auto;
-  padding: 0 14px;
-  gap: 0;
-  scrollbar-width: none;
-  border-top: 1px solid #222;
-}
-.mob-strip::-webkit-scrollbar { display: none; }
-.mob-tab {
   flex-shrink: 0;
+  background: #1a1a1a;
+  border-right: 1px solid #333;
+}
+.mob-tab {
   font-family: var(--heading);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 10px 16px;
-  color: #555;
+  padding: 11px 18px;
+  color: #666;
   cursor: pointer;
   transition: all 0.15s;
-  white-space: nowrap;
   border-bottom: 2px solid transparent;
-  border-right: 1px solid #222;
+  white-space: nowrap;
 }
-.mob-tab:last-child { border-right: none; }
 .mob-tab.active { color: #fff; border-bottom-color: var(--accent); }
 .mob-tab:hover { color: #ccc; }
-.mob-tab-sep {
-  flex-shrink: 0;
-  width: 1px;
-  background: #333;
-  align-self: stretch;
-  margin: 6px 0;
+
+.mob-strip {
+  display: flex;
+  border-top: 1px solid #222;
 }
+.mob-strip-scroll {
+  display: flex;
+  overflow-x: auto;
+  padding: 0;
+  gap: 0;
+  scrollbar-width: none;
+  flex: 1;
+  min-width: 0;
+}
+.mob-strip-scroll::-webkit-scrollbar { display: none; }
 .mob-chip {
   flex-shrink: 0;
   display: flex;
@@ -1331,7 +1333,13 @@ footer p { font-family: var(--heading); font-size: 11px; color: #444; letter-spa
       </div>
     </div>
   </div>
-  <div class="mob-strip" id="mob-strip"></div>
+  <div class="mob-strip">
+    <div class="mob-tabs-inline">
+      <span class="mob-tab active" id="mob-tab-days" onclick="goTo('days')">Days</span>
+      <span class="mob-tab" id="mob-tab-budget" onclick="goTo('budget')">Budget</span>
+    </div>
+    <div class="mob-strip-scroll" id="mob-strip"></div>
+  </div>
 </nav>
 
 <main class="main">
@@ -1515,7 +1523,7 @@ var DAYS=[
 var PM={"travel":{tag:"Travel Day",cls:"phase-travel",sc:"phase-travel",cc:"phase-travel"},"la":{tag:"Los Angeles",cls:"phase-la",sc:"phase-la",cc:"phase-la"},"395":{tag:"Hwy 395",cls:"phase-395",sc:"phase-395",cc:"phase-395"},"bay":{tag:"Bay Area",cls:"phase-bay",sc:"phase-bay",cc:"phase-bay"}};
 var SM={"book":{text:"To Book",c:"book"},"booked":{text:"Booked",c:"booked"},"free":{text:"Free",c:"free"},"na":{text:"",c:"na"}};
 
-function buildSidebar(){var c=document.getElementById("sb-days"),s=document.getElementById("mob-strip");var dt=document.createElement("div");dt.className="mob-tab active";dt.id="mob-tab-days";dt.textContent="Days";dt.onclick=function(){goTo("days");};s.appendChild(dt);var bt=document.createElement("div");bt.className="mob-tab";bt.id="mob-tab-budget";bt.textContent="Budget";bt.onclick=function(){goTo("budget");};s.appendChild(bt);var sep=document.createElement("div");sep.className="mob-tab-sep";s.appendChild(sep);DAYS.forEach(function(d){var p=PM[d.phase]||PM.travel;var n=document.createElement("div");n.className="sb-day "+p.sc;n.id="sbn-"+d.id;n.onclick=function(){goDay(d.id);};var pts=d.date.split(" ");n.innerHTML='<span class="sb-day-date">'+pts[1]+" "+pts[2]+'</span><span class="sb-day-title">'+d.title+'</span>';c.appendChild(n);var ch=document.createElement("div");ch.className="mob-chip "+p.cc;ch.id="mbc-"+d.id;ch.onclick=function(){goDay(d.id);};ch.innerHTML='<span class="mob-chip-date">'+pts[1]+' '+pts[2]+'</span>';s.appendChild(ch);});}
+function buildSidebar(){var c=document.getElementById("sb-days"),s=document.getElementById("mob-strip");DAYS.forEach(function(d){var p=PM[d.phase]||PM.travel;var n=document.createElement("div");n.className="sb-day "+p.sc;n.id="sbn-"+d.id;n.onclick=function(){goDay(d.id);};var pts=d.date.split(" ");n.innerHTML='<span class="sb-day-date">'+pts[1]+" "+pts[2]+'</span><span class="sb-day-title">'+d.title+'</span>';c.appendChild(n);var ch=document.createElement("div");ch.className="mob-chip "+p.cc;ch.id="mbc-"+d.id;ch.onclick=function(){goDay(d.id);};ch.innerHTML='<span class="mob-chip-date">'+pts[1]+' '+pts[2]+'</span>';s.appendChild(ch);});}
 
 function ordDate(ds){var n=parseInt(ds.split(" ")[2]);var s=["th","st","nd","rd"];var v=n%100;return n+(s[(v-20)%10]||s[v]||s[0]);}
 function buildDays(){var MDATA={};var c=document.getElementById("days-container");DAYS.forEach(function(d){var p=PM[d.phase]||PM.travel;var st=SM[d.accom.status]||SM.na;MDATA["map-"+d.id]=d.markers;var rows=d.schedule.map(function(s){var isRun=s.time.indexOf('Run')>-1||s.time.indexOf('Rest')>-1;return'<div class="schedule-row'+(isRun?' run-row':'')+'"><div class="sched-time">'+s.time+'</div><div class="sched-main"><strong>'+s.desc+'</strong>'+(s.note?'<span class="sched-note">'+s.note+'</span>':"")+'</div></div>';}).join("");c.innerHTML+='<section class="day-section '+p.cls+'" id="'+d.id+'"><div class="day-topbar"><div class="day-topbar-left"><span class="day-counter">Day '+String(d.num).padStart(2,"0")+' / 17</span><span class="day-counter-sep"></span><span class="day-weekdate">'+d.date+'</span></div><span class="day-phase-tag">'+p.tag+'</span></div><div class="day-weather loading" id="wx-'+d.id+'">Loading weather…</div><div class="day-headline"><div><div class="day-title">'+d.title+'</div><div class="day-subtitle">'+d.subtitle+'</div></div><div class="day-num-bg">'+ordDate(d.date)+'</div></div><div class="day-body"><div class="day-content-col"><div class="schedule">'+rows+'</div></div><div class="day-map-col"><div style="position:relative"><div class="day-map" id="map-'+d.id+'" data-lat="'+d.lat+'" data-lng="'+d.lng+'" data-zoom="'+d.zoom+'" style="cursor:pointer" onclick="openGoogleMaps('+d.lat+','+d.lng+')"></div><span class="map-open-btn" onclick="openGoogleMaps('+d.lat+','+d.lng+')">&#8599;&nbsp;Expand</span></div></div></div>'+buildAccomHTML(d)+buildRecsHTML(d)+'</section>';if(d.num===5){c.innerHTML+='<div id="roadtrip-map" class="roadtrip-break"><h2 class="roadtrip-title">Road Trippin&#8217; with Gwamps</h2><div id="sierra-map"></div><div class="route-legend" style="justify-content:center;padding:12px 0 0;"><span><span class="route-legend-dot" style="width:14px;height:14px;background:#1B4D2C;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"></span>Night stop</span><span><span class="route-legend-dot" style="width:10px;height:10px;background:#E8431C;"></span>Day stop / attraction</span></div></div>';}});window._MDATA=MDATA;}
@@ -1746,7 +1754,8 @@ function buildAccomHTML(d) {
   return '<div class="accom-wrap">' + tile + details + '</div>';
 }
 function goDay(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
-function goTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
+function goTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});document.querySelectorAll('.mob-tab').forEach(function(t){t.classList.remove('active');});var tab=document.getElementById('mob-tab-'+id);if(tab)tab.classList.add('active');var strip=document.querySelector('.mob-strip-scroll');if(strip){if(id==='budget'){strip.querySelectorAll('.mob-chip').forEach(function(c){c.classList.remove('active');});}}}
+
 
 function initSierraMap(){
   if(!window.L)return;
